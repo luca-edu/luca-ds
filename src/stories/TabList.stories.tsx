@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { TabList } from '../components/TabList';
+import { TabList, TabListItem } from '../components/TabList';
 
-const baseItems: TabListProps['items'] = [
+const baseItems: TabListItem[] = [
   { key: 'overview', label: 'Overview' },
   { key: 'students', label: 'Students' },
 ];
@@ -21,10 +21,6 @@ const meta = {
     },
     onValueChange: {
       control: false,
-    },
-    items: {
-      control: 'object',
-      description: 'Tabs to render within the list.',
     },
     defaultValue: {
       control: 'text',

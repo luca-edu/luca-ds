@@ -12,6 +12,11 @@
       "require": "./dist/luca-ui-kit.umd.cjs",
       "types": "./dist/index.d.ts"
     },
+    "./cross": {
+      "import": "./dist/cross/index.js",
+      "require": "./dist/cross/index.cjs",
+      "types": "./dist/cross/index.d.ts"
+    },
     "./styles.css": "./dist/style.css"
   },
   "files": [
@@ -19,9 +24,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && BUILD_MODE=cross vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "watch:css": "tailwindcss -c tailwind.config.js -i src/styles.css -o dist/style.css --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -50,6 +56,7 @@
     "@storybook/addon-docs": "^10.0.5",
     "@storybook/addon-onboarding": "^10.0.5",
     "@storybook/react-vite": "^10.0.5",
+    "@types/node": "^24.10.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",

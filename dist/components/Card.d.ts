@@ -1,14 +1,12 @@
 import { default as React } from 'react';
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
-    variant?: 'default' | 'hover';
     align?: 'center' | 'start';
     interactive?: boolean;
     icon?: React.ReactNode;
     iconSrc?: string;
     iconAlt?: string;
     iconSize?: 'md' | 'lg';
-    iconBackground?: boolean;
     iconClassName?: string;
 }
 export declare const Card: React.ForwardRefExoticComponent<CardProps & React.RefAttributes<HTMLDivElement>>;
@@ -31,7 +29,6 @@ export declare const CardContent: React.ForwardRefExoticComponent<CardContentPro
 export interface CardIconProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     size?: 'md' | 'lg';
-    background?: boolean;
 }
 export declare const CardIcon: React.ForwardRefExoticComponent<CardIconProps & React.RefAttributes<HTMLDivElement>>;
 //# sourceMappingURL=Card.d.ts.map

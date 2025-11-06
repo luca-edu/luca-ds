@@ -5,7 +5,8 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from './Card';
+} from '../components/Card';
+import React from 'react';
 
 const examIllustration =
   'https://www.figma.com/api/mcp/asset/e4737da7-cdfe-472d-b28a-2bd49f3bd188';
@@ -18,11 +19,6 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['default', 'hover'],
-      description: 'Visual style of the card',
-    },
     align: {
       control: 'select',
       options: ['center', 'start'],
@@ -38,7 +34,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    variant: 'default',
     iconSrc: examIllustration,
     className: 'max-w-md min-w-[600px]',
     align: 'center',
@@ -56,7 +51,6 @@ export const Default: Story = {
 export const HoverState: Story = {
   args: {
     className: 'max-w-md',
-    variant: 'hover',
     iconSrc: examIllustration,
     children: (
       <>
