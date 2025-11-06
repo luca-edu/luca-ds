@@ -5,7 +5,6 @@ import {
   CardTitle,
   CardContent,
   CardDescription,
-  CardIcon,
 } from '../src';
 
 const examIllustration =
@@ -28,28 +27,19 @@ function App() {
             Card States
           </h2>
           <div className="flex flex-wrap gap-6">
-            <Card className="max-w-xs">
-              <CardIcon>
-                <img
-                  src={examIllustration}
-                  alt="Exam illustration"
-                  className="h-full w-full object-contain"
-                />
-              </CardIcon>
+            <Card className="max-w-xs" iconSrc={examIllustration} iconAlt="Exam illustration">
               <CardHeader>
                 <CardTitle>Title</CardTitle>
               </CardHeader>
               <CardDescription>Two{'\n'}lines</CardDescription>
             </Card>
 
-            <Card variant="hover" className="max-w-xs">
-              <CardIcon>
-                <img
-                  src={examIllustration}
-                  alt="Exam illustration"
-                  className="h-full w-full object-contain"
-                />
-              </CardIcon>
+            <Card
+              variant="hover"
+              className="max-w-xs"
+              iconSrc={examIllustration}
+              iconAlt="Exam illustration"
+            >
               <CardHeader>
                 <CardTitle>Title</CardTitle>
               </CardHeader>

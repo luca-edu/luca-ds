@@ -5,7 +5,7 @@ const cardVariantStyles: Record<'default' | 'hover', string> = {
   default:
     'bg-white/80 shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)]',
   hover:
-    'bg-[rgba(237,245,255,0.5)] border-[#c5daff] shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03)]',
+    'bg-[rgba(237,245,255,0.5)] border-[var(--borders-hover,#c5daff)] text-[#3843d0] shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] cursor-pointer',
 };
 
 const cardAlignStyles: Record<'center' | 'start', string> = {
@@ -14,13 +14,19 @@ const cardAlignStyles: Record<'center' | 'start', string> = {
 };
 
 const cardInteractiveStyles =
-  'hover:-translate-y-0.5 hover:bg-[rgba(237,245,255,0.5)] hover:border-[#c5daff] hover:shadow-[0px_8px_24px_0px_rgba(56,67,208,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3843d0]';
+  'hover:-translate-y-0.5 hover:bg-[rgba(237,245,255,0.5)] hover:border-[var(--borders-hover,#c5daff)] hover:text-[#3843d0] hover:shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] hover:cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3843d0]';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   variant?: 'default' | 'hover';
   align?: 'center' | 'start';
   interactive?: boolean;
+  icon?: React.ReactNode;
+  iconSrc?: string;
+  iconAlt?: string;
+  iconSize?: 'md' | 'lg';
+  iconBackground?: boolean;
+  iconClassName?: string;
 }
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -30,11 +36,43 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       align = 'center',
       interactive = true,
       className,
+      icon,
+      iconSrc,
+      iconAlt,
+      iconSize = 'lg',
+      iconBackground = false,
+      iconClassName,
       children,
       ...props
     },
     ref
   ) => {
+    const hasIcon = Boolean(icon ?? iconSrc);
+
+    const renderIcon = () => {
+      if (!hasIcon) return null;
+
+      const iconNode =
+        icon ??
+        (iconSrc ? (
+          <img
+            src={iconSrc}
+            alt={iconAlt ?? 'Card icon'}
+            className="h-full w-full object-contain"
+          />
+        ) : null);
+
+      return (
+        <CardIcon
+          size={iconSize}
+          background={iconBackground}
+          className={iconClassName}
+        >
+          {iconNode}
+        </CardIcon>
+      );
+    };
+
     return (
       <div
         ref={ref}
@@ -44,12 +82,17 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
           'group/card relative flex w-full flex-col gap-4 rounded-2xl border border-transparent px-6 py-8 transition-all duration-200 backdrop-blur-sm',
           cardVariantStyles[variant],
           cardAlignStyles[align],
-          interactive && variant === 'default' && cardInteractiveStyles,
-          variant === 'hover' && 'border-[#c5daff]',
+          interactive
+            ? variant === 'default'
+              ? cardInteractiveStyles
+              : 'cursor-pointer'
+            : 'cursor-default',
+          variant === 'hover' && 'border border-[var(--borders-hover,#c5daff)]',
           className
         )}
         {...props}
       >
+        {renderIcon()}
         {children}
       </div>
     );
@@ -149,6 +192,8 @@ export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
         className={cn(
           'w-full text-sm text-gray-600',
           'group-data-[card-align=center]/card:text-center group-data-[card-align=start]/card:text-left',
+          'group-hover/card:text-[#3843d0]',
+          'group-data-[card-variant=hover]/card:text-[#3843d0]',
           className
         )}
         {...props}
@@ -168,13 +213,13 @@ export interface CardIconProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const iconSizeClasses: Record<'md' | 'lg', string> = {
-  md: 'h-12 w-12 rounded-xl',
-  lg: 'h-16 w-16 rounded-2xl',
+  md: 'h-12 w-12',
+  lg: 'h-16 w-16',
 };
 
 export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
   (
-    { className, children, size = 'lg', background = true, ...props },
+    { className, children, size = 'lg', background = false, ...props },
     ref
   ) => {
     return (
@@ -182,8 +227,13 @@ export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
         ref={ref}
         className={cn(
           'flex items-center justify-center overflow-hidden text-[#3843d0] transition-transform duration-200',
+          'rounded-none',
           iconSizeClasses[size],
-          background && 'bg-[rgba(56,67,208,0.08)]',
+          background &&
+            cn(
+              size === 'md' ? 'rounded-xl' : 'rounded-2xl',
+              'bg-[rgba(56,67,208,0.08)]'
+            ),
           'group-hover/card:scale-[1.02]',
           className
         )}

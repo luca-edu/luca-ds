@@ -1,5 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, CardHeader, CardTitle, CardContent } from './Card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from './Card';
+
+const examIllustration =
+  'https://www.figma.com/api/mcp/asset/e4737da7-cdfe-472d-b28a-2bd49f3bd188';
 
 const meta = {
   title: 'Components/Card',
@@ -11,8 +20,15 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'outlined', 'elevated'],
-      description: 'The visual style variant of the card',
+      options: ['default', 'hover'],
+      description: 'Visual style of the card',
+    },
+    align: {
+      control: 'select',
+      options: ['center', 'start'],
+    },
+    interactive: {
+      control: 'boolean',
     },
   },
 } satisfies Meta<typeof Card>;
@@ -23,43 +39,52 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     variant: 'default',
+    iconSrc: examIllustration,
+    className: 'max-w-md',
+    align: 'center',
     children: (
       <>
         <CardHeader>
-          <CardTitle>Card Title</CardTitle>
+          <CardTitle>Title</CardTitle>
         </CardHeader>
-        <CardContent>
-          This is a default card with some content. It has a simple border and white background.
-        </CardContent>
+        <CardDescription>Two{'\n'}lines</CardDescription>
       </>
     ),
   },
 };
 
-
-
-export const WithoutHeader: Story = {
+export const HoverState: Story = {
   args: {
-    variant: 'default',
+    variant: 'hover',
+    iconSrc: examIllustration,
     children: (
-      <CardContent>
-        This is a card without a header, containing only content.
-      </CardContent>
+      <>
+        <CardHeader>
+          <CardTitle>Title</CardTitle>
+        </CardHeader>
+        <CardDescription>Two{'\n'}lines</CardDescription>
+      </>
     ),
   },
 };
 
-export const CustomStyling: Story = {
+export const AlignedContent: Story = {
   args: {
-    variant: 'default',
-    className: 'bg-blue-50 border-blue-300',
+    align: 'start',
+    interactive: false,
+    className: 'max-w-md',
+    iconSrc: examIllustration,
     children: (
       <>
         <CardHeader>
-          <CardTitle className="text-blue-900">Custom Styled Card</CardTitle>
+          <CardTitle>Start Aligned</CardTitle>
+          <CardDescription>
+            Use the align prop to match content-heavy layouts.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="text-blue-700">
-          This card demonstrates how to override default styles with custom Tailwind classes.
+        <CardContent>
+          Cards can host any rich content inside CardContent while preserving
+          the hero icon and top header.
         </CardContent>
       </>
     ),
