@@ -40,14 +40,14 @@ export const Default: Story = {
   args: {
     variant: 'default',
     iconSrc: examIllustration,
-    className: 'max-w-md',
+    className: 'max-w-md min-w-[600px]',
     align: 'center',
     children: (
       <>
         <CardHeader>
           <CardTitle>Title</CardTitle>
         </CardHeader>
-        <CardDescription>Two{'\n'}lines</CardDescription>
+        <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quaerat.</CardDescription>
       </>
     ),
   },
@@ -55,6 +55,7 @@ export const Default: Story = {
 
 export const HoverState: Story = {
   args: {
+    className: 'max-w-md',
     variant: 'hover',
     iconSrc: examIllustration,
     children: (
@@ -62,7 +63,7 @@ export const HoverState: Story = {
         <CardHeader>
           <CardTitle>Title</CardTitle>
         </CardHeader>
-        <CardDescription>Two{'\n'}lines</CardDescription>
+        <CardDescription>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat quaerat consequuntur assumenda, magnam harum facere repudiandae aperiam? Totam, libero consectetur!</CardDescription>
       </>
     ),
   },

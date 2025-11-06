@@ -5,12 +5,15 @@ import {
   CardTitle,
   CardContent,
   CardDescription,
+  TabList,
 } from '../src';
 
 const examIllustration =
   'https://www.figma.com/api/mcp/asset/e4737da7-cdfe-472d-b28a-2bd49f3bd188';
 
 function App() {
+  const [activeTab, setActiveTab] = React.useState('overview');
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-12">
@@ -45,6 +48,29 @@ function App() {
               </CardHeader>
               <CardDescription>Two{'\n'}lines</CardDescription>
             </Card>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="mb-6 text-2xl font-semibold text-gray-900">
+            Tab List
+          </h2>
+          <div className="flex flex-col gap-4">
+            <TabList
+              items={[
+                { key: 'overview', label: 'Overview' },
+                { key: 'students', label: 'Students' },
+                { key: 'reports', label: 'Reports', disabled: true },
+              ]}
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full max-w-xl"
+              fullWidth
+            />
+            <div className="rounded-xl border border-dashed border-gray-200 bg-white/60 p-6 text-sm text-gray-600">
+              Selected tab:{' '}
+              <span className="font-semibold text-gray-900">{activeTab}</span>
+            </div>
           </div>
         </section>
 

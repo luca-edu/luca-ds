@@ -22,5 +22,8 @@ export type {
 export { Button } from './components/Button';
 export type { ButtonProps, ButtonVariant, ButtonState } from './components/Button';
 
+export { TabList } from './components/TabList';
+export type { TabListProps, TabListItem } from './components/TabList';
+
 // Utils
 export { cn } from './utils/cn';

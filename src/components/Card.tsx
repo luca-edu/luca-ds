@@ -3,9 +3,9 @@ import { cn } from '../utils/cn';
 
 const cardVariantStyles: Record<'default' | 'hover', string> = {
   default:
-    'bg-white/80 shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)]',
+    'bg-white/80 shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)] w-full',
   hover:
-    'bg-[rgba(237,245,255,0.5)] border-[var(--borders-hover,#c5daff)] text-[#3843d0] shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] cursor-pointer',
+    'bg-[rgba(237,245,255,0.5)] border-[var(--borders-hover,#c5daff)] text-[#3843d0] shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] cursor-pointer w-full',
 };
 
 const cardAlignStyles: Record<'center' | 'start', string> = {
