@@ -19,5 +19,8 @@ export type {
   CardIconProps,
 } from './components/Card';
 
+export { Button } from './components/Button';
+export type { ButtonProps, ButtonVariant, ButtonState } from './components/Button';
+
 // Utils
 export { cn } from './utils/cn';
