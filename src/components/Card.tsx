@@ -3,18 +3,18 @@ import { cn } from '../utils/cn';
 
 const cardVariantStyles: Record<'default' | 'hover', string> = {
   default:
-    'bg-white/80 shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)] w-full',
+    'luca-bg-white/80 luca-shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)] luca-w-full',
   hover:
-    'bg-[rgba(237,245,255,0.5)] border-[var(--borders-hover,#c5daff)] text-[#3843d0] shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] cursor-pointer w-full',
+    'luca-bg-[rgba(237,245,255,0.5)] luca-border-[var(--borders-hover,#c5daff)] luca-text-[#3843d0] luca-shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] luca-cursor-pointer luca-w-full',
 };
 
 const cardAlignStyles: Record<'center' | 'start', string> = {
-  center: 'items-center text-center',
-  start: 'items-start text-left',
+  center: 'luca-items-center luca-text-center',
+  start: 'luca-items-start luca-text-left',
 };
 
 const cardInteractiveStyles =
-  'hover:-translate-y-0.5 hover:bg-[rgba(237,245,255,0.5)] hover:border-[var(--borders-hover,#c5daff)] hover:text-[#3843d0] hover:shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] hover:cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3843d0]';
+  'luca-hover:-translate-y-0.5 luca-hover:bg-[rgba(237,245,255,0.5)] luca-hover:border-[var(--borders-hover,#c5daff)] luca-hover:text-[#3843d0] luca-hover:shadow-[0px_4px_6px_-1px_rgba(156,163,175,0.1),0px_2px_4px_-1px_rgba(156,163,175,0.08)] luca-hover:cursor-pointer luca-focus-visible:outline luca-focus-visible:outline-2 luca-focus-visible:outline-offset-2 luca-focus-visible:outline-[#3843d0]';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -58,7 +58,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
           <img
             src={iconSrc}
             alt={iconAlt ?? 'Card icon'}
-            className="h-full w-full object-contain"
+            className="luca-h-full luca-w-full luca-object-contain"
           />
         ) : null);
 
@@ -79,15 +79,16 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         data-card-variant={variant}
         data-card-align={align}
         className={cn(
-          'group/card relative flex w-full flex-col gap-4 rounded-2xl border border-transparent px-6 py-8 transition-all duration-200 backdrop-blur-sm',
+          'luca-group/card luca-relative luca-flex luca-w-full luca-flex-col luca-gap-4 luca-rounded-2xl luca-border luca-border-transparent luca-px-6 luca-py-8 luca-transition-all luca-duration-200 luca-backdrop-blur-sm',
           cardVariantStyles[variant],
           cardAlignStyles[align],
           interactive
             ? variant === 'default'
               ? cardInteractiveStyles
-              : 'cursor-pointer'
-            : 'cursor-default',
-          variant === 'hover' && 'border border-[var(--borders-hover,#c5daff)]',
+              : 'luca-cursor-pointer'
+            : 'luca-cursor-default',
+          variant === 'hover' &&
+            'luca-border luca-border-[var(--borders-hover,#c5daff)]',
           className
         )}
         {...props}
@@ -111,9 +112,9 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
       <div
         ref={ref}
         className={cn(
-          'flex w-full flex-col gap-3',
-          'items-center text-center',
-          'group-data-[card-align=start]/card:items-start group-data-[card-align=start]/card:text-left',
+          'luca-flex luca-w-full luca-flex-col luca-gap-3',
+          'luca-items-center luca-text-center',
+          'luca-group-data-[card-align=start]/card:luca-items-start luca-group-data-[card-align=start]/card:luca-text-left',
           className
         )}
         {...props}
@@ -137,9 +138,9 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
       <h3
         ref={ref}
         className={cn(
-          'text-base font-semibold leading-tight tracking-tight text-gray-900 transition-colors duration-200',
-          'group-hover/card:text-[#3843d0]',
-          'group-data-[card-variant=hover]/card:text-[#3843d0]',
+          'luca-text-base luca-font-semibold luca-leading-tight luca-tracking-tight luca-text-gray-900 luca-transition-colors luca-duration-200',
+          'luca-group-hover/card:luca-text-[#3843d0]',
+          'luca-group-data-[card-variant=hover]/card:luca-text-[#3843d0]',
           className
         )}
         {...props}
@@ -165,10 +166,10 @@ export const CardDescription = React.forwardRef<
     <p
       ref={ref}
       className={cn(
-        'text-sm leading-relaxed text-gray-500 transition-colors duration-200 whitespace-pre-line',
-        'group-data-[card-align=center]/card:text-center group-data-[card-align=start]/card:text-left',
-        'group-hover/card:text-[#3843d0]',
-        'group-data-[card-variant=hover]/card:text-[#3843d0]',
+        'luca-text-sm luca-leading-relaxed luca-text-gray-500 luca-transition-colors luca-duration-200 luca-whitespace-pre-line',
+        'luca-group-data-[card-align=center]/card:luca-text-center luca-group-data-[card-align=start]/card:luca-text-left',
+        'luca-group-hover/card:luca-text-[#3843d0]',
+        'luca-group-data-[card-variant=hover]/card:luca-text-[#3843d0]',
         className
       )}
       {...props}
@@ -190,10 +191,10 @@ export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
       <div
         ref={ref}
         className={cn(
-          'w-full text-sm text-gray-600',
-          'group-data-[card-align=center]/card:text-center group-data-[card-align=start]/card:text-left',
-          'group-hover/card:text-[#3843d0]',
-          'group-data-[card-variant=hover]/card:text-[#3843d0]',
+          'luca-w-full luca-text-sm luca-text-gray-600',
+          'luca-group-data-[card-align=center]/card:luca-text-center luca-group-data-[card-align=start]/card:luca-text-left',
+          'luca-group-hover/card:luca-text-[#3843d0]',
+          'luca-group-data-[card-variant=hover]/card:luca-text-[#3843d0]',
           className
         )}
         {...props}
@@ -213,8 +214,8 @@ export interface CardIconProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const iconSizeClasses: Record<'md' | 'lg', string> = {
-  md: 'h-12 w-12',
-  lg: 'h-16 w-16',
+  md: 'luca-h-12 luca-w-12',
+  lg: 'luca-h-16 luca-w-16',
 };
 
 export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
@@ -226,15 +227,15 @@ export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
       <div
         ref={ref}
         className={cn(
-          'flex items-center justify-center overflow-hidden text-[#3843d0] transition-transform duration-200',
-          'rounded-none',
+          'luca-flex luca-items-center luca-justify-center luca-overflow-hidden luca-text-[#3843d0] luca-transition-transform luca-duration-200',
+          'luca-rounded-none',
           iconSizeClasses[size],
           background &&
             cn(
-              size === 'md' ? 'rounded-xl' : 'rounded-2xl',
-              'bg-[rgba(56,67,208,0.08)]'
+              size === 'md' ? 'luca-rounded-xl' : 'luca-rounded-2xl',
+              'luca-bg-[rgba(56,67,208,0.08)]'
             ),
-          'group-hover/card:scale-[1.02]',
+          'luca-group-hover/card:luca-scale-[1.02]',
           className
         )}
         {...props}

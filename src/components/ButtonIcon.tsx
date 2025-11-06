@@ -3,14 +3,15 @@ import { cn } from '../utils/cn';
 
 const buttonIconVariants = {
   state: {
-    default: 'bg-white border-[#e5e7eb] text-[#3843d0]',
-    hover: 'bg-[#edf5ff] border-[#e5e7eb] text-[#3843d0]',
-    selected: 'bg-[#3843d0] border-[#3843d0] text-white',
-    disabled: 'bg-[#f3f4f6] border-[#e5e7eb] text-[#9ca3af] cursor-not-allowed'
+    default: 'luca-bg-white luca-border-[#e5e7eb] luca-text-[#3843d0]',
+    hover: 'luca-bg-[#edf5ff] luca-border-[#e5e7eb] luca-text-[#3843d0]',
+    selected: 'luca-bg-[#3843d0] luca-border-[#3843d0] luca-text-white',
+    disabled:
+      'luca-bg-[#f3f4f6] luca-border-[#e5e7eb] luca-text-[#9ca3af] luca-cursor-not-allowed'
   },
   outline: {
-    default: 'rounded-lg',
-    rounded: 'rounded-full'
+    default: 'luca-rounded-lg',
+    rounded: 'luca-rounded-full'
   }
 };
 
@@ -40,16 +41,16 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
         ref={ref}
         disabled={isDisabled}
         className={cn(
-          'flex items-center justify-center w-8 h-8 p-1 border transition-all duration-200',
+          'luca-flex luca-items-center luca-justify-center luca-w-8 luca-h-8 luca-p-1 luca-border luca-transition-all luca-duration-200',
           buttonIconVariants.state[state],
           buttonIconVariants.outline[outline],
           // Hover styles solo si no está disabled
-          !isDisabled && 'hover:bg-[#edf5ff] hover:text-[#3843d0]',
+          !isDisabled && 'luca-hover:bg-[#edf5ff] luca-hover:text-[#3843d0]',
           className
         )}
         {...props}
       >
-        <span className="w-4 h-4 flex items-center justify-center">
+        <span className="luca-w-4 luca-h-4 luca-flex luca-items-center luca-justify-center">
           {icon}
         </span>
       </button>

@@ -32,19 +32,19 @@ export interface TabListProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const containerStyles =
-  'inline-flex items-center gap-1 rounded-[14px] bg-[#ececf0] p-1 text-sm font-medium text-gray-900';
+  'luca-inline-flex luca-items-center luca-gap-1 luca-rounded-[14px] luca-bg-[#ececf0] luca-p-1 luca-text-sm luca-font-medium luca-text-gray-900';
 
 const tabBaseStyles =
-  'inline-flex items-center justify-center rounded-[12px] px-[9px] py-[5px] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3843d0] tracking-[-0.010em] text-[#111827]';
+  'luca-inline-flex luca-items-center luca-justify-center luca-rounded-[12px] luca-px-[9px] luca-py-[5px] luca-transition-all luca-duration-200 luca-focus-visible:outline luca-focus-visible:outline-2 luca-focus-visible:outline-offset-2 luca-focus-visible:outline-[#3843d0] luca-tracking-[-0.010em] luca-text-[#111827]';
 
 const tabSelectedStyles =
-  'bg-[#fdc700] text-[#111827] shadow-[0px_1px_2px_rgba(0,0,0,0.05)]';
+  'luca-bg-[#fdc700] luca-text-[#111827] luca-shadow-[0px_1px_2px_rgba(0,0,0,0.05)]';
 
 const tabUnselectedStyles =
-  'hover:text-[#3843d0] focus-visible:outline-[#3843d0]';
+  'luca-hover:text-[#3843d0] luca-focus-visible:outline-[#3843d0]';
 
 const tabDisabledStyles =
-  'cursor-not-allowed text-gray-400 hover:text-gray-400 focus-visible:outline-none opacity-60';
+  'luca-cursor-not-allowed luca-text-gray-400 luca-hover:text-gray-400 luca-focus-visible:outline-none luca-opacity-60';
 
 export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
   (
@@ -104,7 +104,7 @@ export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
         ref={ref}
         role="tablist"
         aria-label={ariaLabel}
-        className={cn(containerStyles, fullWidth && 'w-full', className)}
+        className={cn(containerStyles, fullWidth && 'luca-w-full', className)}
         {...props}
       >
         {items.map((item) => {
@@ -129,7 +129,7 @@ export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
               data-value={item.key}
               className={cn(
                 tabBaseStyles,
-                fullWidth ? 'flex-1' : 'min-w-[88px]',
+                fullWidth ? 'luca-flex-1' : 'luca-min-w-[88px]',
                 isSelected ? tabSelectedStyles : tabUnselectedStyles,
                 disabled && tabDisabledStyles
               )}
