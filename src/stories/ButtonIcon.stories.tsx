@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ButtonIcon } from './ButtonIcon';
+import { ButtonIcon } from '../components/ButtonIcon';
 
 // Importamos el SVG de la flecha como componente React
 const ArrowIcon = () => (

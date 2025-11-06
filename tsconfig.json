@@ -26,5 +26,6 @@
     "emitDeclarationOnly": false
   },
   "include": ["src"],
+  "exclude": ["src/stories/**/*.tsx", "src/**/*.stories.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

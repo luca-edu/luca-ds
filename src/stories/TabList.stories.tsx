@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { TabList, TabListProps } from './TabList';
+import { TabList } from '../components/TabList';
 
 const baseItems: TabListProps['items'] = [
   { key: 'overview', label: 'Overview' },
