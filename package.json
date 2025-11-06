@@ -12,19 +12,15 @@
       "require": "./dist/luca-ui-kit.umd.cjs",
       "types": "./dist/index.d.ts"
     },
-    "./cross": {
-      "import": "./dist/cross/index.js",
-      "require": "./dist/cross/index.cjs",
-      "types": "./dist/cross/index.d.ts"
-    },
     "./styles.css": "./dist/style.css"
+    ,"./dist/*": "./dist/*"
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && BUILD_MODE=cross vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "watch:css": "tailwindcss -c tailwind.config.js -i src/styles.css -o dist/style.css --watch",

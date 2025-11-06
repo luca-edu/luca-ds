@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+
 import {
   Card,
   CardHeader,
@@ -6,7 +8,6 @@ import {
   CardDescription,
   CardContent,
 } from '../components/Card';
-import React from 'react';
 
 const examIllustration =
   'https://www.figma.com/api/mcp/asset/e4737da7-cdfe-472d-b28a-2bd49f3bd188';

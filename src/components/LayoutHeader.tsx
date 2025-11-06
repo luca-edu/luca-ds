@@ -28,7 +28,7 @@ export const LayoutHeader: React.FC<LayoutHeaderProps> = ({
     )}
     style={{ backgroundImage: `url(${backgroundImage})`, ...heroStyle }}
   >
-    <h3 className="luca-font-semibold luca-text-lg luca-text-[#3843D0] luca-leading-[120%] luca-text-center">
+    <h3 className="luca-font-semibold luca-text-lg luca-text-[#3843D0] luca-leading-[120%] luca-text-Left">
       {title}
     </h3>
     <div className="luca-flex luca-flex-row luca-items-center luca-justify-center luca-w-full luca-mt-4">

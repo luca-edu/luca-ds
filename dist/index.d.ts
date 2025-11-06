@@ -6,5 +6,9 @@ export { ButtonIcon } from './components/ButtonIcon';
 export type { ButtonIconProps } from './components/ButtonIcon';
 export { TabList } from './components/TabList';
 export type { TabListProps, TabListItem } from './components/TabList';
+export { Layout, LayoutContent } from './components/Layout';
+export type { LayoutProps, } from './components/Layout';
+export { LayoutHeader } from './components/LayoutHeader';
+export type { LayoutHeaderProps } from './components/LayoutHeader';
 export { cn } from './utils/cn';
 //# sourceMappingURL=index.d.ts.map

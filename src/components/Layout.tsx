@@ -5,7 +5,7 @@ import { LayoutHeader } from './LayoutHeader';
 export const LayoutContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className, ...props }) => (
   <div
     className={cn(
-      'luca-py-6 luca-px-4 luca-max-w-[1400px] luca-w-full luca-mx-auto luca-relative luca-min-h-[calc(100vh-280px)]',
+      'luca-w-full luca-mx-auto luca-relative luca-min-h-[calc(100vh-280px)]',
       className
     )}
     {...props}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '../components/Button';
-
+import React from 'react';
 // Simple upload icon SVG
 const UploadIcon = () => (
   <svg

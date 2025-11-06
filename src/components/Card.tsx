@@ -114,7 +114,7 @@ export interface CardTitleProps
 export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <h3
+      <strong
         ref={ref}
         className={cn(
           'luca-text-base luca-font-semibold luca-leading-tight luca-tracking-tight luca-transition-colors luca-duration-200',
@@ -124,7 +124,7 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
         {...props}
       >
         {children}
-      </h3>
+      </strong>
     );
   }
 );

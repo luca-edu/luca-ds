@@ -7,6 +7,14 @@ export default {
     "./playground/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      xs: '475px',
+      sml: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         primary: {
