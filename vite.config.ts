@@ -9,11 +9,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const sharedRollup = {
-  external: ["react", "react-dom"],
+  external: ["react", "react-dom", "react/jsx-runtime"],
   output: {
     globals: {
       react: "React",
       "react-dom": "ReactDOM",
+      "react/jsx-runtime": "jsxRuntime",
     },
   },
 };

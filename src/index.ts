@@ -35,5 +35,8 @@ export type {
 export { LayoutHeader } from './components/LayoutHeader';
 export type { LayoutHeaderProps } from './components/LayoutHeader';
 
+export { Modal } from './components/Modal';
+export type { ModalProps } from './components/Modal';
+
 // Utils
 export { cn } from './utils/cn';

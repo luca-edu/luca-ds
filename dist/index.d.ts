@@ -10,5 +10,7 @@ export { Layout, LayoutContent } from './components/Layout';
 export type { LayoutProps, } from './components/Layout';
 export { LayoutHeader } from './components/LayoutHeader';
 export type { LayoutHeaderProps } from './components/LayoutHeader';
+export { Modal } from './components/Modal';
+export type { ModalProps } from './components/Modal';
 export { cn } from './utils/cn';
 //# sourceMappingURL=index.d.ts.map
