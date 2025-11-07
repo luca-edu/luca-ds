@@ -12,12 +12,16 @@ const useStyle = createStyles(() => ({
   },
 }));
 
+interface ButtonProps {
+  text: string;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'tertiary';
+}
+
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onClickSecondaryButton?: () => void;
-  onClickTertiaryButton?: () => void;
-  onClickPrimaryButton?: () => void;
+  buttons?: ButtonProps[];
   title: string;
   subtitle?: string;
   description?: string;
@@ -35,15 +39,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
       isOpen,
-      onClickSecondaryButton,
-      onClickTertiaryButton,
-      onClickPrimaryButton,
+      buttons,
       title,
       subtitle,
       description,
-      tertiaryButtonText,
-      secondaryButtonText = 'CANCELAR',
-      primaryButtonText = 'ACEPTAR',
       closeOnOverlayClick = true,
       closeOnEscape = true,
       className,
@@ -98,15 +97,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           )}
           {children}
           <div className="luca-flex luca-justify-end luca-gap-2"> 
-            {secondaryButtonText && (
-              <Button variant="secondary" onClick={onClickSecondaryButton}>{secondaryButtonText}</Button>
-            )}
-            {tertiaryButtonText && (
-              <Button variant="tertiary" onClick={onClickTertiaryButton}>{tertiaryButtonText}</Button>
-            )}
-            {primaryButtonText && (
-              <Button variant="primary" onClick={onClickPrimaryButton}>{primaryButtonText}</Button>
-            )}
+            {buttons?.map((button) => (
+              <Button variant={button.variant} onClick={button.onClick}>{button.text}</Button>
+            ))}
           </div>
         </div>
       </AntdModal>

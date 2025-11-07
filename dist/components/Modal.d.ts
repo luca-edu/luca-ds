@@ -1,10 +1,13 @@
 import { default as React } from 'react';
+interface ButtonProps {
+    text: string;
+    onClick?: () => void;
+    variant?: 'primary' | 'secondary' | 'tertiary';
+}
 export interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onClickSecondaryButton?: () => void;
-    onClickTertiaryButton?: () => void;
-    onClickPrimaryButton?: () => void;
+    buttons?: ButtonProps[];
     title: string;
     subtitle?: string;
     description?: string;
@@ -18,4 +21,5 @@ export interface ModalProps {
     children?: React.ReactNode;
 }
 export declare const Modal: React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>;
+export {};
 //# sourceMappingURL=Modal.d.ts.map
