@@ -119,6 +119,7 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
         className={cn(
           'luca-text-[#111827] luca-font-semibold luca-leading-tight luca-tracking-tight luca-transition-colors luca-duration-200',
           'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
+          'group-hover/card:luca-text-[#3843d0]',
           className
         )}
         {...props}
@@ -146,6 +147,7 @@ export const CardDescription = React.forwardRef<
       className={cn(
         'luca-text-sm luca-leading-relaxed luca-transition-colors luca-duration-200 luca-whitespace-pre-line luca-text-[#6B7280]',
           'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
+          'group-hover/card:luca-text-[#3843d0]',
         className
       )}
       {...props}
@@ -169,6 +171,7 @@ export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
         className={cn(
           'luca-w-full luca-text-sm',
           'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
+          'group-hover/card:luca-text-[#3843d0]',
           className
         )}
         {...props}
