@@ -15,7 +15,9 @@ const useStyle = createStyles(() => ({
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onClickSecondaryButton: () => void;
+  onClickTertiaryButton: () => void;
+  onClickPrimaryButton: () => void;
   title: string;
   subtitle?: string;
   description?: string;
@@ -33,8 +35,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
       isOpen,
-      onClose,
-      onSubmit,
+      onClickSecondaryButton,
+      onClickTertiaryButton,
+      onClickPrimaryButton,
       title,
       subtitle,
       description,
@@ -96,13 +99,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           {children}
           <div className="luca-flex luca-justify-end luca-gap-2"> 
             {secondaryButtonText && (
-              <Button variant="secondary" onClick={onClose}>{secondaryButtonText}</Button>
+              <Button variant="secondary" onClick={onClickSecondaryButton}>{secondaryButtonText}</Button>
             )}
             {tertiaryButtonText && (
-              <Button variant="tertiary" onClick={onClose}>{tertiaryButtonText}</Button>
+              <Button variant="tertiary" onClick={onClickTertiaryButton}>{tertiaryButtonText}</Button>
             )}
             {primaryButtonText && (
-              <Button variant="primary" onClick={onSubmit}>{primaryButtonText}</Button>
+              <Button variant="primary" onClick={onClickPrimaryButton}>{primaryButtonText}</Button>
             )}
           </div>
         </div>

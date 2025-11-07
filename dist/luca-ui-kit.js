@@ -15453,47 +15453,48 @@ const _x = Rx(() => ({
 })), Mx = Mn(
   ({
     isOpen: e,
-    onClose: t,
-    onSubmit: n,
-    title: r,
-    subtitle: o,
-    description: a,
-    tertiaryButtonText: i,
-    secondaryButtonText: s = "CANCELAR",
-    primaryButtonText: c = "ACEPTAR",
-    closeOnOverlayClick: l = !0,
-    closeOnEscape: u = !0,
-    className: f,
-    maxWidth: d,
-    children: h
-  }, v) => {
-    const { styles: p } = _x(), m = {
-      content: p.content
+    onClickSecondaryButton: t,
+    onClickTertiaryButton: n,
+    onClickPrimaryButton: r,
+    title: o,
+    subtitle: a,
+    description: i,
+    tertiaryButtonText: s,
+    secondaryButtonText: c = "CANCELAR",
+    primaryButtonText: l = "ACEPTAR",
+    closeOnOverlayClick: u = !0,
+    closeOnEscape: f = !0,
+    className: d,
+    maxWidth: h,
+    children: v
+  }, p) => {
+    const { styles: m } = _x(), C = {
+      content: m.content
     };
     return /* @__PURE__ */ J(
       st,
       {
         open: e || !1,
-        title: /* @__PURE__ */ J("span", { className: "luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]", children: r }),
-        maskClosable: l,
+        title: /* @__PURE__ */ J("span", { className: "luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]", children: o }),
+        maskClosable: u,
         footer: null,
-        keyboard: u,
+        keyboard: f,
         centered: !0,
-        className: Oe("luca-modal", f),
-        style: d ? {
-          maxWidth: typeof d == "number" ? `${d}px` : d,
+        className: Oe("luca-modal", d),
+        style: h ? {
+          maxWidth: typeof h == "number" ? `${h}px` : h,
           width: "100%"
         } : void 0,
-        modalRender: (C) => /* @__PURE__ */ J("div", { ref: v, className: "luca-modal-wrapper", children: C }),
-        classNames: m,
+        modalRender: (y) => /* @__PURE__ */ J("div", { ref: p, className: "luca-modal-wrapper", children: y }),
+        classNames: C,
         children: /* @__PURE__ */ Bt("div", { className: "luca-flex luca-flex-col luca-mt-6", children: [
-          o && /* @__PURE__ */ J("p", { className: "luca-font-medium luca-text-sm luca-text-[#111827] luca-leading-[30px] luca-m-0", children: o }),
-          a && /* @__PURE__ */ J("p", { className: "luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0 luca-mb-6", children: a }),
-          h,
+          a && /* @__PURE__ */ J("p", { className: "luca-font-medium luca-text-sm luca-text-[#111827] luca-leading-[30px] luca-m-0", children: a }),
+          i && /* @__PURE__ */ J("p", { className: "luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0 luca-mb-6", children: i }),
+          v,
           /* @__PURE__ */ Bt("div", { className: "luca-flex luca-justify-end luca-gap-2", children: [
-            s && /* @__PURE__ */ J(to, { variant: "secondary", onClick: t, children: s }),
-            i && /* @__PURE__ */ J(to, { variant: "tertiary", onClick: t, children: i }),
-            c && /* @__PURE__ */ J(to, { variant: "primary", onClick: n, children: c })
+            c && /* @__PURE__ */ J(to, { variant: "secondary", onClick: t, children: c }),
+            s && /* @__PURE__ */ J(to, { variant: "tertiary", onClick: n, children: s }),
+            l && /* @__PURE__ */ J(to, { variant: "primary", onClick: r, children: l })
           ] })
         ] })
       }

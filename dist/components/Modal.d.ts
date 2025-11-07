@@ -2,7 +2,9 @@ import { default as React } from 'react';
 export interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: () => void;
+    onClickSecondaryButton: () => void;
+    onClickTertiaryButton: () => void;
+    onClickPrimaryButton: () => void;
     title: string;
     subtitle?: string;
     description?: string;
