@@ -69,10 +69,10 @@ const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
             setIsOpen(false);
           }},
           {
-            text: 'CONFIRMAR',
-            variant: 'primary',
+            text: 'Aceptar',
+            variant: 'tertiary',
             onClick: () => {
-              console.log('Primary button clicked');
+              console.log('Tertiary button clicked');
               setIsOpen(false);
             },
           },
@@ -133,6 +133,8 @@ export const LongContent: Story = {
 export const NoOverlayClose: Story = {
   render: (args) => <ModalWrapper {...args} />,
   args: {
+    isOpen: false,
+    onClose: () => {},
     title: 'Acción requerida',
     description:
       'Debes tomar una decisión para continuar. No puedes cerrar este modal haciendo clic fuera.',
@@ -165,8 +167,8 @@ export const NoEscapeClose: Story = {
         variant: 'secondary',
       },
       {
-        text: 'CONFIRMAR',
-        variant: 'primary',
+        text: 'Aceptar',
+        variant: 'tertiary',
       },
     ],
     closeOnOverlayClick: true,
