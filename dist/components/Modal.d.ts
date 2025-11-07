@@ -11,6 +11,7 @@ export interface ModalProps {
     closeOnOverlayClick?: boolean;
     closeOnEscape?: boolean;
     className?: string;
+    maxWidth?: number | string;
     children?: React.ReactNode;
 }
 export declare const Modal: React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>;

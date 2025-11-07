@@ -24,6 +24,7 @@ export interface ModalProps {
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
+  maxWidth?: number | string;
   children?: React.ReactNode;
 }
 
@@ -41,6 +42,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       closeOnOverlayClick = true,
       closeOnEscape = true,
       className,
+      maxWidth,
       children,
     },
     ref
@@ -63,6 +65,14 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         keyboard={closeOnEscape}
         centered
         className={cn('luca-modal', className)}
+        style={
+          maxWidth
+            ? {
+                maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth,
+                width: '100%',
+              }
+            : undefined
+        }
         modalRender={(dom) => (
           <div ref={ref} className="luca-modal-wrapper">
             {dom}
