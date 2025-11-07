@@ -34,6 +34,9 @@ export type { ButtonProps, ButtonVariant, ButtonState } from './components/Butto
 export { ButtonIcon } from './components/ButtonIcon';
 export type { ButtonIconProps } from './components/ButtonIcon';
 
+export { Badge } from './components/Badge';
+export type { BadgeProps } from './components/Badge';
+
 export { TabList } from './components/TabList';
 export type { TabListProps, TabListItem } from './components/TabList';
 

@@ -4,6 +4,8 @@ export { Button } from './components/Button';
 export type { ButtonProps, ButtonVariant, ButtonState } from './components/Button';
 export { ButtonIcon } from './components/ButtonIcon';
 export type { ButtonIconProps } from './components/ButtonIcon';
+export { Badge } from './components/Badge';
+export type { BadgeProps } from './components/Badge';
 export { TabList } from './components/TabList';
 export type { TabListProps, TabListItem } from './components/TabList';
 export { Layout, LayoutContent } from './components/Layout';
