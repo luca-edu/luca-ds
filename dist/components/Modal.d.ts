@@ -6,6 +6,7 @@ interface ButtonProps {
 }
 export interface ModalProps {
     isOpen: boolean;
+    closable: boolean;
     onClose: () => void;
     buttons?: ButtonProps[];
     title: string;

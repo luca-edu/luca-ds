@@ -15453,40 +15453,43 @@ const _x = Rx(() => ({
 })), Mx = Mn(
   ({
     isOpen: e,
-    buttons: t,
-    title: n,
-    subtitle: r,
-    description: o,
-    closeOnOverlayClick: a = !0,
-    closeOnEscape: i = !0,
-    className: s,
-    maxWidth: c,
-    children: l
-  }, u) => {
-    const { styles: f } = _x(), d = {
-      content: f.content
+    closable: t = !0,
+    buttons: n,
+    title: r,
+    subtitle: o,
+    description: a,
+    closeOnOverlayClick: i = !0,
+    closeOnEscape: s = !0,
+    className: c,
+    maxWidth: l,
+    children: u
+  }, f) => {
+    const { styles: d } = _x(), h = {
+      content: d.content
     };
     return /* @__PURE__ */ te(
       st,
       {
         open: e || !1,
-        title: /* @__PURE__ */ te("span", { className: "luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]", children: n }),
-        maskClosable: a,
+        title: /* @__PURE__ */ te("span", { className: "luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]", children: r }),
+        closable: t,
+        maskClosable: i,
         footer: null,
-        keyboard: i,
+        keyboard: s,
         centered: !0,
-        className: Oe("luca-modal", s),
-        style: c ? {
-          maxWidth: typeof c == "number" ? `${c}px` : c,
+        width: "100%",
+        className: Oe("luca-modal", c),
+        style: l ? {
+          maxWidth: typeof l == "number" ? `${l}px` : l,
           width: "100%"
         } : void 0,
-        modalRender: (h) => /* @__PURE__ */ te("div", { ref: u, className: "luca-modal-wrapper", children: h }),
-        classNames: d,
+        modalRender: (v) => /* @__PURE__ */ te("div", { ref: f, className: "luca-modal-wrapper", children: v }),
+        classNames: h,
         children: /* @__PURE__ */ en("div", { className: "luca-flex luca-flex-col luca-mt-6", children: [
-          r && /* @__PURE__ */ te("p", { className: "luca-font-medium luca-text-sm luca-text-[#111827] luca-leading-[30px] luca-m-0", children: r }),
-          o && /* @__PURE__ */ te("p", { className: "luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0 luca-mb-6", children: o }),
-          l,
-          t && /* @__PURE__ */ te("div", { className: "luca-flex luca-justify-end luca-gap-2", children: t.map((h) => /* @__PURE__ */ te(fd, { variant: h.variant, onClick: h.onClick, children: h.text })) })
+          o && /* @__PURE__ */ te("p", { className: "luca-font-medium luca-text-sm luca-text-[#111827] luca-leading-[30px] luca-m-0", children: o }),
+          a && /* @__PURE__ */ te("p", { className: "luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0 luca-mb-6", children: a }),
+          u,
+          n && /* @__PURE__ */ te("div", { className: "luca-flex luca-justify-end luca-gap-2", children: n.map((v) => /* @__PURE__ */ te(fd, { variant: v.variant, onClick: v.onClick, children: v.text })) })
         ] })
       }
     );

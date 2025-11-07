@@ -20,6 +20,7 @@ interface ButtonProps {
 
 export interface ModalProps {
   isOpen: boolean;
+  closable: boolean;
   onClose: () => void;
   buttons?: ButtonProps[];
   title: string;
@@ -36,6 +37,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
       isOpen,
+      closable = true,
       buttons,
       title,
       subtitle,
@@ -61,10 +63,12 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             {title}
           </span>
         }
+        closable={closable}
         maskClosable={closeOnOverlayClick}
         footer={null}
         keyboard={closeOnEscape}
         centered
+        width={'100%'}
         className={cn('luca-modal', className)}
         style={
           maxWidth
