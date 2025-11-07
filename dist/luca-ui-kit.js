@@ -15486,7 +15486,7 @@ const _x = Rx(() => ({
           r && /* @__PURE__ */ te("p", { className: "luca-font-medium luca-text-sm luca-text-[#111827] luca-leading-[30px] luca-m-0", children: r }),
           o && /* @__PURE__ */ te("p", { className: "luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0 luca-mb-6", children: o }),
           l,
-          /* @__PURE__ */ te("div", { className: "luca-flex luca-justify-end luca-gap-2", children: t?.map((h) => /* @__PURE__ */ te(fd, { variant: h.variant, onClick: h.onClick, children: h.text })) })
+          t && /* @__PURE__ */ te("div", { className: "luca-flex luca-justify-end luca-gap-2", children: t.map((h) => /* @__PURE__ */ te(fd, { variant: h.variant, onClick: h.onClick, children: h.text })) })
         ] })
       }
     );

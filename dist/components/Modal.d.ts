@@ -11,9 +11,6 @@ export interface ModalProps {
     title: string;
     subtitle?: string;
     description?: string;
-    tertiaryButtonText?: string;
-    secondaryButtonText?: string;
-    primaryButtonText?: string;
     closeOnOverlayClick?: boolean;
     closeOnEscape?: boolean;
     className?: string;

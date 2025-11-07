@@ -25,9 +25,6 @@ export interface ModalProps {
   title: string;
   subtitle?: string;
   description?: string;
-  tertiaryButtonText?: string;
-  secondaryButtonText?: string;
-  primaryButtonText?: string;
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
@@ -96,11 +93,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             </p>
           )}
           {children}
-          <div className="luca-flex luca-justify-end luca-gap-2"> 
-            {buttons?.map((button) => (
+          {buttons && (
+            <div className="luca-flex luca-justify-end luca-gap-2"> 
+              {buttons.map((button) => (
               <Button variant={button.variant} onClick={button.onClick}>{button.text}</Button>
             ))}
           </div>
+          )}
         </div>
       </AntdModal>
     );
