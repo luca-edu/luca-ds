@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Modal as AntdModal } from 'antd';
+import { Button } from './Button';
 import { cn } from '../utils/cn';
 
 export interface ModalProps {
@@ -27,7 +28,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       subtitle,
       description,
       cancelButtonText = 'CANCELAR',
-      submitButtonText,
+      submitButtonText = 'ACEPTAR',
       closeOnOverlayClick = true,
       closeOnEscape = true,
       className,
@@ -39,14 +40,11 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       <AntdModal
         open={isOpen || false}
         onCancel={onClose}
-        onOk={onSubmit}
         title={
           <span className="luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]">
             {title}
           </span>
         }
-        okText={submitButtonText}
-        cancelText={cancelButtonText}
         maskClosable={closeOnOverlayClick}
         keyboard={closeOnEscape}
         centered
@@ -69,6 +67,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             </p>
           )}
           {children}
+          <Button variant="secondary" onClick={onClose}>{cancelButtonText}</Button>
+          <Button variant="primary" onClick={onSubmit}>{submitButtonText}</Button>
         </div>
       </AntdModal>
     );
