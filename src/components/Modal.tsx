@@ -15,9 +15,9 @@ const useStyle = createStyles(() => ({
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onClickSecondaryButton: () => void;
-  onClickTertiaryButton: () => void;
-  onClickPrimaryButton: () => void;
+  onClickSecondaryButton?: () => void;
+  onClickTertiaryButton?: () => void;
+  onClickPrimaryButton?: () => void;
   title: string;
   subtitle?: string;
   description?: string;
