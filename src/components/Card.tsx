@@ -203,7 +203,7 @@ export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
           'luca-flex luca-items-center luca-justify-center luca-overflow-hidden  luca-transition-transform luca-duration-200',
           'luca-rounded-none',
           iconSizeClasses[size],
-          'luca-group-hover/card:luca-scale-[1.02]',
+          'group-hover/card:luca-scale-[1.02]',
           className
         )}
         {...props}

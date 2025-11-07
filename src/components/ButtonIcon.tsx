@@ -45,7 +45,7 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
           buttonIconVariants.state[state],
           buttonIconVariants.outline[outline],
           // Hover styles solo si no está disabled
-          !isDisabled && 'luca-hover:bg-[#edf5ff] luca-hover:text-[#3843d0]',
+          !isDisabled && 'hover:luca-bg-[#edf5ff] hover:luca-text-[#3843d0]',
           className
         )}
         {...props}
