@@ -1,5 +1,14 @@
 // Styles
 import './styles.css';
+import { ConfigProvider } from 'antd';
+
+ConfigProvider.config({
+  theme: {
+    token: {
+      fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
+    },
+  },
+});
 
 // Components
 export {

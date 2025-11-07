@@ -2,6 +2,15 @@ import React, { forwardRef } from 'react';
 import { Modal as AntdModal } from 'antd';
 import { Button } from './Button';
 import { cn } from '../utils/cn';
+import { createStyles } from 'antd-style';
+
+
+const useStyle = createStyles(() => ({
+  content: {
+    padding: '32px !important',
+    borderRadius: '20px !important',
+  },
+}));
 
 export interface ModalProps {
   isOpen: boolean;
@@ -36,6 +45,11 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     },
     ref
   ) => {
+    const { styles } = useStyle();
+    const classNames = {
+      content: styles.content,
+    };
+  
     return (
       <AntdModal
         open={isOpen || false}
@@ -54,15 +68,16 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             {dom}
           </div>
         )}
+        classNames={classNames}
       >
-        <div className="luca-flex luca-flex-col luca-gap-4">
+        <div className="luca-flex luca-flex-col luca-mt-6">
           {subtitle && (
             <p className="luca-font-medium luca-text-sm luca-text-[#111827] luca-leading-[30px] luca-m-0">
               {subtitle}
             </p>
           )}
           {description && (
-            <p className="luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0">
+            <p className="luca-font-normal luca-text-sm luca-text-[#6b7280] luca-leading-normal luca-m-0 luca-mb-6">
               {description}
             </p>
           )}

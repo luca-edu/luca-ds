@@ -35,7 +35,7 @@ const buttonVariantStyles: Record<ButtonVariant, Record<ButtonState, string>> =
     },
     secondary: {
       default: cn(
-        'luca-bg-white luca-text-gray-900 luca-border luca-border-gray-200 luca-shadow-[0px_4px_0px_0px_#adadad]',
+        'luca-bg-white luca-text-gray-900 luca-border luca-border-gray-200 luca-shadow-[0px_3px_0px_0px_#adadad]',
         'luca-hover:border-[#c5daff] luca-hover:text-[#3843d0]',
         'luca-disabled:bg-gray-100 luca-disabled:text-gray-400 luca-disabled:border-gray-300',
         'luca-focus-visible:outline-[#3843d0]'
