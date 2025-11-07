@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../utils/cn';
 
-export type ButtonVariant = 'primary' | 'secondary';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonState = 'alert' | 'default';
 
 export interface ButtonProps
@@ -42,6 +42,21 @@ const buttonVariantStyles: Record<ButtonVariant, Record<ButtonState, string>> =
       ),
       alert: cn(
         'luca-bg-white luca-text-red-500 luca-border luca-border-red-400',
+        'luca-hover:bg-red-50',
+        'luca-disabled:bg-gray-100 luca-disabled:text-gray-400 luca-disabled:border-gray-300',
+        'luca-focus-visible:outline-red-500'
+      ),
+    },
+    tertiary: {
+      default: cn(
+        '!luca-rounded-full luca-bg-white luca-text-[#4b5563] luca-border luca-border-[#e5e7eb]',
+        'luca-hover:bg-[#edf5ff] luca-hover:border-[#3843d0] luca-hover:text-[#3843d0]',
+        'luca-active:bg-[#3843d0] luca-active:border-white luca-active:text-white',
+        'luca-disabled:bg-gray-100 luca-disabled:text-gray-400 luca-disabled:border-gray-300',
+        'luca-focus-visible:outline-[#3843d0]'
+      ),
+      alert: cn(
+        '!luca-rounded-full luca-bg-white luca-text-red-500 luca-border luca-border-red-400',
         'luca-hover:bg-red-50',
         'luca-disabled:bg-gray-100 luca-disabled:text-gray-400 luca-disabled:border-gray-300',
         'luca-focus-visible:outline-red-500'

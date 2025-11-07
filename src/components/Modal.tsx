@@ -19,8 +19,9 @@ export interface ModalProps {
   title: string;
   subtitle?: string;
   description?: string;
-  cancelButtonText?: string;
-  submitButtonText: string;
+  tertiaryButtonText?: string;
+  secondaryButtonText?: string;
+  primaryButtonText?: string;
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
@@ -37,8 +38,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       title,
       subtitle,
       description,
-      cancelButtonText = 'CANCELAR',
-      submitButtonText = 'ACEPTAR',
+      tertiaryButtonText,
+      secondaryButtonText = 'CANCELAR',
+      primaryButtonText = 'ACEPTAR',
       closeOnOverlayClick = true,
       closeOnEscape = true,
       className,
@@ -93,8 +95,15 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           )}
           {children}
           <div className="luca-flex luca-justify-end luca-gap-2"> 
-            <Button variant="secondary" onClick={onClose}>{cancelButtonText}</Button>
-            <Button variant="primary" onClick={onSubmit}>{submitButtonText}</Button>
+            {secondaryButtonText && (
+              <Button variant="secondary" onClick={onClose}>{secondaryButtonText}</Button>
+            )}
+            {tertiaryButtonText && (
+              <Button variant="tertiary" onClick={onClose}>{tertiaryButtonText}</Button>
+            )}
+            {primaryButtonText && (
+              <Button variant="primary" onClick={onSubmit}>{primaryButtonText}</Button>
+            )}
           </div>
         </div>
       </AntdModal>

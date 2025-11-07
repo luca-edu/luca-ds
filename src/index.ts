@@ -47,5 +47,8 @@ export type { LayoutHeaderProps } from './components/LayoutHeader';
 export { Modal } from './components/Modal';
 export type { ModalProps } from './components/Modal';
 
+export { SearchBar } from './components/SearchBar';
+export type { SearchBarProps, SearchBarStyle } from './components/SearchBar';
+
 // Utils
 export { cn } from './utils/cn';

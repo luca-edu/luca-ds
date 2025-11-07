@@ -1,5 +1,5 @@
 import { default as React } from 'react';
-export type ButtonVariant = 'primary' | 'secondary';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonState = 'alert' | 'default';
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;

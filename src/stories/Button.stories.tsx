@@ -44,7 +44,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'tertiary'],
       description: 'Visual style of the button',
     },
     state: {
@@ -165,6 +165,42 @@ export const SecondaryAlert: Story = {
   },
 };
 
+export const TertiaryDefault: Story = {
+  args: {
+    variant: 'tertiary',
+    state: 'default',
+    children: 'Tertiary button',
+    leftIcon: <UploadIcon />,
+  },
+};
+
+export const TertiaryNoIcons: Story = {
+  args: {
+    variant: 'tertiary',
+    state: 'default',
+    children: 'Tertiary button',
+  },
+};
+
+export const TertiaryDisabled: Story = {
+  args: {
+    variant: 'tertiary',
+    state: 'default',
+    children: 'Tertiary button',
+    leftIcon: <UploadIcon />,
+    disabled: true,
+  },
+};
+
+export const TertiaryAlert: Story = {
+  args: {
+    variant: 'tertiary',
+    state: 'alert',
+    children: 'Tertiary button',
+    leftIcon: <UploadIcon />,
+  },
+};
+
 export const AllVariants = {
   render: () => (
     <div className="flex flex-col gap-4 p-8">
@@ -194,6 +230,21 @@ export const AllVariants = {
           </Button>
           <Button variant="secondary" state="alert" leftIcon={<UploadIcon />} rightIcon={<UploadIcon />}>
             SECONDARY BUTTON
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <h3 className="text-sm font-semibold text-gray-700">Tertiary Variant</h3>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="tertiary" leftIcon={<UploadIcon />}>
+            Tertiary button
+          </Button>
+          <Button variant="tertiary" disabled leftIcon={<UploadIcon />}>
+            Tertiary button
+          </Button>
+          <Button variant="tertiary" state="alert" leftIcon={<UploadIcon />}>
+            Tertiary button
           </Button>
         </div>
       </div>
