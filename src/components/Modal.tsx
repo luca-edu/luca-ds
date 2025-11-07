@@ -39,13 +39,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     return (
       <AntdModal
         open={isOpen || false}
-        onCancel={onClose}
         title={
           <span className="luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]">
             {title}
           </span>
         }
         maskClosable={closeOnOverlayClick}
+        footer={null}
         keyboard={closeOnEscape}
         centered
         className={cn('luca-modal', className)}
@@ -67,8 +67,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             </p>
           )}
           {children}
-          <Button variant="secondary" onClick={onClose}>{cancelButtonText}</Button>
-          <Button variant="primary" onClick={onSubmit}>{submitButtonText}</Button>
+          <div className="luca-flex luca-justify-end luca-gap-2"> 
+            <Button variant="secondary" onClick={onClose}>{cancelButtonText}</Button>
+            <Button variant="primary" onClick={onSubmit}>{submitButtonText}</Button>
+          </div>
         </div>
       </AntdModal>
     );
