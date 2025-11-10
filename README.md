@@ -1,4 +1,4 @@
-# Luca UI Kit
+# Luca DS
 
 A modern UI component library built with React, TypeScript, and Tailwind CSS.
 
@@ -13,7 +13,7 @@ A modern UI component library built with React, TypeScript, and Tailwind CSS.
 ## Installation
 
 ```bash
-npm install luca-ui-kit
+npm install luca-ds
 ```
 
 ## Usage
