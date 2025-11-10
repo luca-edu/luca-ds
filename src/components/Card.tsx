@@ -117,7 +117,7 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
       <strong
         ref={ref}
         className={cn(
-          'luca-text-[#111827] luca-font-semibold luca-leading-tight luca-tracking-tight luca-transition-colors luca-duration-200',
+          'luca-font-semibold luca-leading-tight luca-tracking-tight luca-transition-colors luca-duration-200',
           'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
           'group-hover/card:luca-text-[#3843d0]',
           className
@@ -145,7 +145,7 @@ export const CardDescription = React.forwardRef<
     <p
       ref={ref}
       className={cn(
-        'luca-text-sm luca-leading-relaxed luca-transition-colors luca-duration-200 luca-whitespace-pre-line luca-text-[#6B7280]',
+        'luca-text-sm luca-leading-relaxed luca-transition-colors luca-duration-200 luca-whitespace-pre-line',
           'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
           'group-hover/card:luca-text-[#3843d0]',
         className
