@@ -53,5 +53,12 @@ export type { ModalProps } from './components/Modal';
 export { SearchBar } from './components/SearchBar';
 export type { SearchBarProps, SearchBarStyle } from './components/SearchBar';
 
+export { Breadcrumb } from './components/Breadcrumb';
+export type {
+  BreadcrumbProps,
+  BreadcrumbItemProps,
+  BreadcrumbBackButtonProps,
+} from './components/Breadcrumb';
+
 // Utils
 export { cn } from './utils/cn';
