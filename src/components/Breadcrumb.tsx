@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '../utils/cn';
+import { ArrowLeftOutlined } from "@ant-design/icons"
 
 export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
@@ -17,25 +18,6 @@ export interface BreadcrumbBackButtonProps extends React.ButtonHTMLAttributes<HT
   icon?: React.ReactNode;
 }
 
-// Arrow Left Icon SVG
-const ArrowLeftIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M10 12L6 8L10 4"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export const BreadcrumbBackButton = React.forwardRef<HTMLButtonElement, BreadcrumbBackButtonProps>(
   ({ className, icon, ...props }, ref) => {
     return (
@@ -48,7 +30,7 @@ export const BreadcrumbBackButton = React.forwardRef<HTMLButtonElement, Breadcru
         )}
         {...props}
       >
-        {icon || <ArrowLeftIcon />}
+        {icon || <ArrowLeftOutlined />}
       </button>
     );
   }
