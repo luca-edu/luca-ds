@@ -65,7 +65,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         data-card-align={align}
         className={cn(
-          'luca-group/card luca-relative luca-flex luca-w-full luca-flex-col luca-gap-4 luca-rounded-2xl luca-border luca-border-transparent luca-px-6 luca-py-8 luca-transition-all luca-duration-200 luca-backdrop-blur-sm luca-bg-white/80 luca-shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)] luca-w-full luca-text-gray-900',
+          'luca-relative luca-flex luca-w-full luca-flex-col luca-gap-4 luca-rounded-2xl luca-border luca-border-transparent luca-px-6 luca-py-8 luca-transition-all luca-duration-200 luca-backdrop-blur-sm luca-bg-white/80 luca-shadow-[0px_0px_8.304px_0px_rgba(0,0,0,0.03),0px_1.107px_16.609px_0px_rgba(246,246,246,0.1),0px_0px_0.554px_0px_rgba(246,246,246,0.3)] luca-w-full luca-text-gray-900',
           interactive && cardInteractiveStyles,
           cardAlignStyles[align],
           className
@@ -92,8 +92,6 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
         ref={ref}
         className={cn(
           'luca-flex luca-w-full luca-flex-col luca-gap-3',
-          'luca-items-center luca-text-center',
-          'group-data-[card-align=start]/card:luca-items-start group-data-[card-align=start]/card:luca-text-left',
           className
         )}
         {...props}
@@ -118,8 +116,6 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
         ref={ref}
         className={cn(
           'luca-font-semibold luca-leading-tight luca-tracking-tight luca-transition-colors luca-duration-200',
-          'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
-          'group-hover/card:luca-text-[#3843d0]',
           className
         )}
         {...props}
@@ -146,8 +142,6 @@ export const CardDescription = React.forwardRef<
       ref={ref}
       className={cn(
         'luca-text-sm luca-leading-relaxed luca-transition-colors luca-duration-200 luca-whitespace-pre-line',
-          'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
-          'group-hover/card:luca-text-[#3843d0]',
         className
       )}
       {...props}
@@ -170,8 +164,6 @@ export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
         ref={ref}
         className={cn(
           'luca-w-full luca-text-sm',
-          'group-data-[card-align=center]/card:luca-text-center group-data-[card-align=start]/card:luca-text-left',
-          'group-hover/card:luca-text-[#3843d0]',
           className
         )}
         {...props}
@@ -206,7 +198,6 @@ export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
           'luca-flex luca-items-center luca-justify-center luca-overflow-hidden  luca-transition-transform luca-duration-200',
           'luca-rounded-none',
           iconSizeClasses[size],
-          'group-hover/card:luca-scale-[1.02]',
           className
         )}
         {...props}
