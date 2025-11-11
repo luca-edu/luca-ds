@@ -203,10 +203,10 @@ export const TertiaryAlert: Story = {
 
 export const AllVariants = {
   render: () => (
-    <div className="flex flex-col gap-4 p-8">
-      <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-gray-700">Primary Variant</h3>
-        <div className="flex flex-wrap gap-3">
+    <div className="luca-flex luca-flex-col luca-gap-4 luca-p-8">
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Primary Variant</h3>
+        <div className="luca-flex luca-flex-wrap luca-gap-3">
           <Button variant="primary" leftIcon={<UploadIcon />} rightIcon={<UploadIcon />}>
             PRIMARY BUTTON
           </Button>
@@ -219,9 +219,9 @@ export const AllVariants = {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-gray-700">Secondary Variant</h3>
-        <div className="flex flex-wrap gap-3">
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Secondary Variant</h3>
+        <div className="luca-flex luca-flex-wrap luca-gap-3">
           <Button variant="secondary" leftIcon={<UploadIcon />} rightIcon={<UploadIcon />}>
             SECONDARY BUTTON
           </Button>
@@ -234,9 +234,9 @@ export const AllVariants = {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-gray-700">Tertiary Variant</h3>
-        <div className="flex flex-wrap gap-3">
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Tertiary Variant</h3>
+        <div className="luca-flex luca-flex-wrap luca-gap-3">
           <Button variant="tertiary" leftIcon={<UploadIcon />}>
             Tertiary button
           </Button>
@@ -249,9 +249,9 @@ export const AllVariants = {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-gray-700">Icon Variations</h3>
-        <div className="flex flex-wrap gap-3">
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Icon Variations</h3>
+        <div className="luca-flex luca-flex-wrap luca-gap-3">
           <Button variant="primary" leftIcon={<UploadIcon />}>
             Left Icon Only
           </Button>
