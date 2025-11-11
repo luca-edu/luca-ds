@@ -60,5 +60,8 @@ export type {
   BreadcrumbBackButtonProps,
 } from './components/Breadcrumb';
 
+export { Chips } from './components/Chips';
+export type { ChipsProps, ChipItem } from './components/Chips';
+
 // Utils
 export { cn } from './utils/cn';

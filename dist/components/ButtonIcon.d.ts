@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 export interface ButtonIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     state?: 'default' | 'selected' | 'hover' | 'disabled';
     outline?: 'default' | 'rounded';

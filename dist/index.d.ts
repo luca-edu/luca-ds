@@ -18,5 +18,7 @@ export { SearchBar } from './components/SearchBar';
 export type { SearchBarProps, SearchBarStyle } from './components/SearchBar';
 export { Breadcrumb } from './components/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItemProps, BreadcrumbBackButtonProps, } from './components/Breadcrumb';
+export { Chips } from './components/Chips';
+export type { ChipsProps, ChipItem } from './components/Chips';
 export { cn } from './utils/cn';
 //# sourceMappingURL=index.d.ts.map
