@@ -3289,7 +3289,7 @@ function lv(e) {
     genComponentStyleHook: u
   };
 }
-const zi = ["blue", "purple", "cyan", "green", "magenta", "pink", "red", "orange", "yellow", "volcano", "geekblue", "lime", "gold"], uv = "5.28.0";
+const zi = ["blue", "purple", "cyan", "green", "magenta", "pink", "red", "orange", "yellow", "volcano", "geekblue", "lime", "gold"], uv = "5.28.1";
 function la(e) {
   return e >= 0 && e <= 255;
 }

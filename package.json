@@ -1,16 +1,16 @@
 {
-  "name": "luca-ui-kit",
+  "name": "luca-ds",
   "version": "1.0.0",
   "description": "A modern UI component library built with React, TypeScript, and Tailwind CSS",
   "type": "module",
-  "main": "./dist/luca-ui-kit.umd.cjs",
-  "module": "./dist/luca-ui-kit.js",
+  "main": "./dist/luca-ds.umd.cjs",
+  "module": "./dist/luca-ds.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/luca-ui-kit.js",
-      "require": "./dist/luca-ui-kit.umd.cjs"
+      "import": "./dist/luca-ds.js",
+      "require": "./dist/luca-ds.umd.cjs"
     },
     "./styles.css": "./dist/style.css",
     "./dist/*": "./dist/*"
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luca-edu/luca-ui-kit.git"
+    "url": "git+https://github.com/luca-edu/luca-ds.git"
   },
   "keywords": [
     "react",
@@ -41,9 +41,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/luca-edu/luca-ui-kit/issues"
+    "url": "https://github.com/luca-edu/luca-ds/issues"
   },
-  "homepage": "https://github.com/luca-edu/luca-ui-kit#readme",
+  "homepage": "https://github.com/luca-edu/luca-ds#readme",
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0"

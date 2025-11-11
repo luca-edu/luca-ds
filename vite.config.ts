@@ -32,9 +32,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "LucaUIKit",
+      name: "LucaDS",
       formats: ["es", "umd"],
-      fileName: (format) => `luca-ui-kit.${format === "es" ? "js" : "umd.cjs"}`,
+      fileName: (format) => `luca-ds.${format === "es" ? "js" : "umd.cjs"}`,
     },
     rollupOptions: sharedRollup,
     cssCodeSplit: false,

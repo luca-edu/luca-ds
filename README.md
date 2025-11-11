@@ -21,8 +21,8 @@ npm install luca-ds
 Import the components and styles in your application:
 
 ```tsx
-import { Button, Input, Card } from 'luca-ui-kit';
-import 'luca-ui-kit/styles.css';
+import { Button, Input, Card } from 'luca-ds';
+import 'luca-ds/styles.css';
 
 function App() {
   return (
