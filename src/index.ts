@@ -92,5 +92,14 @@ export type {
   SelectorLabelProps,
 } from './components/Selector';
 
+export { InputField, TextAreaField } from './components/InputField';
+export type {
+  InputFieldProps,
+  TextAreaFieldProps,
+} from './components/InputField';
+
+export { Tooltip } from './components/Tooltip';
+export type { TooltipProps } from './components/Tooltip';
+
 // Utils
 export { cn } from './utils/cn';
