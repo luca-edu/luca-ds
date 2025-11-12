@@ -64,6 +64,41 @@ const getPositionClasses = (position: NotificationPosition): string => {
   return positionMap[position];
 };
 
+const getAnimationClasses = (
+  position: NotificationPosition,
+  isExiting: boolean
+): string => {
+  // Determinar la dirección de la animación según la posición
+  const animationMap: Record<NotificationPosition, { enter: string; exit: string }> = {
+    'top-left': {
+      enter: 'luca-animate-[slideInFromLeft_0.3s_ease-out]',
+      exit: 'luca-animate-[slideOutToLeft_0.3s_ease-in]',
+    },
+    'top-center': {
+      enter: 'luca-animate-[slideInFromTop_0.3s_ease-out]',
+      exit: 'luca-animate-[slideOutToTop_0.3s_ease-in]',
+    },
+    'top-right': {
+      enter: 'luca-animate-[slideInFromRight_0.3s_ease-out]',
+      exit: 'luca-animate-[slideOutToRight_0.3s_ease-in]',
+    },
+    'bottom-left': {
+      enter: 'luca-animate-[slideInFromLeft_0.3s_ease-out]',
+      exit: 'luca-animate-[slideOutToLeft_0.3s_ease-in]',
+    },
+    'bottom-center': {
+      enter: 'luca-animate-[slideInFromBottom_0.3s_ease-out]',
+      exit: 'luca-animate-[slideOutToBottom_0.3s_ease-in]',
+    },
+    'bottom-right': {
+      enter: 'luca-animate-[slideInFromRight_0.3s_ease-out]',
+      exit: 'luca-animate-[slideOutToRight_0.3s_ease-in]',
+    },
+  };
+
+  return isExiting ? animationMap[position].exit : animationMap[position].enter;
+};
+
 export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
   (
     {
@@ -89,16 +124,29 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
     const tokens = VARIANT_TOKENS[variant];
     const IconRenderer = VARIANT_ICONS[variant];
     const showIcon = !hideIcon && Boolean(icon ?? IconRenderer());
+    const [isExiting, setIsExiting] = React.useState(false);
+
+    const handleDismiss = React.useCallback(() => {
+      if (floating) {
+        setIsExiting(true);
+        // Esperar a que termine la animación antes de llamar onDismiss
+        setTimeout(() => {
+          onDismiss?.();
+        }, 300); // Duración de la animación
+      } else {
+        onDismiss?.();
+      }
+    }, [floating, onDismiss]);
 
     React.useEffect(() => {
       if (autoClose && onDismiss) {
         const timer = setTimeout(() => {
-          onDismiss();
+          handleDismiss();
         }, autoClose);
 
         return () => clearTimeout(timer);
       }
-    }, [autoClose, onDismiss]);
+    }, [autoClose, onDismiss, handleDismiss]);
 
     return (
       <NotificationContext.Provider value={{ variant }}>
@@ -109,7 +157,7 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
             'luca-flex luca-items-start luca-gap-4 luca-rounded-2xl luca-bg-white luca-p-4 luca-transition-colors luca-duration-200',
             baseShadow,
             floating
-              ? `luca-fixed luca-z-50 ${getPositionClasses(position)}`
+              ? `luca-fixed luca-z-50 ${getPositionClasses(position)} ${getAnimationClasses(position, isExiting)}`
               : 'luca-relative luca-w-full',
             className
           )}
@@ -161,7 +209,7 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
           {dismissible && (
             <button
               type="button"
-              onClick={onDismiss}
+              onClick={handleDismiss}
               aria-label={closeButtonAriaLabel}
               className={cn(
                 'luca-absolute luca-right-4 luca-top-4 luca-inline-flex luca-h-6 luca-w-6 luca-items-center luca-justify-center luca-rounded-full luca-transition-colors luca-duration-200',
