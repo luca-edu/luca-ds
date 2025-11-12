@@ -108,5 +108,8 @@ export type {
   DropdownItemProps,
 } from './components/Dropdown';
 
+export { EmptyStateCard } from './components/EmptyStateCard';
+export type { EmptyStateCardProps } from './components/EmptyStateCard';
+
 // Utils
 export { cn } from './utils/cn';
