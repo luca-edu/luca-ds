@@ -95,7 +95,6 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
       onChange,
       maxLength,
       defaultValue,
-      size = 'large',
       ...rest
     },
     ref
