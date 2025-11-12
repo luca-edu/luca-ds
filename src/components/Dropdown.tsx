@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Dropdown as AntDropdown,
   Input,
+  Tag,
 } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import { cn } from '../utils/cn';
@@ -40,8 +41,8 @@ export interface DropdownProps {
 }
 
 const sizeStyles: Record<DropdownSize, string> = {
-  md: 'luca-h-11',
-  lg: 'luca-h-12',
+  md: 'luca-min-h-11',
+  lg: 'luca-min-h-12',
 };
 
 export const Dropdown: React.FC<DropdownProps> = ({
@@ -126,6 +127,19 @@ export const Dropdown: React.FC<DropdownProps> = ({
     onChange?.(next);
   }, [enabledKeys, isControlled, onChange, selectedKeys]);
 
+  const handleRemoveKey = React.useCallback(
+    (key: string) => {
+      if (!multiple) return;
+      if (multiple) {
+        if (!isControlled) {
+          setInternalValue((prev) => prev.filter((item) => item !== key));
+        }
+        onChange?.(selectedKeys.filter((item) => item !== key));
+      }
+    },
+    [isControlled, multiple, onChange, selectedKeys]
+  );
+
   const filteredItems = React.useMemo(() => {
     if (!enableSearch || !searchTerm.trim()) {
       return items;
@@ -162,12 +176,28 @@ export const Dropdown: React.FC<DropdownProps> = ({
     !areAllEnabledSelected &&
     selectedKeys.some((key) => enabledKeys.includes(key));
 
-  const summaryLabel = React.useMemo(() => {
-    if (selectedKeys.length === 0) return placeholder;
+  const summaryContent = React.useMemo<React.ReactNode>(() => {
+    if (selectedKeys.length === 0) {
+      return (
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-500">
+          {placeholder}
+        </span>
+      );
+    }
 
     if (!multiple) {
       const key = selectedKeys[0];
-      return items.find((item) => item.key === key)?.label ?? placeholder;
+      const label =
+        items.find((item) => item.key === key)?.label ?? placeholder;
+      return (
+        <Tag
+          key={key}
+          bordered={false}
+          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
+        >
+          {label}
+        </Tag>
+      );
     }
 
     if (
@@ -175,7 +205,24 @@ export const Dropdown: React.FC<DropdownProps> = ({
       enabledKeys.length > 0 &&
       enabledKeys.every((key) => selectedKeys.includes(key))
     ) {
-      return allSelectedLabel;
+      return (
+        <Tag
+          bordered={false}
+          closable
+          onClose={(event) => {
+            event.preventDefault();
+            handleSelectAll();
+          }}
+          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
+          closeIcon={
+            <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
+              ×
+            </span>
+          }
+        >
+          {allSelectedLabel}
+        </Tag>
+      );
     }
 
     const visibleItems = items.filter((item) =>
@@ -183,16 +230,58 @@ export const Dropdown: React.FC<DropdownProps> = ({
     );
 
     if (visibleItems.length <= summaryMaxItems) {
-      return visibleItems.map((item) => item.label).join(', ');
+      return visibleItems.map((item) => (
+        <Tag
+          key={item.key}
+          bordered={false}
+          closable
+          onClose={(event) => {
+            event.preventDefault();
+            handleRemoveKey(item.key);
+          }}
+          closeIcon={
+            <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
+              ×
+            </span>
+          }
+          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
+        >
+          {item.label}
+        </Tag>
+      ));
     }
 
     const firstItems = visibleItems
       .slice(0, summaryMaxItems)
-      .map((item) => item.label)
-      .join(', ');
+      .map((item) => (
+        <Tag
+          key={item.key}
+          bordered={false}
+          closable
+          onClose={(event) => {
+            event.preventDefault();
+            handleRemoveKey(item.key);
+          }}
+          closeIcon={
+            <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
+              ×
+            </span>
+          }
+          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
+        >
+          {item.label}
+        </Tag>
+      ));
     const remaining = visibleItems.length - summaryMaxItems;
 
-    return `${firstItems} y ${remaining} más`;
+    return (
+      <>
+        {firstItems}
+        <span className="luca-text-xs luca-font-medium luca-text-neutral-500 luca-leading-5">
+          ... y {remaining} más
+        </span>
+      </>
+    );
   }, [
     allSelectedLabel,
     enabledKeys,
@@ -202,6 +291,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
     selectAll,
     selectedKeys,
     summaryMaxItems,
+    handleRemoveKey,
+    handleSelectAll,
   ]);
 
   const menuContent = React.useMemo(() => {
@@ -310,9 +401,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
           aria-haspopup="listbox"
           aria-expanded={open}
         >
-          <span className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-y-1 luca-whitespace-normal luca-text-left luca-leading-5">
-            {summaryLabel}
-          </span>
+          <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left">
+            {summaryContent}
+          </div>
           <ChevronDownIcon size={16} className="luca-text-primary-600" />
         </button>
       </AntDropdown>
