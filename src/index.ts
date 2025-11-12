@@ -73,6 +73,7 @@ export type {
   NotificationActionProps,
   NotificationActionVariant,
   NotificationActionsProps,
+  NotificationPosition,
 } from './components/Notification';
 
 export { Toast } from './components/Toast';

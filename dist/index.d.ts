@@ -21,7 +21,7 @@ export type { BreadcrumbProps, BreadcrumbItemProps, BreadcrumbBackButtonProps, }
 export { Chips } from './components/Chips';
 export type { ChipsProps, ChipItem } from './components/Chips';
 export { Notification, NotificationAction, NotificationActions, } from './components/Notification';
-export type { NotificationProps, NotificationVariant, NotificationActionProps, NotificationActionVariant, NotificationActionsProps, } from './components/Notification';
+export type { NotificationProps, NotificationVariant, NotificationActionProps, NotificationActionVariant, NotificationActionsProps, NotificationPosition, } from './components/Notification';
 export { Toast } from './components/Toast';
 export type { ToastProps } from './components/Toast';
 export { Selector, SelectorAction, SelectorDetail, SelectorLabel, } from './components/Selector';

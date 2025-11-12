@@ -27,6 +27,14 @@ const useNotificationContext = () => {
   return context;
 };
 
+export type NotificationPosition =
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-center'
+  | 'bottom-right';
+
 export interface NotificationProps
   extends React.HTMLAttributes<HTMLDivElement> {
   variant?: NotificationVariant;
@@ -38,7 +46,23 @@ export interface NotificationProps
   onDismiss?: () => void;
   hideIcon?: boolean;
   closeButtonAriaLabel?: string;
+  floating?: boolean;
+  position?: NotificationPosition;
+  autoClose?: number;
+  maxWidth?: string;
 }
+
+const getPositionClasses = (position: NotificationPosition): string => {
+  const positionMap: Record<NotificationPosition, string> = {
+    'top-left': 'luca-top-4 luca-left-4',
+    'top-center': 'luca-top-4 luca-left-1/2 -luca-translate-x-1/2',
+    'top-right': 'luca-top-4 luca-right-4',
+    'bottom-left': 'luca-bottom-4 luca-left-4',
+    'bottom-center': 'luca-bottom-4 luca-left-1/2 -luca-translate-x-1/2',
+    'bottom-right': 'luca-bottom-4 luca-right-4',
+  };
+  return positionMap[position];
+};
 
 export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
   (
@@ -54,6 +78,10 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
       hideIcon = false,
       className,
       closeButtonAriaLabel = 'Cerrar notificación',
+      floating = false,
+      position = 'top-right',
+      autoClose,
+      maxWidth,
       ...props
     },
     ref
@@ -62,16 +90,30 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
     const IconRenderer = VARIANT_ICONS[variant];
     const showIcon = !hideIcon && Boolean(icon ?? IconRenderer());
 
+    React.useEffect(() => {
+      if (autoClose && onDismiss) {
+        const timer = setTimeout(() => {
+          onDismiss();
+        }, autoClose);
+
+        return () => clearTimeout(timer);
+      }
+    }, [autoClose, onDismiss]);
+
     return (
       <NotificationContext.Provider value={{ variant }}>
         <div
           ref={ref}
           role="alert"
           className={cn(
-            'luca-relative luca-flex luca-w-full luca-items-start luca-gap-4 luca-rounded-2xl luca-bg-white luca-p-4 luca-transition-colors luca-duration-200',
+            'luca-flex luca-items-start luca-gap-4 luca-rounded-2xl luca-bg-white luca-p-4 luca-transition-colors luca-duration-200',
             baseShadow,
+            floating
+              ? `luca-fixed luca-z-50 ${getPositionClasses(position)}`
+              : 'luca-relative luca-w-full',
             className
           )}
+          style={maxWidth ? { maxWidth, ...props.style } : props.style}
           {...props}
         >
           {showIcon && (

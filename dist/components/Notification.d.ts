@@ -1,5 +1,6 @@
 import { default as React } from 'react';
 import { NotificationVariant } from '../types/variants';
+export type NotificationPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 export interface NotificationProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: NotificationVariant;
     title?: string;
@@ -10,6 +11,10 @@ export interface NotificationProps extends React.HTMLAttributes<HTMLDivElement> 
     onDismiss?: () => void;
     hideIcon?: boolean;
     closeButtonAriaLabel?: string;
+    floating?: boolean;
+    position?: NotificationPosition;
+    autoClose?: number;
+    maxWidth?: string;
 }
 export declare const Notification: React.ForwardRefExoticComponent<NotificationProps & React.RefAttributes<HTMLDivElement>>;
 export interface NotificationActionsProps extends React.HTMLAttributes<HTMLDivElement> {
