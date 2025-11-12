@@ -10,8 +10,8 @@ type FieldStatus = 'default' | 'danger';
 interface FieldBaseProps {
   label?: string;
   required?: boolean;
-  tooltip?: React.ReactNode;
-  helpText?: React.ReactNode;
+  tooltip?: string;
+  helpText?: string;
   message?: React.ReactNode;
   status?: FieldStatus;
   showCounter?: boolean;
@@ -158,9 +158,6 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
                 <button
                   type="button"
                   className="luca-inline-flex luca-h-5 luca-w-5 luca-items-center luca-justify-center luca-text-primary-600"
-                  aria-label={
-                    typeof tooltip === 'string' ? tooltip : 'Más información'
-                  }
                 >
                   <QuestionIcon size={16} />
                 </button>
@@ -317,9 +314,6 @@ export const TextAreaField = React.forwardRef<
                 <button
                   type="button"
                   className="luca-inline-flex luca-h-5 luca-w-5 luca-items-center luca-justify-center luca-text-primary-600"
-                  aria-label={
-                    typeof tooltip === 'string' ? tooltip : 'Más información'
-                  }
                 >
                   <QuestionIcon size={16} />
                 </button>
