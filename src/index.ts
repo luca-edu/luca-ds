@@ -101,5 +101,12 @@ export type {
 export { Tooltip } from './components/Tooltip';
 export type { TooltipProps } from './components/Tooltip';
 
+export { Dropdown, DropdownItem } from './components/Dropdown';
+export type {
+  DropdownProps,
+  DropdownOption,
+  DropdownItemProps,
+} from './components/Dropdown';
+
 // Utils
 export { cn } from './utils/cn';

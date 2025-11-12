@@ -59,6 +59,58 @@ export const MinusIcon: React.FC<IconProps> = ({
   </svg>
 );
 
+export const ChevronDownIcon: React.FC<IconProps> = ({
+  size = 16,
+  className,
+  ...props
+}) => (
+  <svg
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={cn('luca-block', className)}
+    width={size}
+    height={size}
+    aria-hidden="true"
+    focusable="false"
+    {...props}
+  >
+    <path
+      d="M3.5 6L8 10.5L12.5 6"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const CheckIcon: React.FC<IconProps> = ({
+  size = 16,
+  className,
+  ...props
+}) => (
+  <svg
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={cn('luca-block', className)}
+    width={size}
+    height={size}
+    aria-hidden="true"
+    focusable="false"
+    {...props}
+  >
+    <path
+      d="M4 8.25L6.66667 11L12 5"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const QuestionIcon: React.FC<IconProps> = ({
   size = 16,
   className,
