@@ -144,7 +144,7 @@ export const QuestionIcon: React.FC<IconProps> = ({
 );
 
 export const EmptyStateIcon: React.FC<IconProps> = ({
-    size = 120,
+    width = 120,
     height = 120,
     className,
     ...props
@@ -154,8 +154,8 @@ export const EmptyStateIcon: React.FC<IconProps> = ({
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
         className={cn('luca-block', className)}
-        width={size}
-        height={size}
+        width={width}
+        height={height}
         aria-hidden="true"
         focusable="false"
         {...props}

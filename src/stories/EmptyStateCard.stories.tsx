@@ -14,7 +14,7 @@ const meta = {
     title: 'No has creado contenidos aún',
     description:
       'Comienza agregando recursos para tus estudiantes. Aquí aparecerán todas tus actividades y materiales.',
-    wrapperClassName: 'luca-w-[600px]',
+      className: 'luca-w-[600px]',
   },
 } satisfies Meta<typeof EmptyStateCard>;
 

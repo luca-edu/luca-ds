@@ -11,7 +11,6 @@ export interface EmptyStateCardProps
   description?: string;
   footer?: React.ReactNode;
   compact?: boolean;
-  wrapperClassName?: string;
 }
 
 export const EmptyStateCard = React.forwardRef<
@@ -27,7 +26,6 @@ export const EmptyStateCard = React.forwardRef<
       footer,
       compact = false,
       className,
-      wrapperClassName,
       ...props
     },
     ref
@@ -41,7 +39,6 @@ export const EmptyStateCard = React.forwardRef<
           'luca-flex luca-min-h-[260px] luca-flex-col luca-items-center luca-justify-center luca-gap-4 luca-text-center luca-max-w-full',
           compact && 'luca-min-h-[200px]',
           className,
-          wrapperClassName
         )}
         {...props}
       >
