@@ -9,7 +9,7 @@ type Placement = AntTooltipProps['placement'];
 
 export interface TooltipProps
   extends Omit<AntTooltipProps, 'title' | 'overlayClassName'> {
-  content: React.ReactNode;
+  content: string;
   className?: string;
   overlayClassName?: string;
   placement?: Placement;
