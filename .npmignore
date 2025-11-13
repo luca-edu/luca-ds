@@ -1,0 +1,39 @@
+# Source files
+src/
+.storybook/
+stories/
+
+# Story files
+*.stories.tsx
+*.stories.ts
+
+# Configuration files
+tsconfig.json
+vite.config.ts
+tailwind.config.js
+postcss.config.js
+CLAUDE.md
+
+# Git
+.git/
+.gitignore
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Build artifacts (keep dist/)
+docs/
+
+# Misc
+*.log
+npm-debug.log*
+.env
+.env.*
