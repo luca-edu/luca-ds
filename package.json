@@ -29,11 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/luca-edu/luca-ds.git"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "url": "https://github.com/luca-edu/luca-ds.git"
   },
   "keywords": [
     "react",
