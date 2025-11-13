@@ -1,6 +1,6 @@
 {
   "name": "luca-ds",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A modern UI component library built with React, TypeScript, and Tailwind CSS",
   "type": "module",
   "main": "./dist/luca-ds.umd.cjs",
