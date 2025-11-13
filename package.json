@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luca-edu/luca-ds.git"
+    "url": "git+ssh://git@github.com/luca-edu/luca-ds.git"
   },
   "keywords": [
     "react",
