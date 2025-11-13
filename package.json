@@ -31,14 +31,21 @@
     "type": "git",
     "url": "git+ssh://git@github.com/luca-edu/luca-ds.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "keywords": [
     "react",
     "components",
     "ui",
     "tailwind",
-    "typescript"
+    "typescript",
+    "design-system",
+    "component-library",
+    "ui-kit"
   ],
-  "author": "",
+  "author": "Luca Edu",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/luca-edu/luca-ds/issues"
