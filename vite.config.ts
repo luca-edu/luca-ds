@@ -35,7 +35,7 @@ export default defineConfig({
       name: "LucaDS",
       formats: ["es", "umd"],
       fileName: (format) => `index.${format === "es" ? "js" : "umd.cjs"}`,
-      cssFileName: "style",
+      cssFileName: "luca-ds",
     },
     rollupOptions: sharedRollup,
     cssCodeSplit: false,
