@@ -11,6 +11,7 @@ export interface SearchBarProps {
   personalStyles?: SearchBarStyle;
   className?: string;
   inputClassName?: string;
+  placeholder?: string;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
@@ -19,6 +20,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   personalStyles,
   className,
   inputClassName,
+  placeholder = 'Buscar',
 }) => {
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput?.(event.target.value);
@@ -50,14 +52,16 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     !personalStyles && 'luca-h-5 luca-w-5'
   );
 
+  if (personalStyles === 'examsGenerator') {
+    placeholder = 'Buscar por nombre';
+  }
+
   return (
     <div className={containerClassName}>
       <input
         type="text"
         name="searchbar"
-        placeholder={
-          personalStyles === 'examsGenerator' ? 'Buscar por nombre' : 'Buscar'
-        }
+        placeholder={placeholder}
         onChange={handleSearchInput}
         value={searchInput ?? ''}
         className={inputClasses}
