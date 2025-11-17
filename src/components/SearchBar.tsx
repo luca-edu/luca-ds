@@ -52,10 +52,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     !personalStyles && 'luca-h-5 luca-w-5'
   );
 
-  if (personalStyles === 'examsGenerator') {
-    placeholder = 'Buscar por nombre';
-  }
-
   return (
     <div className={containerClassName}>
       <input
