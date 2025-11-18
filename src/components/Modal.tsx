@@ -16,6 +16,8 @@ interface ButtonProps {
   text: string;
   onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'tertiary';
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
 export interface ModalProps {
@@ -100,7 +102,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           {buttons && (
             <div className="luca-flex luca-justify-end luca-gap-2"> 
               {buttons.map((button) => (
-              <Button variant={button.variant} onClick={button.onClick}>{button.text}</Button>
+              <Button variant={button.variant} onClick={button.onClick} leftIcon={button.leftIcon} rightIcon={button.rightIcon}>{button.text}</Button>
             ))}
           </div>
           )}

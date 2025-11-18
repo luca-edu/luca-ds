@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { Modal } from '../components/Modal';
+import { CloseCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const meta = {
   title: 'Components/Modal',
@@ -64,6 +65,7 @@ const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
           {
             text: 'CANCELAR',
             variant: 'secondary',
+            rightIcon: <DeleteOutlined />,
             onClick: () => {
             console.log('Primary button clicked');
             setIsOpen(false);
@@ -71,6 +73,7 @@ const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
           {
             text: 'Aceptar',
             variant: 'tertiary',
+            leftIcon: <CloseCircleOutlined />,
             onClick: () => {
               console.log('Tertiary button clicked');
               setIsOpen(false);
@@ -87,6 +90,7 @@ export const WithSubtitle: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Eliminar elemento',
     subtitle: 'Esta acción no se puede deshacer',
     description:
@@ -95,10 +99,12 @@ export const WithSubtitle: Story = {
       {
         text: 'CANCELAR',
         variant: 'secondary',
+        leftIcon: <CloseCircleOutlined />,
       },
       {
         text: 'ELIMINAR',
         variant: 'primary',
+        leftIcon: <DeleteOutlined />,
       },
     ],
     closeOnOverlayClick: true,
@@ -110,6 +116,7 @@ export const LongContent: Story = {
   render: (args) => <ModalWrapper {...args} />,
   args: {
     isOpen: false,
+    closable: true,
     onClose: () => {},
     title: 'Términos y condiciones',
     subtitle: 'Por favor, lee cuidadosamente',
@@ -135,6 +142,7 @@ export const NoOverlayClose: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Acción requerida',
     description:
       'Debes tomar una decisión para continuar. No puedes cerrar este modal haciendo clic fuera.',
@@ -157,6 +165,7 @@ export const NoEscapeClose: Story = {
   render: (args) => <ModalWrapper {...args} />,
   args: {
     isOpen: false,
+    closable: true,
     onClose: () => {},
     title: 'Confirmación crítica',
     description:
@@ -181,6 +190,7 @@ export const CustomButtons: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Guardar cambios',
     description: '¿Deseas guardar los cambios realizados?',
     buttons: [
@@ -203,6 +213,7 @@ export const SimpleMessage: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Operación exitosa',
     description: 'Los cambios se han guardado correctamente.',
     buttons: [
@@ -225,6 +236,7 @@ export const TitleOnly: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Notificación',
     buttons: [
       {
@@ -242,6 +254,7 @@ export const SingleButton: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Información',
     description: 'Este es un modal con un solo botón de confirmación.',
     buttons: [
@@ -260,6 +273,7 @@ export const ThreeButtons: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Selecciona una opción',
     description: 'Elige cómo deseas proceder con esta acción.',
     buttons: [
@@ -284,8 +298,9 @@ export const ThreeButtons: Story = {
 export const TertiaryButtons: Story = {
   render: (args) => <ModalWrapper {...args} />,
   args: {
-    isOpen: false,
+    isOpen: false, 
     onClose: () => {},
+    closable: true,
     title: 'Opciones adicionales',
     description: 'Estos botones usan la variante terciaria.',
     buttons: [
@@ -308,6 +323,7 @@ export const CustomMaxWidth: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Modal con ancho personalizado',
     description: 'Este modal tiene un ancho máximo de 600px.',
     maxWidth: 600,
@@ -383,6 +399,7 @@ export const WithCustomChildren: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Formulario de contacto',
     subtitle: 'Completa los campos',
     description: 'Por favor, proporciona tu información de contacto.',
@@ -424,6 +441,7 @@ export const NoButtons: Story = {
   args: {
     isOpen: false,
     onClose: () => {},
+    closable: true,
     title: 'Modal sin botones',
     description: 'Los botones pueden ser personalizados dentro del children.',
   },
