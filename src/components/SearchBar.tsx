@@ -4,50 +4,108 @@ import { SearchOutlined } from '@ant-design/icons';
 import { cn } from '../utils/cn';
 
 export type SearchBarStyle = 'reading' | 'examsGenerator';
+export type SearchBarSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'default';
 
 export interface SearchBarProps {
   setSearchInput?: (value: string) => void;
   searchInput?: string;
-  personalStyles?: SearchBarStyle;
+  size?: SearchBarSize;
   className?: string;
   inputClassName?: string;
+  placeholder?: string;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   setSearchInput,
   searchInput,
-  personalStyles,
+  size = 'default',
   className,
   inputClassName,
+  placeholder = 'Buscar',
 }) => {
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput?.(event.target.value);
   };
 
+  // Estilos de tamaño para el contenedor
+  const getSizeContainerStyles = () => {
+    
+    switch (size) {
+      case 'sm':
+        return 'luca-min-h-[32px] luca-px-3 luca-py-1.5';
+      case 'md':
+        return 'luca-min-h-[40px] luca-px-4 luca-py-2';
+      case 'lg':
+        return 'luca-min-h-[48px] luca-px-5 luca-py-2.5';
+      case 'xl':
+        return 'luca-min-h-[56px] luca-px-6 luca-py-3';
+      case 'xxl':
+        return 'luca-min-h-[64px] luca-px-7 luca-py-3.5';
+      case 'default':
+      default:
+        return 'luca-min-h-[40px] luca-px-5 luca-py-[10px]';
+    }
+  };
+
   const containerClassName = cn(
     'luca-flex luca-w-full luca-items-center luca-justify-start',
-    personalStyles === 'reading' &&
-      'luca-h-[50px] luca-rounded-[10px] luca-bg-[#e6e7ef] luca-px-5 luca-py-[10px]',
-    personalStyles === 'examsGenerator' &&
-      'luca-h-10 luca-gap-2 luca-rounded-lg luca-border luca-border-[#e5e7eb] luca-bg-[#f9fafb] luca-px-4 luca-py-2',
-    !personalStyles &&
-      'luca-min-h-[40px] luca-rounded-[10px] luca-bg-[#e6e7ef] luca-px-5 luca-py-[10px]',
+    'luca-h-10 luca-gap-2 luca-rounded-lg luca-border luca-border-[#e5e7eb] luca-bg-[#f9fafb] luca-px-4 luca-py-2',
+    cn(
+      'luca-rounded-[10px] luca-bg-[#e6e7ef]',
+      getSizeContainerStyles()
+    ),
     className
   );
 
+  // Estilos de tamaño para el input
+  const getSizeInputStyles = () => {
+    
+    switch (size) {
+      case 'sm':
+        return 'luca-pl-2 luca-text-xs';
+      case 'md':
+        return 'luca-pl-2.5 luca-text-sm';
+      case 'lg':
+        return 'luca-pl-2.5 luca-text-base';
+      case 'xl':
+        return 'luca-pl-3 luca-text-lg';
+      case 'xxl':
+        return 'luca-pl-3 luca-text-xl';
+      case 'default':
+      default:
+        return 'luca-pl-2.5 luca-text-base';
+    }
+  };
+
   const inputClasses = cn(
     'luca-w-full luca-border-none luca-bg-transparent luca-outline-none',
-    personalStyles === 'examsGenerator'
-      ? 'luca-flex-1 luca-text-sm luca-text-[#111827] placeholder:luca-text-[#9ca3af]'
-      : 'luca-pl-2.5 luca-text-base',
+    getSizeInputStyles(),
     inputClassName
   );
 
+  // Estilos de tamaño para el icono
+  const getSizeIconStyles = () => {
+    
+    switch (size) {
+      case 'sm':
+        return 'luca-h-3 luca-w-3';
+      case 'md':
+        return 'luca-h-4 luca-w-4';
+      case 'lg':
+        return 'luca-h-5 luca-w-5';
+      case 'xl':
+        return 'luca-h-6 luca-w-6';
+      case 'xxl':
+        return 'luca-h-7 luca-w-7';
+      case 'default':
+      default:
+        return 'luca-h-5 luca-w-5';
+    }
+  };
+
   const iconClasses = cn(
-    personalStyles === 'reading' && 'luca-h-[18px] luca-w-[18px]',
-    personalStyles === 'examsGenerator' &&
-      'luca-h-4 luca-w-4 luca-flex-shrink-0 luca-opacity-50',
-    !personalStyles && 'luca-h-5 luca-w-5'
+    'luca-h-4 luca-w-4 luca-flex-shrink-0 luca-opacity-50', 
+    getSizeIconStyles()
   );
 
   return (
@@ -55,9 +113,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       <input
         type="text"
         name="searchbar"
-        placeholder={
-          personalStyles === 'examsGenerator' ? 'Buscar por nombre' : 'Buscar'
-        }
+        placeholder={placeholder}
         onChange={handleSearchInput}
         value={searchInput ?? ''}
         className={inputClasses}

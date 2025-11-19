@@ -16,11 +16,12 @@ interface ButtonProps {
   text: string;
   onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'tertiary';
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
 export interface ModalProps {
   isOpen: boolean;
-  closable: boolean;
   onClose: () => void;
   buttons?: ButtonProps[];
   title: string;
@@ -37,7 +38,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
       isOpen,
-      closable = true,
       buttons,
       title,
       subtitle,
@@ -47,8 +47,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       className,
       maxWidth,
       children,
+      onClose,
     },
-    ref
+    ref,
+    ...rest
   ) => {
     const { styles } = useStyle();
     const classNames = {
@@ -63,7 +65,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             {title}
           </span>
         }
-        closable={closable}
         maskClosable={closeOnOverlayClick}
         footer={null}
         keyboard={closeOnEscape}
@@ -84,6 +85,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           </div>
         )}
         classNames={classNames}
+        onCancel={onClose}
+        {...rest}
       >
         <div className="luca-flex luca-flex-col luca-mt-6">
           {subtitle && (
@@ -100,7 +103,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           {buttons && (
             <div className="luca-flex luca-justify-end luca-gap-2"> 
               {buttons.map((button) => (
-              <Button variant={button.variant} onClick={button.onClick}>{button.text}</Button>
+              <Button variant={button.variant} onClick={button.onClick} leftIcon={button.leftIcon} rightIcon={button.rightIcon}>{button.text}</Button>
             ))}
           </div>
           )}

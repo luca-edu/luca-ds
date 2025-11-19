@@ -11,12 +11,6 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    personalStyles: {
-      control: 'select',
-      options: [undefined, 'reading', 'examsGenerator'],
-      description:
-        'Select predefined style variants. Leave undefined for the default appearance.',
-    },
     setSearchInput: {
       table: {
         disable: true,
@@ -49,23 +43,7 @@ const ControlledTemplate = (args: React.ComponentProps<typeof SearchBar>) => {
 
 export const Default: Story = {
   render: (args) => <ControlledTemplate {...args} />,
-  args: {
-    personalStyles: undefined,
-  },
-};
-
-export const ReadingStyle: Story = {
-  render: (args) => <ControlledTemplate {...args} />,
-  args: {
-    personalStyles: 'reading',
-  },
-};
-
-export const ExamsGeneratorStyle: Story = {
-  render: (args) => <ControlledTemplate {...args} />,
-  args: {
-    personalStyles: 'examsGenerator',
-  },
+  args: {},
 };
 
 
