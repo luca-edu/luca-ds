@@ -362,7 +362,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       className={cn(
-        'luca-flex luca-w-full luca-flex-col luca-gap-2',
+        'luca-flex luca-w-[min(320px,100vw)] luca-flex-col luca-gap-2',
         wrapperClassName
       )}
     >

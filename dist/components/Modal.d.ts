@@ -3,10 +3,11 @@ interface ButtonProps {
     text: string;
     onClick?: () => void;
     variant?: 'primary' | 'secondary' | 'tertiary';
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
 }
 export interface ModalProps {
     isOpen: boolean;
-    closable: boolean;
     onClose: () => void;
     buttons?: ButtonProps[];
     title: string;

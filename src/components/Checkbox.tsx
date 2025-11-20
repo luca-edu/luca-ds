@@ -14,7 +14,7 @@ export type CheckboxVariant =
 export type CheckboxStyle = 'default' | 'filled';
 
 export interface CheckboxProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {
   label?: string;
   variant?: CheckboxVariant;
   style?: CheckboxStyle;

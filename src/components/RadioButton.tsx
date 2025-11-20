@@ -13,7 +13,7 @@ export type RadioButtonVariant =
 export type RadioButtonStyle = 'default' | 'filled';
 
 export interface RadioButtonProps
-extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
+extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {
   label?: string;
   variant?: RadioButtonVariant;
   style?: RadioButtonStyle;
