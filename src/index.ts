@@ -118,5 +118,11 @@ export type {
   RadioButtonVariant,
   RadioButtonStyle,
 } from './components/RadioButton';
+export { Checkbox } from './components/Checkbox';
+export type {
+  CheckboxProps,
+  CheckboxVariant,
+  CheckboxStyle,
+} from './components/Checkbox';
 // Utils
 export { cn } from './utils/cn';
