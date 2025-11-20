@@ -1,5 +1,5 @@
 import { default as React } from 'react';
-type DropdownSize = 'md' | 'lg';
+type DropdownSize = 'sm' | 'md' | 'lg';
 export interface DropdownOption {
     key: string;
     label: string;

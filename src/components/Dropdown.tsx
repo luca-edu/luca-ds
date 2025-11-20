@@ -8,7 +8,7 @@ import VirtualList from 'rc-virtual-list';
 import { cn } from '../utils/cn';
 import { ChevronDownIcon, CheckIcon, MinusIcon } from '../shared/icons';
 
-type DropdownSize = 'md' | 'lg';
+type DropdownSize = 'sm' | 'md' | 'lg';
 
 export interface DropdownOption {
   key: string;
@@ -41,6 +41,7 @@ export interface DropdownProps {
 }
 
 const sizeStyles: Record<DropdownSize, string> = {
+  sm: 'luca-min-h-10',
   md: 'luca-min-h-11',
   lg: 'luca-min-h-12',
 };
@@ -53,7 +54,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   defaultValue,
   onChange,
   disabled,
-  size = 'lg',
+  size = 'sm',
   overlayClassName,
   className,
   wrapperClassName,
@@ -190,13 +191,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
       const label =
         items.find((item) => item.key === key)?.label ?? placeholder;
       return (
-        <Tag
-          key={key}
-          bordered={false}
-          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
-        >
+        <>
           {label}
-        </Tag>
+        </>
       );
     }
 
@@ -229,56 +226,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
       selectedKeys.includes(item.key)
     );
 
-    if (visibleItems.length <= summaryMaxItems) {
-      return visibleItems.map((item) => (
-        <Tag
-          key={item.key}
-          bordered={false}
-          closable
-          onClose={(event) => {
-            event.preventDefault();
-            handleRemoveKey(item.key);
-          }}
-          closeIcon={
-            <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
-              ×
-            </span>
-          }
-          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
-        >
-          {item.label}
-        </Tag>
-      ));
-    }
-
-    const firstItems = visibleItems
-      .slice(0, summaryMaxItems)
-      .map((item) => (
-        <Tag
-          key={item.key}
-          bordered={false}
-          closable
-          onClose={(event) => {
-            event.preventDefault();
-            handleRemoveKey(item.key);
-          }}
-          closeIcon={
-            <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
-              ×
-            </span>
-          }
-          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
-        >
-          {item.label}
-        </Tag>
-      ));
-    const remaining = visibleItems.length - summaryMaxItems;
+    const countItemsSelected = visibleItems.length;
 
     return (
       <>
-        {firstItems}
-        <span className="luca-text-xs luca-font-medium luca-text-neutral-500 luca-leading-5">
-          ... y {remaining} más
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-500">
+          {placeholder} ({countItemsSelected})
         </span>
       </>
     );
@@ -366,7 +319,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       className={cn(
-        'luca-flex luca-w-full luca-flex-col luca-gap-2',
+        'luca-flex luca-w-[min(320px,100vw)] luca-flex-col luca-gap-2',
         wrapperClassName
       )}
     >
