@@ -190,13 +190,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
       const label =
         items.find((item) => item.key === key)?.label ?? placeholder;
       return (
-        <Tag
-          key={key}
-          bordered={false}
-          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
-        >
+        <>
           {label}
-        </Tag>
+        </>
       );
     }
 

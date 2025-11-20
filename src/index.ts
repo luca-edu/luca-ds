@@ -110,6 +110,7 @@ export type {
 
 export { EmptyStateCard } from './components/EmptyStateCard';
 export type { EmptyStateCardProps } from './components/EmptyStateCard';
-
+export { Steps } from './components/Steps';
+export type { StepsProps, Step } from './components/Steps';
 // Utils
 export { cn } from './utils/cn';
