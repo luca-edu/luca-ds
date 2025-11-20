@@ -173,7 +173,7 @@ export const Steps: React.FC<StepsProps> = ({
                 left: `${robotPosition}px`,
             }}
             >
-            <div className="luca-absolute luca-left-[-39px] luca-size-[90px] luca-top-[-10px]">
+            <div className="luca-absolute luca-left-[-39px] luca-size-[90px] luca-top-[-10px] luca-animate-[levitar_3s_ease-in-out_infinite]">
                 {
                     robotImageUrl ?
                     (

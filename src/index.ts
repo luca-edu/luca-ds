@@ -112,5 +112,11 @@ export { EmptyStateCard } from './components/EmptyStateCard';
 export type { EmptyStateCardProps } from './components/EmptyStateCard';
 export { Steps } from './components/Steps';
 export type { StepsProps, Step } from './components/Steps';
+export { RadioButton } from './components/RadioButton';
+export type {
+  RadioButtonProps,
+  RadioButtonVariant,
+  RadioButtonStyle,
+} from './components/RadioButton';
 // Utils
 export { cn } from './utils/cn';
