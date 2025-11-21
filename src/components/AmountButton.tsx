@@ -209,9 +209,15 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
     buttonClassName
   );
 
-  // Estilos para el display
+  // Calcular el ancho basado en la cantidad de dígitos
+  const valueString = String(value);
+  const digitCount = valueString.length;
+  // Ancho base de 2rem (32px) + aproximadamente 0.75rem (12px) por cada dígito adicional
+  const displayWidth = Math.max(2, 2 + (digitCount - 1) * 0.75);
+
+  // Estilos para el display - ancho dinámico basado en dígitos
   const displayClasses = cn(
-    'luca-bg-white luca-h-10 luca-w-8 luca-flex luca-items-center luca-justify-center luca-border-t luca-border-b luca-border-neutral-200',
+    'luca-bg-white luca-h-10 luca-flex luca-items-center luca-justify-center luca-border-t luca-border-b luca-border-neutral-200',
     displayClassName
   );
 
@@ -240,7 +246,17 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
       </button>
 
       {/* Display del valor o input */}
-      <div className={displayClasses}>
+      <div
+        className={displayClasses}
+        style={{
+          width: allowManualInput
+            ? 'auto'
+            : `${displayWidth}rem`,
+          minWidth: '2rem',
+          paddingLeft: '0.5rem',
+          paddingRight: '0.5rem',
+        }}
+      >
         {allowManualInput ? (
           <input
             type="number"
@@ -253,20 +269,23 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
             max={max}
             step={step}
             className={cn(
-              'luca-w-full luca-h-full luca-text-center luca-font-["Poppins"] luca-font-normal luca-leading-6 luca-text-base luca-border-none luca-bg-transparent luca-outline-none',
+              'luca-h-full luca-text-center luca-font-["Poppins"] luca-font-normal luca-leading-6 luca-text-base luca-border-none luca-bg-transparent luca-outline-none',
               'luca-appearance-none luca-[&::-webkit-inner-spin-button]:luca-appearance-none luca-[&::-webkit-outer-spin-button]:luca-appearance-none',
-            //   '[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 [-moz-appearance:textfield]',
               isDisabled
                 ? 'luca-text-neutral-400 luca-cursor-not-allowed'
                 : 'luca-text-neutral-900',
               'focus:luca-outline-none'
             )}
+            style={{
+              width: `${Math.max(2, 2 + (inputValue.length - 1) * 0.5)}rem`,
+              minWidth: '2rem',
+            }}
             aria-label="Cantidad"
           />
         ) : (
           <span
             className={cn(
-              'luca-font-["Poppins"] luca-font-normal luca-leading-6 luca-text-base',
+              'luca-font-["Poppins"] luca-font-normal luca-leading-6 luca-text-base luca-whitespace-nowrap',
               isDisabled ? 'luca-text-neutral-400' : 'luca-text-neutral-900'
             )}
           >
