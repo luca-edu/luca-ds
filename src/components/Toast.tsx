@@ -61,7 +61,7 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
           </span>
         )}
 
-        <span className="luca-text-sm luca-font-medium luca-leading-6">
+        <span className="luca-text-sm luca-leading-6">
           {message}
         </span>
 

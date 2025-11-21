@@ -99,7 +99,11 @@ export type {
 } from './components/InputField';
 
 export { Tooltip } from './components/Tooltip';
-export type { TooltipProps } from './components/Tooltip';
+export type {
+  TooltipProps,
+  TooltipVariant,
+  TooltipPlacement,
+} from './components/Tooltip';
 
 export { Dropdown, DropdownItem } from './components/Dropdown';
 export type {
@@ -137,6 +141,14 @@ export type {
   NavTabsStyle,
   NavTabItem,
 } from './components/NavTabs';
+
+export { Sidebar } from './components/Sidebar';
+export type {
+  SidebarProps,
+  SidebarVariant,
+  SidebarMenuItem,
+  SidebarSubmenuItem,
+} from './components/Sidebar';
 
 // Utils
 export { cn } from './utils/cn';
