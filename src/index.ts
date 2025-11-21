@@ -124,5 +124,11 @@ export type {
   CheckboxVariant,
   CheckboxStyle,
 } from './components/Checkbox';
+export { AmountButton } from './components/AmountButton';
+export type {
+  AmountButtonProps,
+  AmountButtonVariant,
+} from './components/AmountButton';
+
 // Utils
 export { cn } from './utils/cn';
