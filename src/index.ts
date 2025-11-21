@@ -130,5 +130,13 @@ export type {
   AmountButtonVariant,
 } from './components/AmountButton';
 
+export { NavTabs } from './components/NavTabs';
+export type {
+  NavTabsProps,
+  NavTabsVariant,
+  NavTabsStyle,
+  NavTabItem,
+} from './components/NavTabs';
+
 // Utils
 export { cn } from './utils/cn';
