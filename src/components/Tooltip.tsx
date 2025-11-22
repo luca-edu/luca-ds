@@ -139,7 +139,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
             viewBox="0 0 7 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="luca-absolute luca-right-[-7px] luca-top-1/2 luca-translate-y-[-50%]"
+            className="luca-absolute luca-right-[-7px] luca-top-1/2 luca-translate-y-[-50%] luca-rotate-180"
           >
             <path
               d="M0 6L7 0V12L0 6Z"
@@ -155,7 +155,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
             viewBox="0 0 7 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="luca-absolute luca-left-[-7px] luca-top-1/2 luca-translate-y-[-50%]"
+            className="luca-absolute luca-left-[-7px] luca-top-1/2 luca-translate-y-[-50%] luca-rotate-180"
           >
             <path
               d="M7 6L0 0V12L7 6Z"
@@ -195,6 +195,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
         boxShadow: 'none',
       }}
       showArrow={false}
+      arrow={false}
       {...rest}
     >
       <span className={cn('luca-inline-flex luca-items-center', className)}>
