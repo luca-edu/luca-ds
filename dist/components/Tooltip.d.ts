@@ -1,12 +1,13 @@
-import { default as React } from 'react';
+import { default as React } from '../../node_modules/react';
 import { TooltipProps as AntTooltipProps } from 'antd';
-type Placement = AntTooltipProps['placement'];
-export interface TooltipProps extends Omit<AntTooltipProps, 'title' | 'overlayClassName'> {
+export type TooltipVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'white';
+export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
+export interface TooltipProps extends Omit<AntTooltipProps, 'title' | 'overlayClassName' | 'placement'> {
     content: string;
+    variant?: TooltipVariant;
+    placement?: TooltipPlacement;
     className?: string;
     overlayClassName?: string;
-    placement?: Placement;
 }
 export declare const Tooltip: React.FC<TooltipProps>;
-export {};
 //# sourceMappingURL=Tooltip.d.ts.map

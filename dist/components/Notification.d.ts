@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import { default as React } from '../../node_modules/react';
 import { NotificationVariant } from '../types/variants';
 export type NotificationPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 export interface NotificationProps extends React.HTMLAttributes<HTMLDivElement> {
