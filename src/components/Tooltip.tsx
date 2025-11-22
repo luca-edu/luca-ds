@@ -175,13 +175,13 @@ export const Tooltip: React.FC<TooltipProps> = ({
         <div className="luca-relative">
           <div
             className={cn(
-              'luca-flex luca-items-center luca-justify-center luca-px-[14px] luca-py-[5px] luca-rounded-[5px]',
+              'luca-flex luca-items-center luca-justify-center luca-px-[14px] luca-py-[5px] luca-rounded-[5px] luca-max-w-xs',
               colors.bg,
               colors.text,
               hasShadow && 'luca-shadow-[0px_1px_3px_0px_rgba(166,175,195,0.4)]'
             )}
           >
-            <p className='luca-font-["Poppins"] luca-font-normal luca-text-sm luca-leading-5 luca-text-center luca-whitespace-nowrap'>
+            <p className='luca-font-["Poppins"] luca-font-normal luca-text-sm luca-leading-5 luca-text-center luca-break-words'>
               {content}
             </p>
           </div>
