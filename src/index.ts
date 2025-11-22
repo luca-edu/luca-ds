@@ -77,7 +77,10 @@ export type {
 } from './components/Notification';
 
 export { Toast } from './components/Toast';
-export type { ToastProps } from './components/Toast';
+export type {
+  ToastProps,
+  ToastPosition,
+} from './components/Toast';
 
 export {
   Selector,
@@ -98,8 +101,12 @@ export type {
   TextAreaFieldProps,
 } from './components/InputField';
 
-export { Tooltip } from './components/Tooltip';
-export type { TooltipProps } from './components/Tooltip';
+// export { Tooltip } from './components/Tooltip';
+// export type {
+//   TooltipProps,
+//   TooltipVariant,
+//   TooltipPlacement,
+// } from './components/Tooltip';
 
 export { Dropdown, DropdownItem } from './components/Dropdown';
 export type {
@@ -124,5 +131,27 @@ export type {
   CheckboxVariant,
   CheckboxStyle,
 } from './components/Checkbox';
+export { AmountButton } from './components/AmountButton';
+export type {
+  AmountButtonProps,
+  AmountButtonVariant,
+} from './components/AmountButton';
+
+export { NavTabs } from './components/NavTabs';
+export type {
+  NavTabsProps,
+  NavTabsVariant,
+  NavTabsStyle,
+  NavTabItem,
+} from './components/NavTabs';
+
+export { Sidebar } from './components/Sidebar';
+export type {
+  SidebarProps,
+  SidebarVariant,
+  SidebarMenuItem,
+  SidebarSubmenuItem,
+} from './components/Sidebar';
+
 // Utils
 export { cn } from './utils/cn';

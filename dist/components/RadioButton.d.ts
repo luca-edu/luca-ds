@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import { default as React } from '../../node_modules/react';
 export type RadioButtonVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 export type RadioButtonStyle = 'default' | 'filled';
 export interface RadioButtonProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {

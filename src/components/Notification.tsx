@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '../utils/cn';
 import type { NotificationVariant } from '../types/variants';
 import {
-  VARIANT_ICONS,
+  VARIANT_NOTIFICATION_ICONS,
   VARIANT_TOKENS,
   baseShadow,
   CloseIcon,
@@ -122,7 +122,7 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
     ref
   ) => {
     const tokens = VARIANT_TOKENS[variant];
-    const IconRenderer = VARIANT_ICONS[variant];
+    const IconRenderer = VARIANT_NOTIFICATION_ICONS[variant];
     const showIcon = !hideIcon && Boolean(icon ?? IconRenderer());
     const [isExiting, setIsExiting] = React.useState(false);
 
