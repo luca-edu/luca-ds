@@ -75,7 +75,7 @@ export const Steps: React.FC<StepsProps> = ({
           <div className="luca-absolute luca-bg-[#e5e7eb] luca-h-1 luca-left-0 luca-rounded-sm luca-top-4 luca-w-full" />
 
           {/* Puntos de los steps */}
-          <div className="luca-absolute luca-flex luca-items-center luca-justify-between luca-left-1/2 luca-top-0 luca-transform luca-translate-x-[-50%] luca-w-full luca-max-w-[899px]">
+          <div className="luca-absolute luca-flex luca-items-center luca-justify-between luca-left-1/2 luca-top-0 luca-transform luca-translate-x-[-50%] luca-w-full">
             {steps.map((_, index) => {
               const isActive = index === currentStep;
               const isCompleted = index < currentStep;

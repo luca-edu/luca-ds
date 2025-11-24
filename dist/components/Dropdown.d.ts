@@ -1,20 +1,27 @@
 import { default as React } from 'react';
 type DropdownSize = 'sm' | 'md' | 'lg';
+export type DropdownVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 export interface DropdownOption {
     key: string;
     label: string;
     description?: string;
     disabled?: boolean;
+    [key: string]: any;
 }
 export interface DropdownProps {
     label?: string;
     placeholder?: string;
-    items: DropdownOption[];
+    items: Record<string, any>[];
     value?: string[];
     defaultValue?: string[];
     onChange?: (keys: string[]) => void;
     disabled?: boolean;
     size?: DropdownSize;
+    variant?: DropdownVariant;
+    valueKey?: string;
+    labelKey?: string;
+    descriptionKey?: string;
+    disabledKey?: string;
     overlayClassName?: string;
     className?: string;
     wrapperClassName?: string;
@@ -36,6 +43,7 @@ export interface DropdownItemProps {
     disabled?: boolean;
     onToggle?: () => void;
     indeterminate?: boolean;
+    variant?: DropdownVariant;
 }
 export declare const DropdownItem: React.FC<DropdownItemProps>;
 export {};
