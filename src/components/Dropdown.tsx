@@ -537,7 +537,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         menu={{
           items: [],
         }}
-        dropdownRender={() => menuContent}
+        popupRender={() => menuContent}
         overlayClassName={cn('luca-dropdown-overlay', overlayClassName)}
       >
         <button
