@@ -27248,7 +27248,7 @@ const a4 = ({
       children: /* @__PURE__ */ pe("div", { className: "luca-relative luca-flex luca-flex-col luca-gap-4 luca-items-start luca-pb-0 luca-pt-12 luca-px-0 luca-shrink-0 luca-w-full", children: [
         /* @__PURE__ */ pe("div", { className: "luca-relative luca-h-8 luca-w-full", children: [
           /* @__PURE__ */ O("div", { className: "luca-absolute luca-bg-[#e5e7eb] luca-h-1 luca-left-0 luca-rounded-sm luca-top-4 luca-w-full" }),
-          /* @__PURE__ */ O("div", { className: "luca-absolute luca-flex luca-items-center luca-justify-between luca-left-1/2 luca-top-0 luca-transform luca-translate-x-[-50%] luca-w-full luca-max-w-[899px]", children: e.map((f, v) => {
+          /* @__PURE__ */ O("div", { className: "luca-absolute luca-flex luca-items-center luca-justify-between luca-left-1/2 luca-top-0 luca-transform luca-translate-x-[-50%] luca-w-full", children: e.map((f, v) => {
             const p = v === t, g = v < t;
             return /* @__PURE__ */ O(
               "div",
