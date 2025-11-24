@@ -24677,18 +24677,18 @@ const OA = ({
     (() => {
       switch (n) {
         case "sm":
-          return "luca-pl-2 luca-text-xs";
+          return "luca-text-xs";
         case "md":
-          return "luca-pl-2.5 luca-text-sm";
+          return "luca-text-sm";
         case "lg":
-          return "luca-pl-2.5 luca-text-base";
+          return "luca-text-base";
         case "xl":
-          return "luca-pl-3 luca-text-lg";
+          return "luca-text-lg";
         case "xxl":
-          return "luca-pl-3 luca-text-xl";
+          return "luca-text-xl";
         case "default":
         default:
-          return "luca-pl-2.5 luca-text-base";
+          return "luca-text-base";
       }
     })(),
     a
@@ -27086,7 +27086,7 @@ const t4 = {
             menu: {
               items: []
             },
-            dropdownRender: () => K,
+            popupRender: () => K,
             overlayClassName: _("luca-dropdown-overlay", p),
             children: /* @__PURE__ */ pe(
               "button",
