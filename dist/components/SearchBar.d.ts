@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 export type SearchBarStyle = 'reading' | 'examsGenerator';
 export type SearchBarSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'default';
 export interface SearchBarProps {

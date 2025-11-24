@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 export type CheckboxVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 export type CheckboxStyle = 'default' | 'filled';
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {

@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 export type SidebarVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 export interface SidebarSubmenuItem {
     key: string;

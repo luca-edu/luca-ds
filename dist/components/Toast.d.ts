@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 import { NotificationVariant } from '../types/variants';
 export type ToastPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'left-center' | 'right-center';
 export interface ToastProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDismiss'> {

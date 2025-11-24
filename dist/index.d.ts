@@ -28,6 +28,8 @@ export { Selector, SelectorAction, SelectorDetail, SelectorLabel, } from './comp
 export type { SelectorProps, SelectorActionProps, SelectorDetailProps, SelectorLabelProps, } from './components/Selector';
 export { InputField, TextAreaField } from './components/InputField';
 export type { InputFieldProps, TextAreaFieldProps, } from './components/InputField';
+export { Tooltip } from './components/Tooltip';
+export type { TooltipProps, TooltipVariant, TooltipPlacement, } from './components/Tooltip';
 export { Dropdown, DropdownItem } from './components/Dropdown';
 export type { DropdownProps, DropdownOption, DropdownItemProps, } from './components/Dropdown';
 export { EmptyStateCard } from './components/EmptyStateCard';

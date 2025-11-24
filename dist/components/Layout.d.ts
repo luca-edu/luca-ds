@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 import { LayoutHeader } from './LayoutHeader';
 export declare const LayoutContent: React.FC<React.HTMLAttributes<HTMLDivElement>>;
 export interface LayoutProps {

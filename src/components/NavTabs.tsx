@@ -117,7 +117,7 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
     ref
   ) => {
     const isControlled = value !== undefined;
-    let colors = variantColors[variant];
+    const colors = variantColors[variant];
 
     const firstEnabledKey = React.useMemo(
       () => items.find((item) => !item.disabled)?.key,
@@ -202,16 +202,13 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
                                  variant === 'info' ? 'hover:luca-border-b-info-600' :
                                  'hover:luca-border-b-neutral-600';
 
-        colors = {
-            ...colors,  
-            activeText: colors.inactiveHover,
-        };
+        const activeText = colors.inactiveHover;
 
         return cn(
           'luca-inline-flex luca-items-center luca-gap-2 luca-px-4 luca-py-2 luca-transition-all luca-duration-200 luca-border-b-2 luca-border-transparent luca-mb-[-1px]',
           'focus-visible:luca-outline focus-visible:luca-outline-2 focus-visible:luca-outline-offset-2 focus-visible:luca-outline-primary-600',
           isSelected
-            ? cn(colors.activeText, borderClass, 'luca-font-medium')
+            ? cn(activeText, borderClass, 'luca-font-medium')
             : cn(colors.inactiveText, colors.inactiveHover, hoverBorderClass)
         );
       }

@@ -1,4 +1,4 @@
-import { default as React } from '../../node_modules/react';
+import { default as React } from 'react';
 import { TooltipProps as AntTooltipProps } from 'antd';
 export type TooltipVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'white';
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';

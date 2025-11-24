@@ -101,12 +101,12 @@ export type {
   TextAreaFieldProps,
 } from './components/InputField';
 
-// export { Tooltip } from './components/Tooltip';
-// export type {
-//   TooltipProps,
-//   TooltipVariant,
-//   TooltipPlacement,
-// } from './components/Tooltip';
+export { Tooltip } from './components/Tooltip';
+export type {
+  TooltipProps,
+  TooltipVariant,
+  TooltipPlacement,
+} from './components/Tooltip';
 
 export { Dropdown, DropdownItem } from './components/Dropdown';
 export type {
