@@ -10,22 +10,37 @@ import { ChevronDownIcon, CheckIcon, MinusIcon } from '../shared/icons';
 
 type DropdownSize = 'sm' | 'md' | 'lg';
 
+export type DropdownVariant =
+  | 'primary'
+  | 'accent'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'neutral';
+
 export interface DropdownOption {
   key: string;
   label: string;
   description?: string;
   disabled?: boolean;
+  [key: string]: any;
 }
 
 export interface DropdownProps {
   label?: string;
   placeholder?: string;
-  items: DropdownOption[];
+  items: Record<string, any>[];
   value?: string[];
   defaultValue?: string[];
   onChange?: (keys: string[]) => void;
   disabled?: boolean;
   size?: DropdownSize;
+  variant?: DropdownVariant;
+  valueKey?: string;
+  labelKey?: string;
+  descriptionKey?: string;
+  disabledKey?: string;
   overlayClassName?: string;
   className?: string;
   wrapperClassName?: string;
@@ -46,6 +61,140 @@ const sizeStyles: Record<DropdownSize, string> = {
   lg: 'luca-min-h-12',
 };
 
+// Mapeo de variantes a colores del tailwind.config.js
+const variantColors: Record<
+  DropdownVariant,
+  {
+    border: string;
+    borderHover: string;
+    borderFocus: string;
+    text: string;
+    textHover: string;
+    textFocus: string;
+    ring: string;
+    ringFocus: string;
+    bgChecked: string;
+    bgTag: string;
+    textTag: string;
+    borderCheckbox: string;
+    bgCheckbox: string;
+    icon: string;
+  }
+> = {
+  primary: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-primary-100',
+    borderFocus: 'focus:luca-border-primary-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-primary-600',
+    textFocus: 'focus:luca-text-primary-600',
+    ring: 'focus:luca-ring-primary-200',
+    ringFocus: 'focus:luca-ring-primary-100',
+    bgChecked: 'luca-bg-primary-50',
+    bgTag: 'luca-bg-primary-50',
+    textTag: 'luca-text-primary-600',
+    borderCheckbox: 'luca-border-primary-500',
+    bgCheckbox: 'luca-bg-primary-500',
+    icon: 'luca-text-primary-600',
+  },
+  accent: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-accent-100',
+    borderFocus: 'focus:luca-border-accent-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-accent-600',
+    textFocus: 'focus:luca-text-accent-600',
+    ring: 'focus:luca-ring-accent-200',
+    ringFocus: 'focus:luca-ring-accent-100',
+    bgChecked: 'luca-bg-accent-50',
+    bgTag: 'luca-bg-accent-50',
+    textTag: 'luca-text-accent-600',
+    borderCheckbox: 'luca-border-accent-600',
+    bgCheckbox: 'luca-bg-accent-600',
+    icon: 'luca-text-accent-600',
+  },
+  success: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-success-100',
+    borderFocus: 'focus:luca-border-success-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-success-600',
+    textFocus: 'focus:luca-text-success-600',
+    ring: 'focus:luca-ring-success-200',
+    ringFocus: 'focus:luca-ring-success-100',
+    bgChecked: 'luca-bg-success-50',
+    bgTag: 'luca-bg-success-50',
+    textTag: 'luca-text-success-600',
+    borderCheckbox: 'luca-border-success-500',
+    bgCheckbox: 'luca-bg-success-500',
+    icon: 'luca-text-success-600',
+  },
+  warning: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-warning-100',
+    borderFocus: 'focus:luca-border-warning-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-warning-600',
+    textFocus: 'focus:luca-text-warning-600',
+    ring: 'focus:luca-ring-warning-200',
+    ringFocus: 'focus:luca-ring-warning-100',
+    bgChecked: 'luca-bg-warning-50',
+    bgTag: 'luca-bg-warning-50',
+    textTag: 'luca-text-warning-600',
+    borderCheckbox: 'luca-border-warning-500',
+    bgCheckbox: 'luca-bg-warning-500',
+    icon: 'luca-text-warning-600',
+  },
+  danger: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-danger-100',
+    borderFocus: 'focus:luca-border-danger-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-danger-600',
+    textFocus: 'focus:luca-text-danger-600',
+    ring: 'focus:luca-ring-danger-200',
+    ringFocus: 'focus:luca-ring-danger-100',
+    bgChecked: 'luca-bg-danger-50',
+    bgTag: 'luca-bg-danger-50',
+    textTag: 'luca-text-danger-600',
+    borderCheckbox: 'luca-border-danger-500',
+    bgCheckbox: 'luca-bg-danger-500',
+    icon: 'luca-text-danger-600',
+  },
+  info: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-info-100',
+    borderFocus: 'focus:luca-border-info-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-info-600',
+    textFocus: 'focus:luca-text-info-600',
+    ring: 'focus:luca-ring-info-200',
+    ringFocus: 'focus:luca-ring-info-100',
+    bgChecked: 'luca-bg-info-50',
+    bgTag: 'luca-bg-info-50',
+    textTag: 'luca-text-info-600',
+    borderCheckbox: 'luca-border-info-500',
+    bgCheckbox: 'luca-bg-info-500',
+    icon: 'luca-text-info-600',
+  },
+  neutral: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-neutral-100',
+    borderFocus: 'focus:luca-border-neutral-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-neutral-600',
+    textFocus: 'focus:luca-text-neutral-600',
+    ring: 'focus:luca-ring-neutral-200',
+    ringFocus: 'focus:luca-ring-neutral-100',
+    bgChecked: 'luca-bg-neutral-100',
+    bgTag: 'luca-bg-neutral-100',
+    textTag: 'luca-text-neutral-600',
+    borderCheckbox: 'luca-border-neutral-500',
+    bgCheckbox: 'luca-bg-neutral-500',
+    icon: 'luca-text-neutral-600',
+  },
+};
+
 export const Dropdown: React.FC<DropdownProps> = ({
   label,
   placeholder = 'Selecciona una opción',
@@ -55,13 +204,18 @@ export const Dropdown: React.FC<DropdownProps> = ({
   onChange,
   disabled,
   size = 'sm',
+  variant = 'primary',
+  valueKey = 'key',
+  labelKey = 'label',
+  descriptionKey = 'description',
+  disabledKey = 'disabled',
   overlayClassName,
   className,
   wrapperClassName,
   multiple = true,
   selectAll = false,
   selectAllLabel = 'Seleccionar todo',
-  allSelectedLabel = 'Todos los elementos seleccionados',
+  allSelectedLabel = 'Todos',
   summaryMaxItems = 3,
   enableSearch = false,
   virtualizationThreshold = 10,
@@ -75,6 +229,36 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [searchTerm, setSearchTerm] = React.useState('');
   const isControlled = value !== undefined;
   const selectedKeys = isControlled ? value! : internalValue;
+  const colors = variantColors[variant];
+
+  // Helper functions para obtener valores usando las keys personalizadas
+  const getItemValue = React.useCallback(
+    (item: Record<string, any>): string => {
+      return String(item[valueKey] ?? '');
+    },
+    [valueKey]
+  );
+
+  const getItemLabel = React.useCallback(
+    (item: Record<string, any>): string => {
+      return String(item[labelKey] ?? '');
+    },
+    [labelKey]
+  );
+
+  const getItemDescription = React.useCallback(
+    (item: Record<string, any>): string | undefined => {
+      return item[descriptionKey] ? String(item[descriptionKey]) : undefined;
+    },
+    [descriptionKey]
+  );
+
+  const getItemDisabled = React.useCallback(
+    (item: Record<string, any>): boolean => {
+      return Boolean(item[disabledKey]);
+    },
+    [disabledKey]
+  );
 
   React.useEffect(() => {
     if (!isControlled && defaultValue) {
@@ -89,8 +273,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
   }, [open, searchTerm]);
 
   const enabledKeys = React.useMemo(
-    () => items.filter((item) => !item.disabled).map((item) => item.key),
-    [items]
+    () =>
+      items
+        .filter((item) => !getItemDisabled(item))
+        .map((item) => getItemValue(item)),
+    [items, getItemDisabled, getItemValue]
   );
 
   const toggleKey = React.useCallback(
@@ -146,23 +333,29 @@ export const Dropdown: React.FC<DropdownProps> = ({
       return items;
     }
     const normalized = searchTerm.trim().toLowerCase();
-    return items.filter((item) =>
-      `${item.label} ${item.description ?? ''}`.toLowerCase().includes(normalized)
-    );
-  }, [enableSearch, items, searchTerm]);
+    return items.filter((item) => {
+      const label = getItemLabel(item);
+      const description = getItemDescription(item) ?? '';
+      return `${label} ${description}`.toLowerCase().includes(normalized);
+    });
+  }, [enableSearch, items, searchTerm, getItemLabel, getItemDescription]);
 
   const renderItem = React.useCallback(
-    (item: DropdownOption) => (
-      <DropdownItem
-        key={item.key}
-        label={item.label}
-        description={item.description}
-        checked={selectedKeys.includes(item.key)}
-        disabled={item.disabled}
-        onToggle={() => toggleKey(item.key)}
-      />
-    ),
-    [selectedKeys, toggleKey]
+    (item: Record<string, any>) => {
+      const itemValue = getItemValue(item);
+      return (
+        <DropdownItem
+          key={itemValue}
+          label={getItemLabel(item)}
+          description={getItemDescription(item)}
+          checked={selectedKeys.includes(itemValue)}
+          disabled={getItemDisabled(item)}
+          onToggle={() => toggleKey(itemValue)}
+          variant={variant}
+        />
+      );
+    },
+    [selectedKeys, toggleKey, getItemValue, getItemLabel, getItemDescription, getItemDisabled, variant]
   );
 
   const shouldVirtualize =
@@ -188,8 +381,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
     if (!multiple) {
       const key = selectedKeys[0];
-      const label =
-        items.find((item) => item.key === key)?.label ?? placeholder;
+      const selectedItem = items.find((item) => getItemValue(item) === key);
+      const label = selectedItem ? getItemLabel(selectedItem) : placeholder;
       return (
         <>
           {label}
@@ -210,14 +403,18 @@ export const Dropdown: React.FC<DropdownProps> = ({
             event.preventDefault();
             handleSelectAll();
           }}
-          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-md luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
+          className={cn(
+            'luca-m-0 luca-rounded-md luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5',
+            colors.bgTag,
+            colors.textTag
+          )}
           closeIcon={
-            <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
+            <span className={cn('luca-ml-1 luca-font-bold', colors.textTag)}>
               ×
             </span>
           }
         >
-          {allSelectedLabel}
+          {allSelectedLabel} ({enabledKeys.length})
         </Tag>
       );
     }
@@ -246,6 +443,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
     summaryMaxItems,
     handleRemoveKey,
     handleSelectAll,
+    getItemValue,
+    getItemLabel,
   ]);
 
   const menuContent = React.useMemo(() => {
@@ -254,9 +453,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
         data={filteredItems}
         height={virtualListHeight}
         itemHeight={virtualItemHeight}
-        itemKey="key"
+        itemKey={(item) => getItemValue(item)}
       >
-        {(item: DropdownOption) => renderItem(item)}
+        {(item: Record<string, any>) => renderItem(item)}
       </VirtualList>
     );
 
@@ -285,6 +484,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
               checked={areAllEnabledSelected}
               indeterminate={hasPartialSelection}
               onToggle={handleSelectAll}
+              variant={variant}
             />
           )}
           {filteredItems.length === 0 ? (
@@ -314,6 +514,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
     searchTerm,
     multiple,
     enabledKeys.length,
+    getItemValue,
   ]);
 
   return (
@@ -342,9 +543,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
         <button
           type="button"
           className={cn(
-            'luca-flex luca-w-full luca-items-start luca-justify-between luca-rounded-md luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-text-neutral-500 luca-transition-colors luca-duration-200',
-            'hover:luca-border-primary-100 hover:luca-text-primary-600',
-            'focus:luca-border-primary-200 focus:luca-text-primary-600 focus:luca-outline-none focus:luca-ring-2 focus:luca-ring-primary-200',
+            'luca-flex luca-w-full luca-items-start luca-justify-between luca-rounded-md luca-border luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-transition-colors luca-duration-200',
+            colors.border,
+            colors.borderHover,
+            colors.text,
+            colors.textHover,
+            colors.borderFocus,
+            colors.textFocus,
+            'focus:luca-outline-none focus:luca-ring-2',
+            colors.ring,
             disabled &&
               'luca-cursor-not-allowed luca-border-neutral-200 luca-bg-neutral-100 luca-text-neutral-400',
             sizeStyles[size],
@@ -357,7 +564,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left">
             {summaryContent}
           </div>
-          <ChevronDownIcon size={16} className="luca-text-primary-600" />
+          <ChevronDownIcon size={16} className={colors.icon} />
         </button>
       </AntDropdown>
     </div>
@@ -373,6 +580,7 @@ export interface DropdownItemProps {
   disabled?: boolean;
   onToggle?: () => void;
   indeterminate?: boolean;
+  variant?: DropdownVariant;
 }
 
 export const DropdownItem: React.FC<DropdownItemProps> = ({
@@ -382,7 +590,9 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
   disabled,
   onToggle,
   indeterminate = false,
+  variant = 'primary',
 }) => {
+  const colors = variantColors[variant];
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
@@ -403,8 +613,9 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
       onClick={handleClick}
       className={cn(
         'luca-flex luca-w-full luca-items-center luca-gap-3 luca-rounded-md luca-px-2 luca-py-1.5 luca-transition-colors luca-duration-150',
-        checked ? 'luca-bg-primary-50' : 'luca-bg-white',
-        'hover:luca-bg-neutral-100 focus:luca-outline-none focus:luca-ring-2 focus:luca-ring-primary-100',
+        checked ? colors.bgChecked : 'luca-bg-white',
+        'hover:luca-bg-neutral-100 focus:luca-outline-none focus:luca-ring-2',
+        colors.ringFocus,
         disabled && 'luca-cursor-not-allowed luca-opacity-70'
       )}
     >
@@ -412,7 +623,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
         className={cn(
           'luca-flex luca-h-6 luca-w-6 luca-items-center luca-justify-center luca-rounded-md luca-border-2 luca-transition-colors luca-duration-150',
           checked
-            ? 'luca-border-primary-500 luca-bg-primary-500 luca-text-white'
+            ? cn(colors.borderCheckbox, colors.bgCheckbox, 'luca-text-white')
             : 'luca-border-neutral-200 luca-bg-white luca-text-transparent'
         )}
         aria-hidden
@@ -438,5 +649,3 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
 };
 
 DropdownItem.displayName = 'DropdownItem';
-
-

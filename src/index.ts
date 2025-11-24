@@ -113,6 +113,7 @@ export type {
   DropdownProps,
   DropdownOption,
   DropdownItemProps,
+  DropdownVariant,
 } from './components/Dropdown';
 
 export { EmptyStateCard } from './components/EmptyStateCard';
