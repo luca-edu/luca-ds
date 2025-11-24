@@ -210,7 +210,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             event.preventDefault();
             handleSelectAll();
           }}
-          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-full luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
+          className="luca-m-0 luca-bg-primary-50 luca-text-primary-600 luca-rounded-md luca-px-2 luca-py-0.5 luca-text-xs luca-font-semibold luca-leading-5"
           closeIcon={
             <span className="luca-ml-1 luca-text-primary-600 luca-font-bold">
               ×
@@ -261,19 +261,19 @@ export const Dropdown: React.FC<DropdownProps> = ({
     );
 
     const regularList = (
-      <div className="luca-flex luca-flex-col luca-gap-1 luca-max-h-[320px] luca-overflow-y-auto luca-pr-1">
+      <div className="luca-flex luca-flex-col luca-gap-1 luca-max-h-[190px] luca-overflow-y-auto luca-pr-1">
         {filteredItems.map((item) => renderItem(item))}
       </div>
     );
 
     return (
-      <div className="luca-flex luca-w-[min(320px,100vw)] luca-flex-col luca-gap-3 luca-rounded-xl luca-bg-white luca-p-2 luca-shadow-lg">
+      <div className="luca-flex luca-w-[min(190px,100vw)] luca-flex-col luca-gap-3 luca-rounded-md luca-bg-white luca-p-2 luca-shadow-lg">
         {enableSearch && (
           <Input
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
             placeholder="Buscar..."
-            className="luca-rounded-lg luca-border luca-border-neutral-200 luca-text-sm"
+            className="luca-rounded-md luca-border luca-border-neutral-200 luca-text-sm"
             allowClear
           />
         )}
@@ -319,7 +319,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       className={cn(
-        'luca-flex luca-w-[min(320px,100vw)] luca-flex-col luca-gap-2',
+        'luca-flex luca-w-[min(190px,100vw)] luca-flex-col luca-gap-2',
         wrapperClassName
       )}
     >
@@ -342,7 +342,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         <button
           type="button"
           className={cn(
-            'luca-flex luca-w-full luca-items-start luca-justify-between luca-rounded-2xl luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-text-neutral-500 luca-transition-colors luca-duration-200',
+            'luca-flex luca-w-full luca-items-start luca-justify-between luca-rounded-md luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-text-neutral-500 luca-transition-colors luca-duration-200',
             'hover:luca-border-primary-100 hover:luca-text-primary-600',
             'focus:luca-border-primary-200 focus:luca-text-primary-600 focus:luca-outline-none focus:luca-ring-2 focus:luca-ring-primary-200',
             disabled &&
@@ -402,7 +402,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
       disabled={disabled}
       onClick={handleClick}
       className={cn(
-        'luca-flex luca-w-full luca-items-center luca-gap-3 luca-rounded-xl luca-px-2 luca-py-1.5 luca-transition-colors luca-duration-150',
+        'luca-flex luca-w-full luca-items-center luca-gap-3 luca-rounded-md luca-px-2 luca-py-1.5 luca-transition-colors luca-duration-150',
         checked ? 'luca-bg-primary-50' : 'luca-bg-white',
         'hover:luca-bg-neutral-100 focus:luca-outline-none focus:luca-ring-2 focus:luca-ring-primary-100',
         disabled && 'luca-cursor-not-allowed luca-opacity-70'
@@ -410,7 +410,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
     >
       <span
         className={cn(
-          'luca-flex luca-h-6 luca-w-6 luca-items-center luca-justify-center luca-rounded-lg luca-border-2 luca-transition-colors luca-duration-150',
+          'luca-flex luca-h-6 luca-w-6 luca-items-center luca-justify-center luca-rounded-md luca-border-2 luca-transition-colors luca-duration-150',
           checked
             ? 'luca-border-primary-500 luca-bg-primary-500 luca-text-white'
             : 'luca-border-neutral-200 luca-bg-white luca-text-transparent'
