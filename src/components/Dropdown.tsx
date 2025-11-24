@@ -466,7 +466,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
     );
 
     return (
-      <div className="luca-flex luca-w-[min(190px,100vw)] luca-flex-col luca-gap-3 luca-rounded-md luca-bg-white luca-p-2 luca-shadow-lg">
+      <div className="luca-flex luca-w-[min(200px,100vw)] luca-flex-col luca-gap-3 luca-rounded-md luca-bg-white luca-p-2 luca-shadow-lg">
         {enableSearch && (
           <Input
             value={searchTerm}
@@ -520,7 +520,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       className={cn(
-        'luca-flex luca-w-[min(190px,100vw)] luca-flex-col luca-gap-2',
+        'luca-flex luca-w-[min(200px,100vw)] luca-flex-col luca-gap-2',
         wrapperClassName
       )}
     >
@@ -634,12 +634,12 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
           <MinusIcon size={12} />
         ) : null}
       </span>
-      <div className="luca-flex luca-min-w-0 luca-flex-col luca-items-start luca-gap-0.5">
-        <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-truncate">
-          {label}
-        </span>
+      <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-start luca-gap-0.5">
+          <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-break-words luca-text-left luca-w-full">
+            {label}
+          </span>
         {description && (
-          <span className="luca-text-xs luca-font-normal luca-text-neutral-400 luca-truncate">
+          <span className="luca-text-xs luca-font-normal luca-text-neutral-400 luca-break-words luca-text-left luca-w-full">
             {description}
           </span>
         )}

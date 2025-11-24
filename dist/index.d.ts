@@ -31,7 +31,7 @@ export type { InputFieldProps, TextAreaFieldProps, } from './components/InputFie
 export { Tooltip } from './components/Tooltip';
 export type { TooltipProps, TooltipVariant, TooltipPlacement, } from './components/Tooltip';
 export { Dropdown, DropdownItem } from './components/Dropdown';
-export type { DropdownProps, DropdownOption, DropdownItemProps, } from './components/Dropdown';
+export type { DropdownProps, DropdownOption, DropdownItemProps, DropdownVariant, } from './components/Dropdown';
 export { EmptyStateCard } from './components/EmptyStateCard';
 export type { EmptyStateCardProps } from './components/EmptyStateCard';
 export { Steps } from './components/Steps';
