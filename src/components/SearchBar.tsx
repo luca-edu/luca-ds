@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import { cn } from '../utils/cn';
 
 export type SearchBarStyle = 'reading' | 'examsGenerator';
@@ -76,6 +76,25 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   // Usar valor local cuando hay debounce (para actualización inmediata)
   // o cuando no es controlado, de lo contrario usar el prop
   const displayValue = enableDebounce || !isControlled ? localValue : (searchInput ?? '');
+  
+  // Determinar si hay texto para mostrar el icono de clear
+  const hasValue = displayValue.trim().length > 0;
+
+  const handleClear = React.useCallback(() => {
+    const emptyValue = '';
+    setLocalValue(emptyValue);
+    
+    if (enableDebounce) {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      debounceTimeoutRef.current = setTimeout(() => {
+        setSearchInput?.(emptyValue);
+      }, debounceTime);
+    } else {
+      setSearchInput?.(emptyValue);
+    }
+  }, [enableDebounce, debounceTime, setSearchInput]);
 
   // Estilos de tamaño para el contenedor
   const getSizeContainerStyles = () => {
@@ -153,8 +172,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  const iconClasses = cn(
-    'luca-h-4 luca-w-4 luca-flex-shrink-0 luca-opacity-50', 
+  const iconBaseClasses = 'luca-flex-shrink-0 luca-opacity-50 luca-transition-opacity luca-duration-200';
+  const iconClasses = cn(iconBaseClasses, getSizeIconStyles());
+  const clearButtonClasses = cn(
+    iconBaseClasses,
+    'luca-cursor-pointer hover:luca-opacity-100 luca-bg-transparent luca-border-none luca-p-0',
     getSizeIconStyles()
   );
 
@@ -168,7 +190,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         value={displayValue}
         className={inputClasses}
       />
-      <SearchOutlined className={iconClasses} />
+      {hasValue ? (
+        <button
+          type="button"
+          onClick={handleClear}
+          className={clearButtonClasses}
+          aria-label="Limpiar búsqueda"
+        >
+          <CloseOutlined />
+        </button>
+      ) : (
+        <SearchOutlined className={iconClasses} />
+      )}
     </div>
   );
 };
