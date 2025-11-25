@@ -13,6 +13,8 @@ export interface SearchBarProps {
   className?: string;
   inputClassName?: string;
   placeholder?: string;
+  enableDebounce?: boolean;
+  debounceTime?: number;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
@@ -22,10 +24,58 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   className,
   inputClassName,
   placeholder = 'Buscar',
+  enableDebounce = false,
+  debounceTime = 300,
 }) => {
-  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput?.(event.target.value);
-  };
+  const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [localValue, setLocalValue] = React.useState(searchInput ?? '');
+  const isControlled = searchInput !== undefined;
+
+  // Sincronizar el valor local cuando cambia searchInput (componente controlado)
+  // Solo sincronizar si no hay debounce activo o si el valor cambió externamente
+  React.useEffect(() => {
+    if (isControlled && !enableDebounce) {
+      setLocalValue(searchInput ?? '');
+    }
+  }, [searchInput, isControlled, enableDebounce]);
+
+  React.useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleSearchInput = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = event.target.value;
+
+      // Actualizar el valor local inmediatamente para que el usuario vea lo que escribe
+      // Esto funciona tanto para componentes controlados como no controlados cuando hay debounce
+      setLocalValue(newValue);
+
+      if (enableDebounce) {
+        if (debounceTimeoutRef.current) {
+          clearTimeout(debounceTimeoutRef.current);
+        }
+        debounceTimeoutRef.current = setTimeout(() => {
+          setSearchInput?.(newValue);
+        }, debounceTime);
+      } else {
+        setSearchInput?.(newValue);
+        // Si no hay debounce y es controlado, el valor viene del prop
+        if (!isControlled) {
+          setLocalValue(newValue);
+        }
+      }
+    },
+    [enableDebounce, debounceTime, setSearchInput, isControlled]
+  );
+
+  // Usar valor local cuando hay debounce (para actualización inmediata)
+  // o cuando no es controlado, de lo contrario usar el prop
+  const displayValue = enableDebounce || !isControlled ? localValue : (searchInput ?? '');
 
   // Estilos de tamaño para el contenedor
   const getSizeContainerStyles = () => {
@@ -115,7 +165,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         name="searchbar"
         placeholder={placeholder}
         onChange={handleSearchInput}
-        value={searchInput ?? ''}
+        value={displayValue}
         className={inputClasses}
       />
       <SearchOutlined className={iconClasses} />

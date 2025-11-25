@@ -10,6 +10,8 @@ interface FieldBaseProps {
     status?: FieldStatus;
     showCounter?: boolean;
     wrapperClassName?: string;
+    enableDebounce?: boolean;
+    debounceTime?: number;
 }
 export interface InputFieldProps extends FieldBaseProps, Omit<React.InputHTMLAttributes<HTMLInputElement>, 'children' | 'size'> {
     size?: InputProps['size'];

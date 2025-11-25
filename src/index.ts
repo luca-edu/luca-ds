@@ -29,10 +29,10 @@ export type {
 } from './components/Card';
 
 export { Button } from './components/Button';
-export type { ButtonProps, ButtonVariant, ButtonState } from './components/Button';
+export type { ButtonProps, ButtonVariant, ButtonState, ButtonSize } from './components/Button';
 
 export { ButtonIcon } from './components/ButtonIcon';
-export type { ButtonIconProps } from './components/ButtonIcon';
+export type { ButtonIconProps, ButtonIconSize } from './components/ButtonIcon';
 
 export { Badge } from './components/Badge';
 export type { BadgeProps } from './components/Badge';

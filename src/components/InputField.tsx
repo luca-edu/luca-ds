@@ -16,6 +16,8 @@ interface FieldBaseProps {
   status?: FieldStatus;
   showCounter?: boolean;
   wrapperClassName?: string;
+  enableDebounce?: boolean;
+  debounceTime?: number;
 }
 
 type ControlledValue = string | number | readonly string[] | undefined;
@@ -95,6 +97,8 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
       onChange,
       maxLength,
       defaultValue,
+      enableDebounce = false,
+      debounceTime = 300,
       ...rest
     },
     ref
@@ -123,14 +127,34 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
         : `${charCount}`
       : undefined;
 
+    const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimeoutRef.current) {
+          clearTimeout(debounceTimeoutRef.current);
+        }
+      };
+    }, []);
+
     const handleChange = React.useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!isControlled) {
           handleUncontrolledChange(event);
         }
-        onChange?.(event);
+
+        if (enableDebounce) {
+          if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+          }
+          debounceTimeoutRef.current = setTimeout(() => {
+            onChange?.(event);
+          }, debounceTime);
+        } else {
+          onChange?.(event);
+        }
       },
-      [handleUncontrolledChange, isControlled, onChange]
+      [handleUncontrolledChange, isControlled, onChange, enableDebounce, debounceTime]
     );
 
     return (
@@ -251,6 +275,8 @@ export const TextAreaField = React.forwardRef<
       maxLength,
       rows = 6,
       defaultValue,
+      enableDebounce = false,
+      debounceTime = 300,
       ...rest
     },
     ref
@@ -279,14 +305,34 @@ export const TextAreaField = React.forwardRef<
         : `${charCount}`
       : undefined;
 
+    const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimeoutRef.current) {
+          clearTimeout(debounceTimeoutRef.current);
+        }
+      };
+    }, []);
+
     const handleChange = React.useCallback(
       (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (!isControlled) {
           handleUncontrolledChange(event);
         }
-        onChange?.(event);
+
+        if (enableDebounce) {
+          if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+          }
+          debounceTimeoutRef.current = setTimeout(() => {
+            onChange?.(event);
+          }, debounceTime);
+        } else {
+          onChange?.(event);
+        }
       },
-      [handleUncontrolledChange, isControlled, onChange]
+      [handleUncontrolledChange, isControlled, onChange, enableDebounce, debounceTime]
     );
 
     return (

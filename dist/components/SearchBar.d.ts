@@ -8,6 +8,8 @@ export interface SearchBarProps {
     className?: string;
     inputClassName?: string;
     placeholder?: string;
+    enableDebounce?: boolean;
+    debounceTime?: number;
 }
 export declare const SearchBar: React.FC<SearchBarProps>;
 export default SearchBar;
