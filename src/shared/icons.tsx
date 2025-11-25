@@ -475,8 +475,8 @@ export const LucaRobotIcon: React.FC<IconProps> = ({
     <rect width="90" height="90" transform="translate(8 6)" fill="url(#pattern0_2615_12045)"/>
     </g>
     <defs>
-    <filter id="filter0_d_2615_12045" x="0" y="0" width="106" height="106" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+    <filter id="filter0_d_2615_12045" x="0" y="0" width="106" height="106" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
     <feOffset dy="2"/>
     <feGaussianBlur stdDeviation="4"/>

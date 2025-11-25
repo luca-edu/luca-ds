@@ -3,18 +3,36 @@ import { cn } from '../utils/cn';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonState = 'alert' | 'default';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   state?: ButtonState;
+  size?: ButtonSize;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   children: React.ReactNode;
 }
 
 const buttonBaseStyles =
-  'luca-inline-flex luca-items-center luca-justify-center luca-gap-2.5 luca-h-9 luca-px-4 luca-py-2.5 luca-rounded-xl luca-font-semibold luca-text-sm luca-transition-all luca-duration-200 luca-whitespace-nowrap disabled:luca-cursor-not-allowed';
+  'luca-inline-flex luca-items-center luca-justify-center luca-rounded-xl luca-font-semibold luca-transition-all luca-duration-200 luca-whitespace-nowrap disabled:luca-cursor-not-allowed';
+
+const buttonSizeStyles: Record<ButtonSize, string> = {
+  xs: 'luca-h-7 luca-px-2.5 luca-py-1.5 luca-gap-1.5 luca-text-xs',
+  sm: 'luca-h-8 luca-px-3 luca-py-2 luca-gap-2 luca-text-xs',
+  md: 'luca-h-9 luca-px-4 luca-py-2.5 luca-gap-2.5 luca-text-sm',
+  lg: 'luca-h-10 luca-px-5 luca-py-3 luca-gap-3 luca-text-base',
+  xl: 'luca-h-12 luca-px-6 luca-py-3.5 luca-gap-3 luca-text-lg',
+};
+
+const iconSizeStyles: Record<ButtonSize, string> = {
+  xs: 'luca-w-4 luca-h-4',
+  sm: 'luca-w-4 luca-h-4',
+  md: 'luca-w-5 luca-h-5',
+  lg: 'luca-w-6 luca-h-6',
+  xl: 'luca-w-6 luca-h-6',
+};
 
 const buttonVariantStyles: Record<ButtonVariant, Record<ButtonState, string>> =
   {
@@ -76,6 +94,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant = 'primary',
       state = 'default',
+      size = 'md',
       leftIcon,
       rightIcon,
       className,
@@ -86,6 +105,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    const iconSize = iconSizeStyles[size];
+    
     return (
       <button
         ref={ref}
@@ -93,19 +114,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         className={cn(
           buttonBaseStyles,
+          buttonSizeStyles[size],
           buttonVariantStyles[variant][state],
           className
         )}
         {...props}
       >
         {leftIcon && (
-          <span className="luca-inline-flex luca-items-center luca-justify-center luca-w-6 luca-h-6 luca-shrink-0">
+          <span className={cn('luca-inline-flex luca-items-center luca-justify-center luca-shrink-0', iconSize)}>
             {leftIcon}
           </span>
         )}
         <span className="luca-leading-tight">{children}</span>
         {rightIcon && (
-          <span className="luca-inline-flex luca-items-center luca-justify-center luca-w-6 luca-h-6 luca-shrink-0">
+          <span className={cn('luca-inline-flex luca-items-center luca-justify-center luca-shrink-0', iconSize)}>
             {rightIcon}
           </span>
         )}

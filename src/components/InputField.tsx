@@ -16,6 +16,8 @@ interface FieldBaseProps {
   status?: FieldStatus;
   showCounter?: boolean;
   wrapperClassName?: string;
+  enableDebounce?: boolean;
+  debounceTime?: number;
 }
 
 type ControlledValue = string | number | readonly string[] | undefined;
@@ -95,6 +97,8 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
       onChange,
       maxLength,
       defaultValue,
+      enableDebounce = false,
+      debounceTime = 300,
       ...rest
     },
     ref
@@ -123,14 +127,34 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
         : `${charCount}`
       : undefined;
 
+    const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimeoutRef.current) {
+          clearTimeout(debounceTimeoutRef.current);
+        }
+      };
+    }, []);
+
     const handleChange = React.useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!isControlled) {
           handleUncontrolledChange(event);
         }
-        onChange?.(event);
+
+        if (enableDebounce) {
+          if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+          }
+          debounceTimeoutRef.current = setTimeout(() => {
+            onChange?.(event);
+          }, debounceTime);
+        } else {
+          onChange?.(event);
+        }
       },
-      [handleUncontrolledChange, isControlled, onChange]
+      [handleUncontrolledChange, isControlled, onChange, enableDebounce, debounceTime]
     );
 
     return (
@@ -149,7 +173,7 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
               >
                 <span>
                   {label}
-                  {required && <span className="luca-text-danger-500">*</span>}
+                  {required && <span className="luca-text-danger-500 luca-pl-1">*</span>}
                 </span>
               </label>
             )}
@@ -185,7 +209,7 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
             maxLength={maxLength}
             status={status === 'danger' ? 'error' : undefined}
             className={cn(
-              'luca-h-12 luca-w-full luca-rounded-2xl luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-text-sm luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
+              'luca-h-12 luca-w-full luca-rounded-[8px] luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-text-sm luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
               'placeholder:luca-text-neutral-400 placeholder:luca-opacity-100',
               !disabled &&
                 'hover:luca-border-primary-100 focus:luca-border-primary-200 focus:luca-ring-2 focus:luca-ring-primary-200 focus:luca-outline-none',
@@ -251,6 +275,8 @@ export const TextAreaField = React.forwardRef<
       maxLength,
       rows = 6,
       defaultValue,
+      enableDebounce = false,
+      debounceTime = 300,
       ...rest
     },
     ref
@@ -279,14 +305,34 @@ export const TextAreaField = React.forwardRef<
         : `${charCount}`
       : undefined;
 
+    const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimeoutRef.current) {
+          clearTimeout(debounceTimeoutRef.current);
+        }
+      };
+    }, []);
+
     const handleChange = React.useCallback(
       (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (!isControlled) {
           handleUncontrolledChange(event);
         }
-        onChange?.(event);
+
+        if (enableDebounce) {
+          if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+          }
+          debounceTimeoutRef.current = setTimeout(() => {
+            onChange?.(event);
+          }, debounceTime);
+        } else {
+          onChange?.(event);
+        }
       },
-      [handleUncontrolledChange, isControlled, onChange]
+      [handleUncontrolledChange, isControlled, onChange, enableDebounce, debounceTime]
     );
 
     return (
@@ -305,7 +351,7 @@ export const TextAreaField = React.forwardRef<
               >
                 <span>
                   {label}
-                  {required && <span className="luca-text-danger-500">*</span>}
+                  {required && <span className="luca-text-danger-500 luca-pl-1">*</span>}
                 </span>
               </label>
             )}
@@ -341,7 +387,7 @@ export const TextAreaField = React.forwardRef<
             rows={rows}
             status={status === 'danger' ? 'error' : undefined}
             className={cn(
-              'luca-w-full luca-rounded-2xl luca-border luca-border-neutral-200 luca-bg-white luca-p-4 luca-text-sm luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
+              'luca-w-full luca-rounded-[8px] luca-border luca-border-neutral-200 luca-bg-white luca-p-4 luca-text-sm luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
               'placeholder:luca-text-neutral-400 placeholder:luca-opacity-100',
               'luca-resize-y luca-overflow-auto',
               !disabled &&
