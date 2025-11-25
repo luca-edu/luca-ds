@@ -298,3 +298,294 @@ NotificationAction.displayName = 'NotificationAction';
 
 export type { NotificationVariant } from '../types/variants';
 
+// ==================== API Hook Implementation ====================
+
+export interface NotificationApiConfig {
+  title?: string;
+  description?: React.ReactNode;
+  variant?: NotificationVariant;
+  icon?: React.ReactNode;
+  dismissible?: boolean;
+  position?: NotificationPosition;
+  autoClose?: number;
+  hideIcon?: boolean;
+  closeButtonAriaLabel?: string;
+  maxWidth?: string;
+  actions?: React.ReactNode;
+  className?: string;
+  onDismiss?: () => void;
+}
+
+interface NotificationInstance extends NotificationApiConfig {
+  id: string;
+  visible: boolean;
+}
+
+export type NotificationApi = {
+  success: (config: NotificationApiConfig) => void;
+  error: (config: NotificationApiConfig) => void;
+  warning: (config: NotificationApiConfig) => void;
+  info: (config: NotificationApiConfig) => void;
+  open: (config: NotificationApiConfig & { variant: NotificationVariant }) => void;
+  close: (id: string) => void;
+  destroy: () => void;
+};
+
+interface NotificationContextApiValue {
+  notifications: NotificationInstance[];
+  addNotification: (notification: Omit<NotificationInstance, 'id' | 'visible'>) => string;
+  removeNotification: (id: string) => void;
+  clearAll: () => void;
+}
+
+const NotificationContextApi = React.createContext<NotificationContextApiValue | null>(null);
+
+const useNotificationContextApi = () => {
+  const context = React.useContext(NotificationContextApi);
+  if (!context) {
+    throw new Error('useNotification debe usarse dentro de NotificationProvider');
+  }
+  return context;
+};
+
+// Provider para manejar el estado global de notificaciones
+const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [notifications, setNotifications] = React.useState<NotificationInstance[]>([]);
+
+  const addNotification = React.useCallback((notification: Omit<NotificationInstance, 'id' | 'visible'>) => {
+    const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const newNotification: NotificationInstance = {
+      ...notification,
+      id,
+      visible: true,
+    };
+    setNotifications((prev) => [...prev, newNotification]);
+    return id;
+  }, []);
+
+  const removeNotification = React.useCallback((id: string) => {
+    setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+  }, []);
+
+  const clearAll = React.useCallback(() => {
+    setNotifications([]);
+  }, []);
+
+  const value = React.useMemo(
+    () => ({
+      notifications,
+      addNotification,
+      removeNotification,
+      clearAll,
+    }),
+    [notifications, addNotification, removeNotification, clearAll]
+  );
+
+  return <NotificationContextApi.Provider value={value}>{children}</NotificationContextApi.Provider>;
+};
+
+// Componente NotificationItem para usar dentro del context holder (sin posición fija)
+const NotificationItem: React.FC<{
+  notification: NotificationInstance;
+  onDismiss: (id: string) => void;
+  onRemove: (id: string) => void;
+}> = ({ notification, onDismiss, onRemove }) => {
+  const [isExiting, setIsExiting] = React.useState(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleDismiss = React.useCallback(() => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onRemove(notification.id);
+      onDismiss(notification.id);
+      setIsExiting(false);
+    }, 300);
+  }, [notification.id, onDismiss, onRemove]);
+
+  React.useEffect(() => {
+    if (notification.autoClose && notification.visible && !isExiting) {
+      timeoutRef.current = setTimeout(() => {
+        handleDismiss();
+      }, notification.autoClose);
+
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    }
+  }, [notification.autoClose, notification.visible, isExiting, handleDismiss]);
+
+  if (!notification.visible && !isExiting) {
+    return null;
+  }
+
+  const animationClass = getAnimationClasses(notification.position || 'top-right', isExiting);
+
+  return (
+    <div
+      className={cn('luca-relative', animationClass)}
+      style={{
+        maxWidth: notification.maxWidth,
+      }}
+    >
+      <Notification
+        variant={notification.variant}
+        title={notification.title}
+        description={notification.description}
+        icon={notification.icon}
+        dismissible={notification.dismissible ?? true}
+        hideIcon={notification.hideIcon}
+        closeButtonAriaLabel={notification.closeButtonAriaLabel}
+        floating={true}
+        position={notification.position}
+        maxWidth={notification.maxWidth}
+        actions={notification.actions}
+        className={notification.className}
+        onDismiss={handleDismiss}
+      />
+    </div>
+  );
+};
+
+// Componente que renderiza todas las notificaciones agrupadas por posición
+const NotificationContextHolder: React.FC = () => {
+  const { notifications, removeNotification } = useNotificationContextApi();
+
+  // Agrupar notificaciones por posición
+  const notificationsByPosition = React.useMemo(() => {
+    const grouped: Record<NotificationPosition, NotificationInstance[]> = {
+      'top-left': [],
+      'top-center': [],
+      'top-right': [],
+      'bottom-left': [],
+      'bottom-center': [],
+      'bottom-right': [],
+    };
+
+    notifications.forEach((notification) => {
+      const position = notification.position || 'top-right';
+      grouped[position].push(notification);
+    });
+
+    return grouped;
+  }, [notifications]);
+
+  const handleDismiss = React.useCallback((id: string) => {
+    const notification = notifications.find((n) => n.id === id);
+    notification?.onDismiss?.();
+  }, [notifications]);
+
+  return (
+    <>
+      {Object.entries(notificationsByPosition).map(([position, positionNotifications]) => {
+        if (positionNotifications.length === 0) return null;
+
+        const positionKey = position as NotificationPosition;
+        const basePositionClass = getPositionClasses(positionKey);
+
+        return (
+          <div
+            key={position}
+            className={cn('luca-fixed luca-z-50 luca-flex luca-flex-col', basePositionClass)}
+            style={{
+              gap: '0.5rem',
+            }}
+          >
+            {positionNotifications.map((notification) => (
+              <NotificationItem
+                key={notification.id}
+                notification={notification}
+                onDismiss={handleDismiss}
+                onRemove={removeNotification}
+              />
+            ))}
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+// Hook principal que retorna [api, contextHolder]
+// Este hook crea su propio provider interno
+export const useNotification = (): [NotificationApi, React.ReactElement] => {
+  const [notifications, setNotifications] = React.useState<NotificationInstance[]>([]);
+
+  const addNotification = React.useCallback((notification: Omit<NotificationInstance, 'id' | 'visible'>) => {
+    const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const newNotification: NotificationInstance = {
+      ...notification,
+      id,
+      visible: true,
+    };
+    setNotifications((prev) => [...prev, newNotification]);
+    return id;
+  }, []);
+
+  const removeNotification = React.useCallback((id: string) => {
+    setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+  }, []);
+
+  const clearAll = React.useCallback(() => {
+    setNotifications([]);
+  }, []);
+
+  const api = React.useMemo<NotificationApi>(
+    () => ({
+      success: (config: NotificationApiConfig) => {
+        addNotification({ ...config, variant: 'success' });
+      },
+      error: (config: NotificationApiConfig) => {
+        addNotification({ ...config, variant: 'danger' });
+      },
+      warning: (config: NotificationApiConfig) => {
+        addNotification({ ...config, variant: 'warning' });
+      },
+      info: (config: NotificationApiConfig) => {
+        addNotification({ ...config, variant: 'info' });
+      },
+      open: (config: NotificationApiConfig & { variant: NotificationVariant }) => {
+        addNotification(config);
+      },
+      close: (id: string) => {
+        removeNotification(id);
+      },
+      destroy: () => {
+        clearAll();
+      },
+    }),
+    [addNotification, removeNotification, clearAll]
+  );
+
+  // Crear el valor del contexto
+  const contextValue = React.useMemo<NotificationContextApiValue>(
+    () => ({
+      notifications,
+      addNotification,
+      removeNotification,
+      clearAll,
+    }),
+    [notifications, addNotification, removeNotification, clearAll]
+  );
+
+  // El contextHolder incluye el provider y el holder
+  const contextHolder = (
+    <NotificationContextApi.Provider value={contextValue}>
+      <NotificationContextHolder />
+    </NotificationContextApi.Provider>
+  );
+
+  return [api, contextHolder];
+};
+
+// Función helper para crear el hook con provider
+export const notification = {
+  useNotification: () => {
+    return useNotification();
+  },
+};
+
+// Exportar el provider para que se use en la raíz de la app
+export { NotificationProvider };
+

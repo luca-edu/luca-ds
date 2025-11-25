@@ -257,3 +257,300 @@ export const Toast: React.FC<ToastProps> = ({
 
 Toast.displayName = 'Toast';
 
+// ==================== API Hook Implementation ====================
+
+export interface ToastApiConfig {
+  message: React.ReactNode;
+  variant?: NotificationVariant;
+  icon?: React.ReactNode;
+  dismissible?: boolean;
+  position?: ToastPosition;
+  autoClose?: number | false;
+  closeButtonAriaLabel?: string;
+  className?: string;
+  onDismiss?: () => void;
+}
+
+interface ToastInstance extends ToastApiConfig {
+  id: string;
+  visible: boolean;
+}
+
+export type ToastApi = {
+  success: (config: ToastApiConfig) => void;
+  error: (config: ToastApiConfig) => void;
+  warning: (config: ToastApiConfig) => void;
+  info: (config: ToastApiConfig) => void;
+  open: (config: ToastApiConfig & { variant: NotificationVariant }) => void;
+  close: (id: string) => void;
+  destroy: () => void;
+};
+
+interface ToastContextValue {
+  toasts: ToastInstance[];
+  addToast: (toast: Omit<ToastInstance, 'id' | 'visible'>) => string;
+  removeToast: (id: string) => void;
+  clearAll: () => void;
+}
+
+const ToastContext = React.createContext<ToastContextValue | null>(null);
+
+const useToastContext = () => {
+  const context = React.useContext(ToastContext);
+  if (!context) {
+    throw new Error('useToast debe usarse dentro de ToastProvider');
+  }
+  return context;
+};
+
+// Provider para manejar el estado global de toasts
+const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [toasts, setToasts] = React.useState<ToastInstance[]>([]);
+
+  const addToast = React.useCallback((toast: Omit<ToastInstance, 'id' | 'visible'>) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const newToast: ToastInstance = {
+      ...toast,
+      id,
+      visible: true,
+    };
+    setToasts((prev) => [...prev, newToast]);
+    return id;
+  }, []);
+
+  const removeToast = React.useCallback((id: string) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  }, []);
+
+  const clearAll = React.useCallback(() => {
+    setToasts([]);
+  }, []);
+
+  const value = React.useMemo(
+    () => ({
+      toasts,
+      addToast,
+      removeToast,
+      clearAll,
+    }),
+    [toasts, addToast, removeToast, clearAll]
+  );
+
+  return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>;
+};
+
+// Componente ToastItem para usar dentro del context holder (sin posición fija)
+const ToastItem: React.FC<{
+  toast: ToastInstance;
+  onDismiss: (id: string) => void;
+  onRemove: (id: string) => void;
+}> = ({ toast, onDismiss, onRemove }) => {
+  const [isExiting, setIsExiting] = React.useState(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const exitTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleDismiss = React.useCallback(() => {
+    setIsExiting(true);
+    exitTimeoutRef.current = setTimeout(() => {
+      onRemove(toast.id);
+      onDismiss(toast.id);
+      setIsExiting(false);
+    }, 300);
+  }, [toast.id, onDismiss, onRemove]);
+
+  React.useEffect(() => {
+    if (toast.autoClose && typeof toast.autoClose === 'number' && toast.autoClose > 0 && toast.visible && !isExiting) {
+      timeoutRef.current = setTimeout(() => {
+        handleDismiss();
+      }, toast.autoClose);
+
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    }
+  }, [toast.autoClose, toast.visible, isExiting, handleDismiss]);
+
+  React.useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      if (exitTimeoutRef.current) {
+        clearTimeout(exitTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  if (!toast.visible && !isExiting) {
+    return null;
+  }
+
+  const animationClass = getAnimationClasses(toast.position || 'top-right', !isExiting && toast.visible);
+
+  return (
+    <div
+      className={cn(
+        'luca-relative',
+        toast.visible && !isExiting ? 'luca-pointer-events-auto' : 'luca-pointer-events-none',
+        animationClass
+      )}
+    >
+      <ToastContent
+        variant={toast.variant}
+        message={toast.message}
+        icon={toast.icon}
+        dismissible={toast.dismissible ?? false}
+        closeButtonAriaLabel={toast.closeButtonAriaLabel}
+        className={toast.className}
+        onDismiss={handleDismiss}
+      />
+    </div>
+  );
+};
+
+// Componente que renderiza todos los toasts agrupados por posición
+const ToastContextHolder: React.FC = () => {
+  const context = useToastContext();
+  const { toasts, removeToast } = context;
+
+  // Agrupar toasts por posición
+  const toastsByPosition = React.useMemo(() => {
+    const grouped: Record<ToastPosition, ToastInstance[]> = {
+      'top-left': [],
+      'top-center': [],
+      'top-right': [],
+      'bottom-left': [],
+      'bottom-center': [],
+      'bottom-right': [],
+      'left-center': [],
+      'right-center': [],
+    };
+
+    toasts.forEach((toast) => {
+      const position = toast.position || 'top-right';
+      grouped[position].push(toast);
+    });
+
+    return grouped;
+  }, [toasts]);
+
+  const handleDismiss = React.useCallback((id: string) => {
+    const toast = toasts.find((t) => t.id === id);
+    toast?.onDismiss?.();
+  }, [toasts]);
+
+  return (
+    <>
+      {Object.entries(toastsByPosition).map(([position, positionToasts]) => {
+        if (positionToasts.length === 0) return null;
+
+        const positionKey = position as ToastPosition;
+        const basePositionClass = positionClasses[positionKey];
+
+        return (
+          <div
+            key={position}
+            className={cn('luca-fixed luca-z-50 luca-flex luca-flex-col', basePositionClass)}
+            style={{
+              gap: '0.5rem',
+            }}
+          >
+            {positionToasts.map((toast) => (
+              <ToastItem
+                key={toast.id}
+                toast={toast}
+                onDismiss={handleDismiss}
+                onRemove={removeToast}
+              />
+            ))}
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+// Hook principal que retorna [api, contextHolder]
+// Este hook crea su propio provider interno
+export const useToast = (): [ToastApi, React.ReactElement] => {
+  const [toasts, setToasts] = React.useState<ToastInstance[]>([]);
+
+  const addToast = React.useCallback((toast: Omit<ToastInstance, 'id' | 'visible'>) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const newToast: ToastInstance = {
+      ...toast,
+      id,
+      visible: true,
+    };
+    setToasts((prev) => [...prev, newToast]);
+    return id;
+  }, []);
+
+  const removeToast = React.useCallback((id: string) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  }, []);
+
+  const clearAll = React.useCallback(() => {
+    setToasts([]);
+  }, []);
+
+  const api = React.useMemo<ToastApi>(
+    () => ({
+      success: (config: ToastApiConfig) => {
+        addToast({ ...config, variant: 'success' });
+      },
+      error: (config: ToastApiConfig) => {
+        addToast({ ...config, variant: 'danger' });
+      },
+      warning: (config: ToastApiConfig) => {
+        addToast({ ...config, variant: 'warning' });
+      },
+      info: (config: ToastApiConfig) => {
+        addToast({ ...config, variant: 'info' });
+      },
+      open: (config: ToastApiConfig & { variant: NotificationVariant }) => {
+        addToast(config);
+      },
+      close: (id: string) => {
+        removeToast(id);
+      },
+      destroy: () => {
+        clearAll();
+      },
+    }),
+    [addToast, removeToast, clearAll]
+  );
+
+  // Crear el valor del contexto
+  const contextValue = React.useMemo<ToastContextValue>(
+    () => ({
+      toasts,
+      addToast,
+      removeToast,
+      clearAll,
+    }),
+    [toasts, addToast, removeToast, clearAll]
+  );
+
+  // El contextHolder incluye el provider y el holder
+  const contextHolder = (
+    <ToastContext.Provider value={contextValue}>
+      <ToastContextHolder />
+    </ToastContext.Provider>
+  );
+
+  return [api, contextHolder];
+};
+
+// Función helper para crear el hook con provider
+export const toast = {
+  useToast: () => {
+    return useToast();
+  },
+};
+
+// Exportar el provider para que se use en la raíz de la app
+export { ToastProvider };
+
