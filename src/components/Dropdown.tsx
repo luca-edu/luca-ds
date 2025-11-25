@@ -591,7 +591,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           type="button"
           id={fieldId}
           className={cn(
-            'luca-flex luca-w-full luca-items-start luca-justify-between luca-rounded-md luca-border luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-transition-colors luca-duration-200',
+            'luca-flex luca-w-full luca-items-center luca-justify-between luca-rounded-md luca-border luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-transition-colors luca-duration-200',
             hasError
               ? 'luca-border-danger-500 focus:luca-border-danger-500 focus:luca-ring-2 focus:luca-ring-danger-200'
               : cn(
@@ -698,7 +698,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
           <MinusIcon size={12} />
         ) : null}
       </span>
-      <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-start luca-gap-0.5">
+      <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-center luca-gap-0.5">
           <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-break-words luca-text-left luca-w-full">
             {label}
           </span>
