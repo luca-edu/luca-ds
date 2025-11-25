@@ -66,6 +66,9 @@ export {
   Notification,
   NotificationAction,
   NotificationActions,
+  useNotification,
+  notification,
+  NotificationProvider,
 } from './components/Notification';
 export type {
   NotificationProps,
@@ -74,12 +77,16 @@ export type {
   NotificationActionVariant,
   NotificationActionsProps,
   NotificationPosition,
+  NotificationApiConfig,
+  NotificationApi,
 } from './components/Notification';
 
-export { Toast } from './components/Toast';
+export { Toast, useToast, toast, ToastProvider } from './components/Toast';
 export type {
   ToastProps,
   ToastPosition,
+  ToastApiConfig,
+  ToastApi,
 } from './components/Toast';
 
 export {

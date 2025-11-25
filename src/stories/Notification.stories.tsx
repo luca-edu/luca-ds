@@ -4,9 +4,11 @@ import {
   Notification,
   NotificationAction,
   NotificationActions,
+  notification,
   type NotificationPosition,
 } from '../components/Notification';
 import type { NotificationVariant } from '../types/variants';
+import { Button } from '../components/Button';
 
 const meta = {
   title: 'Components/Notification',
@@ -717,6 +719,425 @@ export const CustomIcon: Story = {
     docs: {
       description: {
         story: 'Puedes personalizar el icono pasando cualquier elemento React a la propiedad icon.',
+      },
+    },
+  },
+};
+
+// ==================== API Hook Stories ====================
+
+// Story usando el hook useNotification - Básico
+export const WithUseNotificationHook: Story = {
+  render: () => {
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {notificationContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Notification API - Hook useNotification</h3>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                notificationApi.success({
+                  title: 'Operación exitosa',
+                  description: 'Los cambios se guardaron correctamente usando la API',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Success Notification
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.error({
+                  title: 'Error',
+                  description: 'No se pudo completar la operación',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Error Notification
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.warning({
+                  title: 'Advertencia',
+                  description: 'Por favor revisa esta acción',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Warning Notification
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.info({
+                  title: 'Información',
+                  description: 'Hay nueva información disponible',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Info Notification
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Ejemplo de uso del hook useNotification() para mostrar notificaciones programáticamente. El contextHolder debe renderizarse una vez en la aplicación.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useNotification - Con auto-close
+export const WithUseNotificationHookAutoClose: Story = {
+  render: () => {
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {notificationContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Notification API - Con Auto-Close</h3>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                notificationApi.success({
+                  title: 'Éxito',
+                  description: 'Esta notificación se cerrará en 3 segundos',
+                  position: 'top-right',
+                  autoClose: 3000,
+                  dismissible: true,
+                })
+              }
+            >
+              Notification 3 segundos
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.info({
+                  title: 'Información',
+                  description: 'Esta notificación se cerrará en 5 segundos',
+                  position: 'top-center',
+                  autoClose: 5000,
+                  dismissible: true,
+                })
+              }
+            >
+              Notification 5 segundos
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.warning({
+                  title: 'Advertencia',
+                  description: 'Esta notificación no se cierra automáticamente',
+                  position: 'bottom-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Notification sin auto-close
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Ejemplos de notificaciones con diferentes tiempos de auto-close usando la API.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useNotification - Todas las posiciones
+export const WithUseNotificationHookPositions: Story = {
+  render: () => {
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
+
+    const positions: NotificationPosition[] = [
+      'top-left',
+      'top-center',
+      'top-right',
+      'bottom-left',
+      'bottom-center',
+      'bottom-right',
+    ];
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {notificationContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Notification API - Todas las Posiciones</h3>
+          <div className="luca-grid luca-grid-cols-3 luca-gap-4">
+            {positions.map((position) => (
+              <Button
+                key={position}
+                onClick={() =>
+                  notificationApi.success({
+                    title: 'Notificación',
+                    description: `Posición: ${position}`,
+                    position,
+                    dismissible: true,
+                  })
+                }
+              >
+                {position}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demostración de todas las posiciones disponibles usando la API.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useNotification - Apilado de múltiples notificaciones
+export const WithUseNotificationHookStacking: Story = {
+  render: () => {
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {notificationContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Notification API - Apilado Múltiple</h3>
+          <p className="luca-text-sm luca-text-neutral-600">
+            Haz clic varias veces para apilar múltiples notificaciones en la misma posición.
+          </p>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                notificationApi.success({
+                  title: 'Éxito',
+                  description: `Notificación Success #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Success
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.error({
+                  title: 'Error',
+                  description: `Notificación Error #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Error
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.warning({
+                  title: 'Advertencia',
+                  description: `Notificación Warning #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Warning
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.info({
+                  title: 'Información',
+                  description: `Notificación Info #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Info
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => notificationApi.destroy()}
+            >
+              Limpiar Todas
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demostración del apilado de múltiples notificaciones en la misma posición. Usa destroy() para limpiar todas las notificaciones.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useNotification - Con acciones
+export const WithUseNotificationHookActions: Story = {
+  render: () => {
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {notificationContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Notification API - Con Acciones</h3>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                notificationApi.success({
+                  title: 'Cambios guardados',
+                  description: 'Tu documento ha sido guardado exitosamente.',
+                  position: 'top-right',
+                  dismissible: true,
+                  actions: (
+                    <NotificationActions>
+                      <NotificationAction onClick={() => console.log('Ver cambios')}>
+                        Ver cambios
+                      </NotificationAction>
+                      <NotificationAction actionVariant="secondary" onClick={() => console.log('Deshacer')}>
+                        Deshacer
+                      </NotificationAction>
+                    </NotificationActions>
+                  ),
+                })
+              }
+            >
+              Notification con Acciones
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.info({
+                  title: 'Nueva actualización',
+                  description: 'Versión 2.0 disponible con nuevas características.',
+                  position: 'top-right',
+                  dismissible: true,
+                  actions: (
+                    <NotificationActions>
+                      <NotificationAction onClick={() => console.log('Actualizar ahora')}>
+                        Actualizar ahora
+                      </NotificationAction>
+                      <NotificationAction actionVariant="secondary" onClick={() => console.log('Recordar después')}>
+                        Recordar después
+                      </NotificationAction>
+                    </NotificationActions>
+                  ),
+                })
+              }
+            >
+              Notification con Acciones (Info)
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Notificaciones con acciones usando la API. Puedes incluir NotificationActions y NotificationAction en la propiedad actions.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useNotification - Método open
+export const WithUseNotificationHookOpen: Story = {
+  render: () => {
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {notificationContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Notification API - Método open()</h3>
+          <p className="luca-text-sm luca-text-neutral-600">
+            El método open() permite especificar cualquier variante manualmente.
+          </p>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                notificationApi.open({
+                  variant: 'success',
+                  title: 'Éxito',
+                  description: 'Notificación con método open() - Success',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Open Success
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.open({
+                  variant: 'danger',
+                  title: 'Error',
+                  description: 'Notificación con método open() - Danger',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Open Danger
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.open({
+                  variant: 'warning',
+                  title: 'Advertencia',
+                  description: 'Notificación con método open() - Warning (Auto-close)',
+                  position: 'top-right',
+                  autoClose: 4000,
+                  dismissible: true,
+                })
+              }
+            >
+              Open Warning (Auto-close)
+            </Button>
+            <Button
+              onClick={() =>
+                notificationApi.open({
+                  variant: 'info',
+                  title: 'Información',
+                  description: 'Notificación con método open() - Info',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Open Info
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Uso del método open() para crear notificaciones con cualquier variante especificada manualmente.',
       },
     },
   },

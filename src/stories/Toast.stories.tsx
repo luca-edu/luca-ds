@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Toast, type ToastPosition } from '../components/Toast';
+import { Toast, toast, type ToastPosition } from '../components/Toast';
 import { Button } from '../components/Button';
 import { variantOptions } from './shared/notificationShared';
 
@@ -299,6 +299,373 @@ export const MultipleToasts: Story = {
         </div>
       </div>
     );
+  },
+};
+
+// ==================== API Hook Stories ====================
+
+// Story usando el hook useToast - Básico
+export const WithUseToastHook: Story = {
+  args: {
+    variant: 'success',
+    message: 'Toast con método useToast() - Success',
+    position: 'top-right',
+    dismissible: true,
+  },
+  render: () => {
+    const [toastApi, toastContextHolder] = toast.useToast();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {toastContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Toast API - Hook useToast</h3>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                toastApi.success({
+                  message: 'Operación exitosa usando la API',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Success Toast
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.error({
+                  message: 'Error al procesar la solicitud',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Error Toast
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.warning({
+                  message: 'Advertencia: revisa los datos',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Warning Toast
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.info({
+                  message: 'Información importante',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Info Toast
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Ejemplo de uso del hook useToast() para mostrar toasts programáticamente. El contextHolder debe renderizarse una vez en la aplicación.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useToast - Con auto-close
+export const WithUseToastHookAutoClose: Story = {
+  args: {
+    variant: 'success',
+    message: 'Toast con método autoClose() - Success',
+    position: 'top-right',
+    dismissible: true,
+  },
+  render: () => {
+    const [toastApi, toastContextHolder] = toast.useToast();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {toastContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Toast API - Con Auto-Close</h3>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                toastApi.success({
+                  message: 'Este toast se cerrará en 3 segundos',
+                  position: 'top-right',
+                  autoClose: 3000,
+                  dismissible: true,
+                })
+              }
+            >
+              Toast 3 segundos
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.info({
+                  message: 'Este toast se cerrará en 5 segundos',
+                  position: 'top-center',
+                  autoClose: 5000,
+                  dismissible: true,
+                })
+              }
+            >
+              Toast 5 segundos
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.warning({
+                  message: 'Este toast no se cierra automáticamente',
+                  position: 'bottom-right',
+                  autoClose: false,
+                  dismissible: true,
+                })
+              }
+            >
+              Toast sin auto-close
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Ejemplos de toasts con diferentes tiempos de auto-close usando la API.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useToast - Múltiples posiciones
+export const WithUseToastHookPositions: Story = {
+  args: {
+    variant: 'success',
+    message: 'Toast con método positions() - Success',
+    position: 'top-right',
+    dismissible: true,
+  },
+  render: () => {
+    const [toastApi, toastContextHolder] = toast.useToast();
+
+    const positions: ToastPosition[] = [
+      'top-left',
+      'top-center',
+      'top-right',
+      'bottom-left',
+      'bottom-center',
+      'bottom-right',
+      'left-center',
+      'right-center',
+    ];
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {toastContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Toast API - Todas las Posiciones</h3>
+          <div className="luca-grid luca-grid-cols-4 luca-gap-4">
+            {positions.map((position) => (
+              <Button
+                key={position}
+                onClick={() =>
+                  toastApi.success({
+                    message: `Toast en ${position}`,
+                    position,
+                    dismissible: true,
+                  })
+                }
+              >
+                {position}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demostración de todas las posiciones disponibles usando la API.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useToast - Apilado de múltiples toasts
+export const WithUseToastHookStacking: Story = {
+  args: {
+    variant: 'success',
+    message: 'Toast con método stacking() - Success',
+    position: 'top-right',
+    dismissible: true,
+  },
+  render: () => {
+    const [toastApi, toastContextHolder] = toast.useToast();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {toastContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Toast API - Apilado Múltiple</h3>
+          <p className="luca-text-sm luca-text-neutral-600">
+            Haz clic varias veces para apilar múltiples toasts en la misma posición.
+          </p>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                toastApi.success({
+                  message: `Toast Success #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Success Toast
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.error({
+                  message: `Toast Error #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Error Toast
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.warning({
+                  message: `Toast Warning #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Warning Toast
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.info({
+                  message: `Toast Info #${Date.now()}`,
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Agregar Info Toast
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => toastApi.destroy()}
+            >
+              Limpiar Todos
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demostración del apilado de múltiples toasts en la misma posición. Usa destroy() para limpiar todos los toasts.',
+      },
+    },
+  },
+};
+
+// Story usando el hook useToast - Método open
+export const WithUseToastHookOpen: Story = {
+  args: {
+    variant: 'success',
+    message: 'Toast con método open() - Success',
+    position: 'top-right',
+    dismissible: true,
+  },
+  render: () => {
+    const [toastApi, toastContextHolder] = toast.useToast();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {toastContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Toast API - Método open()</h3>
+          <p className="luca-text-sm luca-text-neutral-600">
+            El método open() permite especificar cualquier variante manualmente.
+          </p>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                toastApi.open({
+                  variant: 'success',
+                  message: 'Toast con método open() - Success',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Open Success
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.open({
+                  variant: 'danger',
+                  message: 'Toast con método open() - Danger',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Open Danger
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.open({
+                  variant: 'warning',
+                  message: 'Toast con método open() - Warning',
+                  position: 'top-right',
+                  autoClose: 4000,
+                  dismissible: true,
+                })
+              }
+            >
+              Open Warning (Auto-close)
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.open({
+                  variant: 'info',
+                  message: 'Toast con método open() - Info',
+                  position: 'top-right',
+                  dismissible: true,
+                })
+              }
+            >
+              Open Info
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Uso del método open() para crear toasts con cualquier variante especificada manualmente.',
+      },
+    },
   },
 };
 
