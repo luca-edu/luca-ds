@@ -34,6 +34,10 @@ export interface DropdownProps {
     virtualizationThreshold?: number;
     virtualListHeight?: number;
     virtualItemHeight?: number;
+    required?: boolean;
+    tooltip?: string;
+    helpText?: string;
+    message?: React.ReactNode;
 }
 export declare const Dropdown: React.FC<DropdownProps>;
 export interface DropdownItemProps {

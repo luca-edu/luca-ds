@@ -7,6 +7,8 @@ import {
 import VirtualList from 'rc-virtual-list';
 import { cn } from '../utils/cn';
 import { ChevronDownIcon, CheckIcon, MinusIcon } from '../shared/icons';
+import { Tooltip } from './Tooltip';
+import { QuestionIcon } from '../shared/icons';
 
 type DropdownSize = 'sm' | 'md' | 'lg';
 
@@ -53,6 +55,10 @@ export interface DropdownProps {
   virtualizationThreshold?: number;
   virtualListHeight?: number;
   virtualItemHeight?: number;
+  required?: boolean;
+  tooltip?: string;
+  helpText?: string;
+  message?: React.ReactNode;
 }
 
 const sizeStyles: Record<DropdownSize, string> = {
@@ -221,6 +227,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
   virtualizationThreshold = 10,
   virtualListHeight = 256,
   virtualItemHeight = 40,
+  required = false,
+  tooltip,
+  helpText,
+  message,
 }) => {
   const [internalValue, setInternalValue] = React.useState<string[]>(
     defaultValue ?? []
@@ -517,6 +527,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
     getItemValue,
   ]);
 
+  const generatedId = React.useId();
+  const fieldId = `dropdown-${generatedId}`;
+  const helpTextId = helpText ? `${fieldId}-help` : undefined;
+  const messageId = message ? `${fieldId}-message` : undefined;
+  const hasError = Boolean(message);
+
   return (
     <div
       className={cn(
@@ -524,12 +540,43 @@ export const Dropdown: React.FC<DropdownProps> = ({
         wrapperClassName
       )}
     >
-      {label && (
-        <label className="luca-text-sm luca-font-medium luca-leading-6 luca-text-neutral-900">
-          {label}
-        </label>
+      {(label || tooltip) && (
+        <div className="luca-flex luca-items-center luca-gap-2">
+          {label && (
+            <label
+              htmlFor={fieldId}
+              className="luca-flex luca-items-center luca-gap-1 luca-text-base luca-font-medium luca-leading-6 luca-text-neutral-900"
+            >
+              <span>
+                {label}
+                {required && <span className="luca-text-danger-500 luca-pl-1">*</span>}
+              </span>
+            </label>
+          )}
+          {tooltip && (
+            <Tooltip content={tooltip}>
+              <button
+                type="button"
+                className="luca-inline-flex luca-h-5 luca-w-5 luca-items-center luca-justify-center luca-text-primary-600"
+              >
+                <QuestionIcon size={16} />
+              </button>
+            </Tooltip>
+          )}
+        </div>
       )}
-      <AntDropdown
+
+      {helpText && (
+        <p
+          id={helpTextId}
+          className="luca-text-xs luca-font-normal luca-leading-6 luca-text-neutral-400"
+        >
+          {helpText}
+        </p>
+      )}
+
+      <div className="luca-flex luca-flex-col luca-gap-1">
+        <AntDropdown
         trigger={['click']}
         disabled={disabled}
         open={open}
@@ -542,16 +589,21 @@ export const Dropdown: React.FC<DropdownProps> = ({
       >
         <button
           type="button"
+          id={fieldId}
           className={cn(
             'luca-flex luca-w-full luca-items-start luca-justify-between luca-rounded-md luca-border luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-transition-colors luca-duration-200',
-            colors.border,
-            colors.borderHover,
+            hasError
+              ? 'luca-border-danger-500 focus:luca-border-danger-500 focus:luca-ring-2 focus:luca-ring-danger-200'
+              : cn(
+                  colors.border,
+                  colors.borderHover,
+                  colors.borderFocus,
+                  colors.textFocus,
+                  'focus:luca-outline-none focus:luca-ring-2',
+                  colors.ring
+                ),
             colors.text,
             colors.textHover,
-            colors.borderFocus,
-            colors.textFocus,
-            'focus:luca-outline-none focus:luca-ring-2',
-            colors.ring,
             disabled &&
               'luca-cursor-not-allowed luca-border-neutral-200 luca-bg-neutral-100 luca-text-neutral-400',
             sizeStyles[size],
@@ -560,13 +612,25 @@ export const Dropdown: React.FC<DropdownProps> = ({
           disabled={disabled}
           aria-haspopup="listbox"
           aria-expanded={open}
+          aria-invalid={hasError || undefined}
+          aria-describedby={[helpTextId, messageId].filter(Boolean).join(' ') || undefined}
         >
           <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left">
             {summaryContent}
           </div>
-          <ChevronDownIcon size={16} className={colors.icon} />
+          <ChevronDownIcon size={16} className={hasError ? 'luca-text-danger-500' : colors.icon} />
         </button>
       </AntDropdown>
+
+        {hasError && message && (
+          <p
+            id={messageId}
+            className="luca-text-xs luca-font-medium luca-leading-6 luca-text-danger-500"
+          >
+            {message}
+          </p>
+        )}
+      </div>
     </div>
   );
 };
