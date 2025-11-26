@@ -139,5 +139,8 @@ export type {
   SidebarSubmenuItem,
 } from './components/Sidebar';
 
+export { AudioVisualizer } from './components/AudioVisualizer';
+export type { AudioVisualizerProps } from './components/AudioVisualizer';
+
 // Utils
 export { cn } from './utils/cn';

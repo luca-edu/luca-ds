@@ -14,6 +14,8 @@ import { AllVariants as NotificationAllVariants } from './Notification.stories';
 import { AllVariants as ToastAllVariants } from './Toast.stories';
 import { AllVariants as AmountButtonAllVariants } from './AmountButton.stories';
 import { AllStates as ButtonIconAllStates } from './ButtonIcon.stories';
+import { AllVariants as ProgressBarAllVariants } from './ProgressBar.stories';
+import { AllVariations as AudioVisualizerAllVariations } from './AudioVisualizer.stories';
 
 // Import actual components for rendering
 import { useState } from 'react';
@@ -72,7 +74,7 @@ const ComponentShowcase = () => {
           }}
         >
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '36px', fontWeight: 700 }}>20+</div>
+            <div style={{ fontSize: '36px', fontWeight: 700 }}>25+</div>
             <div style={{ fontSize: '14px', opacity: 0.8, marginTop: '4px' }}>Components</div>
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -312,6 +314,22 @@ function App() {
         {/* Button Icon */}
         <ComponentSection title="Button Icon" description="Icon-only buttons in various sizes">
           {ButtonIconAllStates.render?.({} as any, {} as any)}
+        </ComponentSection>
+
+        {/* Progress Bar */}
+        <ComponentSection
+          title="Progress Bar"
+          description="Visual progress indicator with multiple variants and customization options"
+        >
+          {ProgressBarAllVariants.render?.({} as any, {} as any)}
+        </ComponentSection>
+
+        {/* Audio Visualizer */}
+        <ComponentSection
+          title="Audio Visualizer"
+          description="Audio player with waveform visualization and progress tracking"
+        >
+          {AudioVisualizerAllVariations.render?.()}
         </ComponentSection>
 
         {/* Card */}
