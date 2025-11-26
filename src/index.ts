@@ -142,5 +142,8 @@ export type {
 export { AudioVisualizer } from './components/AudioVisualizer';
 export type { AudioVisualizerProps } from './components/AudioVisualizer';
 
+export { TextBox } from './components/TextBox';
+export type { TextBoxProps } from './components/TextBox';
+
 // Utils
 export { cn } from './utils/cn';
