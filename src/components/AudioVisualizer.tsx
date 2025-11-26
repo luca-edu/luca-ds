@@ -83,7 +83,7 @@ export const AudioVisualizer = React.forwardRef<HTMLDivElement, AudioVisualizerP
     },
     ref
   ) => {
-    // Calculate progress from currentTime/duration if not provided
+    // Calculate progress from current time between duration
     const progress =
       propProgress !== undefined ? propProgress : duration > 0 ? (currentTime / duration) * 100 : 0;
 
