@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { TextBox } from '../components/TextBox';
@@ -88,7 +89,9 @@ export const Interactive: Story = {
         <div className="luca-space-y-2">
           <h3 className="luca-text-lg luca-font-semibold">Submitted Messages:</h3>
           {messages.length === 0 ? (
-            <p className="luca-text-neutral-400">No messages yet. Type and press Enter or click send.</p>
+            <p className="luca-text-neutral-400">
+              No messages yet. Type and press Enter or click send.
+            </p>
           ) : (
             <div className="luca-space-y-2">
               {messages.map((msg, idx) => (

@@ -2,7 +2,8 @@ import React, { useRef, useEffect, KeyboardEvent } from 'react';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { cn } from '../utils/cn';
 
-export interface TextBoxProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onSubmit'> {
+export interface TextBoxProps
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onSubmit'> {
   /**
    * Placeholder text shown when textarea is empty
    * @default "Write answer"
@@ -109,15 +110,15 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
       >
         <div
           className={cn(
-            'luca-flex-1 luca-min-h-px luca-min-w-px luca-w-full luca-relative luca-z-[1]',
+            'luca-flex-1 luca-min-h-[96px] luca-w-full luca-relative luca-z-[1]',
             'luca-bg-white luca-rounded-[16px]',
             'luca-border luca-border-solid luca-border-neutral-200',
             disabled && 'luca-opacity-60 luca-cursor-not-allowed'
           )}
         >
-          <div className="luca-box-border luca-flex luca-gap-4 luca-items-center luca-overflow-clip luca-p-4 luca-relative luca-rounded-[inherit] luca-size-full">
+          <div className="luca-box-border luca-flex luca-flex-col luca-gap-4 luca-overflow-clip luca-p-4 luca-relative luca-rounded-[inherit] luca-w-full luca-h-full">
             {/* Textarea Container */}
-            <div className="luca-flex luca-flex-1 luca-flex-col luca-h-full luca-items-start luca-min-h-px luca-min-w-px luca-relative luca-shrink-0">
+            <div className="luca-flex luca-flex-1 luca-flex-col luca-items-start luca-relative">
               <textarea
                 ref={setRefs}
                 value={value}
@@ -127,7 +128,7 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
                 maxLength={maxLength}
                 disabled={disabled}
                 className={cn(
-                  'luca-flex-1 luca-min-h-px luca-min-w-px luca-w-full',
+                  'luca-w-full luca-h-full',
                   'luca-font-sans luca-text-base luca-leading-6',
                   'luca-resize-none luca-overflow-hidden',
                   'luca-bg-transparent luca-border-none luca-outline-none',
@@ -142,8 +143,8 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
               />
             </div>
 
-            {/* Submit Button */}
-            <div className="luca-flex luca-gap-[10px] luca-h-full luca-items-end luca-justify-end luca-relative luca-shrink-0">
+            {/* Submit Button Container */}
+            <div className="luca-flex luca-justify-end luca-items-end">
               <button
                 type="button"
                 onClick={handleSubmit}
