@@ -119,14 +119,9 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
     const isControlled = value !== undefined;
     const colors = variantColors[variant];
 
-    const firstEnabledKey = React.useMemo(
-      () => items.find((item) => !item.disabled)?.key,
-      [items]
-    );
+    const firstEnabledKey = React.useMemo(() => items.find((item) => !item.disabled)?.key, [items]);
 
-    const [uncontrolledValue, setUncontrolledValue] = React.useState<
-      string | undefined
-    >(() => {
+    const [uncontrolledValue, setUncontrolledValue] = React.useState<string | undefined>(() => {
       if (defaultValue !== undefined) return defaultValue;
       return firstEnabledKey;
     });
@@ -135,19 +130,14 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
       if (isControlled) return;
       if (defaultValue === undefined) return;
 
-      const defaultExists = items.some(
-        (item) => item.key === defaultValue && !item.disabled
-      );
+      const defaultExists = items.some((item) => item.key === defaultValue && !item.disabled);
       setUncontrolledValue(defaultExists ? defaultValue : firstEnabledKey);
     }, [defaultValue, firstEnabledKey, isControlled, items]);
 
     React.useEffect(() => {
       if (isControlled) return;
       setUncontrolledValue((current) => {
-        if (
-          current &&
-          items.some((item) => item.key === current && !item.disabled)
-        ) {
+        if (current && items.some((item) => item.key === current && !item.disabled)) {
           return current;
         }
         return firstEnabledKey ?? current;
@@ -186,21 +176,35 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
       }
 
       if (style === 'underline') {
-        const borderClass = variant === 'primary' ? 'luca-border-b-primary-600' :
-                           variant === 'accent' ? 'luca-border-b-accent-600' :
-                           variant === 'success' ? 'luca-border-b-success-600' :
-                           variant === 'warning' ? 'luca-border-b-warning-600' :
-                           variant === 'danger' ? 'luca-border-b-danger-600' :
-                           variant === 'info' ? 'luca-border-b-info-600' :
-                           'luca-border-b-neutral-600';
+        const borderClass =
+          variant === 'primary'
+            ? 'luca-border-b-primary-600'
+            : variant === 'accent'
+              ? 'luca-border-b-accent-600'
+              : variant === 'success'
+                ? 'luca-border-b-success-600'
+                : variant === 'warning'
+                  ? 'luca-border-b-warning-600'
+                  : variant === 'danger'
+                    ? 'luca-border-b-danger-600'
+                    : variant === 'info'
+                      ? 'luca-border-b-info-600'
+                      : 'luca-border-b-neutral-600';
 
-        const hoverBorderClass = variant === 'primary' ? 'hover:luca-border-b-primary-600' :
-                                 variant === 'accent' ? 'hover:luca-border-b-accent-600' :
-                                 variant === 'success' ? 'hover:luca-border-b-success-600' :
-                                 variant === 'warning' ? 'hover:luca-border-b-warning-600' :
-                                 variant === 'danger' ? 'hover:luca-border-b-danger-600' :
-                                 variant === 'info' ? 'hover:luca-border-b-info-600' :
-                                 'hover:luca-border-b-neutral-600';
+        const hoverBorderClass =
+          variant === 'primary'
+            ? 'hover:luca-border-b-primary-600'
+            : variant === 'accent'
+              ? 'hover:luca-border-b-accent-600'
+              : variant === 'success'
+                ? 'hover:luca-border-b-success-600'
+                : variant === 'warning'
+                  ? 'hover:luca-border-b-warning-600'
+                  : variant === 'danger'
+                    ? 'hover:luca-border-b-danger-600'
+                    : variant === 'info'
+                      ? 'hover:luca-border-b-info-600'
+                      : 'hover:luca-border-b-neutral-600';
 
         const activeText = colors.inactiveHover;
 
@@ -227,20 +231,12 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
     };
 
     return (
-      <div
-        ref={ref}
-        role="tablist"
-        aria-label={ariaLabel}
-        className={containerStyles}
-        {...props}
-      >
+      <div ref={ref} role="tablist" aria-label={ariaLabel} className={containerStyles} {...props}>
         {items.map((item) => {
           const isSelected = item.key === currentValue;
           const disabled = Boolean(item.disabled);
           const computedTabIndex =
-            isSelected || (!currentValue && item.key === firstEnabledKey)
-              ? 0
-              : -1;
+            isSelected || (!currentValue && item.key === firstEnabledKey) ? 0 : -1;
 
           return (
             <button
@@ -292,4 +288,3 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
 NavTabs.displayName = 'NavTabs';
 
 export default NavTabs;
-

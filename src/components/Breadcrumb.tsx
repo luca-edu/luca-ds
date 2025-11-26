@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '../utils/cn';
-import { ArrowLeftOutlined } from "@ant-design/icons"
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
@@ -42,17 +42,11 @@ export const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProp
   ({ className, children, href, isCurrentPage = false, icon, ...props }, ref) => {
     const content = (
       <div className="luca-flex luca-h-6 luca-items-center luca-gap-1 luca-px-1">
-        {icon && (
-          <span className="luca-text-gray-500">
-            {icon}
-          </span>
-        )}
+        {icon && <span className="luca-text-gray-500">{icon}</span>}
         <span
           className={cn(
             'luca-text-base luca-font-normal luca-leading-5',
-            isCurrentPage
-              ? 'luca-text-gray-500'
-              : 'luca-text-[#3843D0] hover:luca-underline'
+            isCurrentPage ? 'luca-text-gray-500' : 'luca-text-[#3843D0] hover:luca-underline'
           )}
         >
           {children}
@@ -63,10 +57,7 @@ export const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProp
     return (
       <li
         ref={ref}
-        className={cn(
-          'luca-inline-flex luca-items-center luca-gap-1 luca-rounded-md',
-          className
-        )}
+        className={cn('luca-inline-flex luca-items-center luca-gap-1 luca-rounded-md', className)}
         {...props}
       >
         {href && !isCurrentPage ? (

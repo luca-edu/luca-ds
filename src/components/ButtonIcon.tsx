@@ -6,13 +6,12 @@ const buttonIconVariants = {
     default: 'luca-bg-white luca-border-[#e5e7eb] luca-text-[#3843d0]',
     hover: 'luca-bg-[#edf5ff] luca-border-[#e5e7eb] luca-text-[#3843d0]',
     selected: 'luca-bg-[#3843d0] luca-border-[#3843d0] luca-text-white',
-    disabled:
-      'luca-bg-[#f3f4f6] luca-border-[#e5e7eb] luca-text-[#9ca3af] luca-cursor-not-allowed'
+    disabled: 'luca-bg-[#f3f4f6] luca-border-[#e5e7eb] luca-text-[#9ca3af] luca-cursor-not-allowed',
   },
   outline: {
     default: 'luca-rounded-lg',
-    rounded: 'luca-rounded-full'
-  }
+    rounded: 'luca-rounded-full',
+  },
 };
 
 const buttonIconSizeStyles: Record<ButtonIconSize, { container: string; icon: string }> = {
@@ -49,15 +48,7 @@ export interface ButtonIconProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 
 export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
   (
-    {
-      state = 'default',
-      outline = 'default',
-      size = 'md',
-      icon,
-      className,
-      disabled,
-      ...props
-    },
+    { state = 'default', outline = 'default', size = 'md', icon, className, disabled, ...props },
     ref
   ) => {
     // Si el estado es disabled, forzamos disabled=true en el botón

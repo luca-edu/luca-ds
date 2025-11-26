@@ -13,7 +13,7 @@ export type RadioButtonVariant =
 export type RadioButtonStyle = 'default' | 'filled';
 
 export interface RadioButtonProps
-extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {
   label?: string;
   variant?: RadioButtonVariant;
   style?: RadioButtonStyle;
@@ -100,10 +100,7 @@ const variantColors: Record<
   },
 };
 
-export const RadioButton = React.forwardRef<
-  HTMLInputElement,
-  RadioButtonProps
->(
+export const RadioButton = React.forwardRef<HTMLInputElement, RadioButtonProps>(
   (
     {
       label,
@@ -136,19 +133,11 @@ export const RadioButton = React.forwardRef<
         !disabled &&
         'luca-bg-white luca-border-neutral-200 hover:luca-border-neutral-300',
       // Estado hover (unchecked)
-      !isChecked &&
-        !disabled &&
-        `hover:${colors.borderHover}`,
+      !isChecked && !disabled && `hover:${colors.borderHover}`,
       // Estado checked - default style
-      isChecked &&
-        !isFilled &&
-        !disabled &&
-        `${colors.bg} ${colors.border}`,
+      isChecked && !isFilled && !disabled && `${colors.bg} ${colors.border}`,
       // Estado checked - filled style (fondo claro con borde oscuro)
-      isChecked &&
-        isFilled &&
-        !disabled &&
-        `${colors.bgFilled} ${colors.borderFilled}`,
+      isChecked && isFilled && !disabled && `${colors.bgFilled} ${colors.borderFilled}`,
       // Estado disabled
       disabled &&
         'luca-bg-neutral-100 luca-border-neutral-200 luca-cursor-not-allowed luca-opacity-60',
@@ -159,26 +148,15 @@ export const RadioButton = React.forwardRef<
     const dotClasses = cn(
       'luca-absolute luca-size-2.5 luca-rounded-full luca-transition-all luca-duration-200',
       // Punto para estilo default
-      isChecked &&
-        !isFilled &&
-        !disabled &&
-        colors.dot,
+      isChecked && !isFilled && !disabled && colors.dot,
       // Punto para estilo filled
-      isChecked &&
-        isFilled &&
-        !disabled &&
-        colors.dotFilled,
+      isChecked && isFilled && !disabled && colors.dotFilled,
       // Sin punto cuando no está checked
       !isChecked && 'luca-opacity-0'
     );
 
     return (
-      <div
-        className={cn(
-          'luca-flex luca-items-center luca-gap-2.5',
-          wrapperClassName
-        )}
-      >
+      <div className={cn('luca-flex luca-items-center luca-gap-2.5', wrapperClassName)}>
         <div className="luca-relative luca-shrink-0">
           <input
             ref={ref}
@@ -196,10 +174,7 @@ export const RadioButton = React.forwardRef<
           />
           <label
             htmlFor={radioId}
-            className={cn(
-              'luca-cursor-pointer',
-              disabled && 'luca-cursor-not-allowed'
-            )}
+            className={cn('luca-cursor-pointer', disabled && 'luca-cursor-not-allowed')}
           >
             <div className={radioCircleClasses}>
               <div className={dotClasses} />
@@ -225,4 +200,3 @@ export const RadioButton = React.forwardRef<
 RadioButton.displayName = 'RadioButton';
 
 export default RadioButton;
-

@@ -51,6 +51,7 @@ A versatile button component with multiple variants and sizes.
 ```
 
 Props:
+
 - `variant`: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'
 - `size`: 'sm' | 'md' | 'lg'
 
@@ -77,13 +78,12 @@ A flexible card component with header, title, and content sections.
   <CardHeader>
     <CardTitle>Card Title</CardTitle>
   </CardHeader>
-  <CardContent>
-    Card content goes here
-  </CardContent>
+  <CardContent>Card content goes here</CardContent>
 </Card>
 ```
 
 Props:
+
 - `variant`: 'default' | 'outlined' | 'elevated'
 
 ## Development

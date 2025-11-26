@@ -67,9 +67,10 @@ const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
             variant: 'secondary',
             rightIcon: <DeleteOutlined />,
             onClick: () => {
-            console.log('Primary button clicked');
-            setIsOpen(false);
-          }},
+              console.log('Primary button clicked');
+              setIsOpen(false);
+            },
+          },
           {
             text: 'Aceptar',
             variant: 'tertiary',
@@ -82,7 +83,7 @@ const ModalWrapper = (args: React.ComponentProps<typeof Modal>) => {
         ]}
       />
     </>
-  )
+  );
 };
 
 export const WithSubtitle: Story = {
@@ -164,8 +165,7 @@ export const NoEscapeClose: Story = {
     isOpen: false,
     onClose: () => {},
     title: 'Confirmación crítica',
-    description:
-      'Esta es una acción crítica. No puedes cerrar este modal con la tecla Escape.',
+    description: 'Esta es una acción crítica. No puedes cerrar este modal con la tecla Escape.',
     buttons: [
       {
         text: 'CANCELAR',
@@ -289,7 +289,7 @@ export const ThreeButtons: Story = {
 export const TertiaryButtons: Story = {
   render: (args) => <ModalWrapper {...args} />,
   args: {
-    isOpen: false, 
+    isOpen: false,
     onClose: () => {},
     title: 'Opciones adicionales',
     description: 'Estos botones usan la variante terciaria.',
@@ -406,11 +406,7 @@ export const NoButtons: Story = {
         >
           Abrir Modal
         </button>
-        <Modal
-          {...args}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        >
+        <Modal {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
           <div className="luca-mb-6">
             <p className="luca-text-gray-700">
               Este modal no tiene botones predefinidos. El contenido personalizado va aquí.

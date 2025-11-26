@@ -77,14 +77,7 @@ export const Default: Story = {
   },
   render: (args) => {
     const [value, setValue] = useState('home');
-    return (
-      <NavTabs
-        {...args}
-        items={defaultItems}
-        value={value}
-        onValueChange={setValue}
-      />
-    );
+    return <NavTabs {...args} items={defaultItems} value={value} onValueChange={setValue} />;
   },
 };
 
@@ -133,14 +126,7 @@ export const WithIcons: Story = {
   },
   render: (args) => {
     const [value, setValue] = useState('home');
-    return (
-      <NavTabs
-        {...args}
-        items={itemsWithIcons}
-        value={value}
-        onValueChange={setValue}
-      />
-    );
+    return <NavTabs {...args} items={itemsWithIcons} value={value} onValueChange={setValue} />;
   },
 };
 
@@ -162,21 +148,23 @@ export const AllVariants: Story = {
 
     return (
       <div className="luca-flex luca-flex-col luca-gap-6">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map((variant) => (
-          <div key={variant} className="luca-flex luca-flex-col luca-gap-2">
-            <span className="luca-text-sm luca-font-medium luca-text-neutral-700">
-              {variant}:
-            </span>
-            <NavTabs
-              variant={variant}
-              items={defaultItems}
-              value={values[variant]}
-              onValueChange={(newValue) =>
-                setValues((prev) => ({ ...prev, [variant]: newValue }))
-              }
-            />
-          </div>
-        ))}
+        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
+          (variant) => (
+            <div key={variant} className="luca-flex luca-flex-col luca-gap-2">
+              <span className="luca-text-sm luca-font-medium luca-text-neutral-700">
+                {variant}:
+              </span>
+              <NavTabs
+                variant={variant}
+                items={defaultItems}
+                value={values[variant]}
+                onValueChange={(newValue) =>
+                  setValues((prev) => ({ ...prev, [variant]: newValue }))
+                }
+              />
+            </div>
+          )
+        )}
       </div>
     );
   },
@@ -195,20 +183,11 @@ export const AllStyles: Story = {
     return (
       <div className="luca-flex luca-flex-col luca-gap-6">
         <div className="luca-flex luca-flex-col luca-gap-2">
-          <span className="luca-text-sm luca-font-medium luca-text-neutral-700">
-            Default:
-          </span>
-          <NavTabs
-            items={defaultItems}
-            value={value1}
-            onValueChange={setValue1}
-            style="default"
-          />
+          <span className="luca-text-sm luca-font-medium luca-text-neutral-700">Default:</span>
+          <NavTabs items={defaultItems} value={value1} onValueChange={setValue1} style="default" />
         </div>
         <div className="luca-flex luca-flex-col luca-gap-2">
-          <span className="luca-text-sm luca-font-medium luca-text-neutral-700">
-            Underline:
-          </span>
+          <span className="luca-text-sm luca-font-medium luca-text-neutral-700">Underline:</span>
           <NavTabs
             items={defaultItems}
             value={value2}
@@ -217,15 +196,8 @@ export const AllStyles: Story = {
           />
         </div>
         <div className="luca-flex luca-flex-col luca-gap-2">
-          <span className="luca-text-sm luca-font-medium luca-text-neutral-700">
-            Pills:
-          </span>
-          <NavTabs
-            items={defaultItems}
-            value={value3}
-            onValueChange={setValue3}
-            style="pills"
-          />
+          <span className="luca-text-sm luca-font-medium luca-text-neutral-700">Pills:</span>
+          <NavTabs items={defaultItems} value={value3} onValueChange={setValue3} style="pills" />
         </div>
       </div>
     );
@@ -250,14 +222,7 @@ export const WithDisabled: Story = {
       { key: 'services', label: 'Services' },
       { key: 'contact', label: 'Contact', disabled: true },
     ];
-    return (
-      <NavTabs
-        {...args}
-        items={itemsWithDisabled}
-        value={value}
-        onValueChange={setValue}
-      />
-    );
+    return <NavTabs {...args} items={itemsWithDisabled} value={value} onValueChange={setValue} />;
   },
 };
 
@@ -270,15 +235,8 @@ export const FullWidth: Story = {
     const [value, setValue] = useState('home');
     return (
       <div className="luca-w-full luca-max-w-2xl">
-        <NavTabs
-          {...args}
-          items={defaultItems}
-          value={value}
-          onValueChange={setValue}
-          fullWidth
-        />
+        <NavTabs {...args} items={defaultItems} value={value} onValueChange={setValue} fullWidth />
       </div>
     );
   },
 };
-

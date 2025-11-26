@@ -56,12 +56,9 @@ function useFieldValue<T extends HTMLInputElement | HTMLTextAreaElement>({
 
   const currentValue = isControlled ? valueToString(value) : uncontrolledValue;
 
-  const handleUncontrolledChange = React.useCallback(
-    (event: React.ChangeEvent<T>) => {
-      setUncontrolledValue(event.target.value);
-    },
-    []
-  );
+  const handleUncontrolledChange = React.useCallback((event: React.ChangeEvent<T>) => {
+    setUncontrolledValue(event.target.value);
+  }, []);
 
   return {
     isControlled,
@@ -106,15 +103,9 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
     const generatedId = React.useId();
     const fieldId = idProp ?? generatedId;
     const helpTextId = helpText ? `${fieldId}-help` : undefined;
-    const messageId =
-      status === 'danger' && message ? `${fieldId}-message` : undefined;
-    const composedDescribedBy = [
-      helpTextId,
-      messageId,
-      rest['aria-describedby'],
-    ]
-      .filter(Boolean)
-      .join(' ') || undefined;
+    const messageId = status === 'danger' && message ? `${fieldId}-message` : undefined;
+    const composedDescribedBy =
+      [helpTextId, messageId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
     const { isControlled, currentValue, handleUncontrolledChange } =
       useFieldValue<HTMLInputElement>({ value, defaultValue });
@@ -158,12 +149,7 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
     );
 
     return (
-      <div
-        className={cn(
-          'luca-flex luca-w-full luca-flex-col luca-gap-2',
-          wrapperClassName
-        )}
-      >
+      <div className={cn('luca-flex luca-w-full luca-flex-col luca-gap-2', wrapperClassName)}>
         {(label || tooltip) && (
           <div className="luca-flex luca-items-center luca-gap-2">
             {label && (
@@ -253,10 +239,7 @@ export interface TextAreaFieldProps
 
 type AntTextAreaRef = React.ComponentRef<typeof Input.TextArea>;
 
-export const TextAreaField = React.forwardRef<
-  AntTextAreaRef,
-  TextAreaFieldProps
->(
+export const TextAreaField = React.forwardRef<AntTextAreaRef, TextAreaFieldProps>(
   (
     {
       label,
@@ -284,15 +267,9 @@ export const TextAreaField = React.forwardRef<
     const generatedId = React.useId();
     const fieldId = idProp ?? generatedId;
     const helpTextId = helpText ? `${fieldId}-help` : undefined;
-    const messageId =
-      status === 'danger' && message ? `${fieldId}-message` : undefined;
-    const composedDescribedBy = [
-      helpTextId,
-      messageId,
-      rest['aria-describedby'],
-    ]
-      .filter(Boolean)
-      .join(' ') || undefined;
+    const messageId = status === 'danger' && message ? `${fieldId}-message` : undefined;
+    const composedDescribedBy =
+      [helpTextId, messageId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
     const { isControlled, currentValue, handleUncontrolledChange } =
       useFieldValue<HTMLTextAreaElement>({ value, defaultValue });
@@ -336,12 +313,7 @@ export const TextAreaField = React.forwardRef<
     );
 
     return (
-      <div
-        className={cn(
-          'luca-flex luca-w-full luca-flex-col luca-gap-2',
-          wrapperClassName
-        )}
-      >
+      <div className={cn('luca-flex luca-w-full luca-flex-col luca-gap-2', wrapperClassName)}>
         {(label || tooltip) && (
           <div className="luca-flex luca-items-center luca-gap-2">
             {label && (
@@ -425,5 +397,3 @@ export const TextAreaField = React.forwardRef<
 );
 
 TextAreaField.displayName = 'TextAreaField';
-
-

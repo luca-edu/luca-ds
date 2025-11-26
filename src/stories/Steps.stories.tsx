@@ -60,11 +60,7 @@ export const Default: Story = {
             Anterior
           </Button>
           <Button
-            onClick={() =>
-              setCurrentStep(
-                Math.min((args.steps?.length || 3) - 1, currentStep + 1)
-              )
-            }
+            onClick={() => setCurrentStep(Math.min((args.steps?.length || 3) - 1, currentStep + 1))}
             disabled={currentStep === (args.steps?.length || 3) - 1}
           >
             Siguiente
@@ -119,4 +115,3 @@ export const MoreSteps: Story = {
     currentStep: 2,
   },
 };
-

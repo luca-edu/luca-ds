@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tooltip, type TooltipVariant, type TooltipPlacement } from '../components/Tooltip';
+import { Tooltip, type TooltipVariant } from '../components/Tooltip';
 import { Button } from '../components/Button';
 import { QuestionIcon } from '../shared/icons';
 
@@ -70,13 +70,24 @@ export const AllVariants: Story = {
     placement: 'top',
   },
   render: () => {
-    const variants: TooltipVariant[] = ['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral', 'white'];
-    
+    const variants: TooltipVariant[] = [
+      'primary',
+      'accent',
+      'success',
+      'warning',
+      'danger',
+      'info',
+      'neutral',
+      'white',
+    ];
+
     return (
       <div className="luca-flex luca-flex-col luca-gap-8 luca-p-20">
         {variants.map((variant) => (
           <div key={variant} className="luca-flex luca-items-center luca-gap-4">
-            <span className="luca-w-24 luca-text-sm luca-font-medium luca-capitalize">{variant}:</span>
+            <span className="luca-w-24 luca-text-sm luca-font-medium luca-capitalize">
+              {variant}:
+            </span>
             <Tooltip content={`Tooltip ${variant}`} variant={variant} placement="top">
               <Button variant="secondary">{variant}</Button>
             </Tooltip>
@@ -95,8 +106,6 @@ export const AllPositions: Story = {
     placement: 'top',
   },
   render: () => {
-    const positions: TooltipPlacement[] = ['top', 'bottom', 'left', 'right'];
-    
     return (
       <div className="luca-flex luca-flex-col luca-gap-8 luca-p-20 luca-items-center">
         <div className="luca-flex luca-gap-4">
@@ -131,8 +140,7 @@ export const VariantsAndPositions: Story = {
   },
   render: () => {
     const variants: TooltipVariant[] = ['primary', 'white'];
-    const positions: TooltipPlacement[] = ['top', 'bottom', 'left', 'right'];
-    
+
     return (
       <div className="luca-flex luca-flex-col luca-gap-12 luca-p-20">
         {variants.map((variant) => (
@@ -233,12 +241,9 @@ export const WithDifferentElements: Story = {
           </a>
         </Tooltip>
         <Tooltip content="Tooltip en texto" variant="success" placement="top">
-          <span className="luca-cursor-pointer luca-text-neutral-700 luca-font-medium">
-            Texto
-          </span>
+          <span className="luca-cursor-pointer luca-text-neutral-700 luca-font-medium">Texto</span>
         </Tooltip>
       </div>
     </div>
   ),
 };
-

@@ -45,5 +45,3 @@ export const Default: Story = {
   render: (args) => <ControlledTemplate {...args} />,
   args: {},
 };
-
-

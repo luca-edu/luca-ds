@@ -76,14 +76,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   // Usar valor local cuando hay debounce (para actualización inmediata)
   // o cuando no es controlado, de lo contrario usar el prop
   const displayValue = enableDebounce || !isControlled ? localValue : (searchInput ?? '');
-  
+
   // Determinar si hay texto para mostrar el icono de clear
   const hasValue = displayValue.trim().length > 0;
 
   const handleClear = React.useCallback(() => {
     const emptyValue = '';
     setLocalValue(emptyValue);
-    
+
     if (enableDebounce) {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
@@ -98,7 +98,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   // Estilos de tamaño para el contenedor
   const getSizeContainerStyles = () => {
-    
     switch (size) {
       case 'sm':
         return 'luca-min-h-[32px] luca-px-3 luca-py-1.5';
@@ -119,16 +118,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   const containerClassName = cn(
     'luca-flex luca-w-full luca-items-center luca-justify-start',
     'luca-h-10 luca-gap-2 luca-rounded-lg luca-border luca-border-[#e5e7eb] luca-bg-[#f9fafb] luca-px-4 luca-py-2',
-    cn(
-      'luca-rounded-[10px] luca-bg-[#e6e7ef]',
-      getSizeContainerStyles()
-    ),
+    cn('luca-rounded-[10px] luca-bg-[#e6e7ef]', getSizeContainerStyles()),
     className
   );
 
   // Estilos de tamaño para el input
   const getSizeInputStyles = () => {
-    
     switch (size) {
       case 'sm':
         return 'luca-text-xs';
@@ -154,7 +149,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   // Estilos de tamaño para el icono
   const getSizeIconStyles = () => {
-    
     switch (size) {
       case 'sm':
         return 'luca-h-3 luca-w-3';
@@ -172,7 +166,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  const iconBaseClasses = 'luca-flex-shrink-0 luca-opacity-50 luca-transition-opacity luca-duration-200';
+  const iconBaseClasses =
+    'luca-flex-shrink-0 luca-opacity-50 luca-transition-opacity luca-duration-200';
   const iconClasses = cn(iconBaseClasses, getSizeIconStyles());
   const clearButtonClasses = cn(
     iconBaseClasses,
@@ -209,4 +204,3 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 SearchBar.displayName = 'SearchBar';
 
 export default SearchBar;
-

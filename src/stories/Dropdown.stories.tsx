@@ -91,13 +91,7 @@ export const Controlled: Story = {
   render: (args) => {
     const [value, setValue] = React.useState<string[]>(['2']);
 
-    return (
-      <Dropdown
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <Dropdown {...args} value={value} onChange={setValue} />;
   },
   args: {
     items: [
@@ -130,5 +124,3 @@ export const Virtualized: Story = {
     defaultValue: ['grade-1', 'grade-2', 'grade-3', 'grade-4', 'grade-5'],
   },
 };
-
-

@@ -51,10 +51,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         ) : null);
 
       return (
-        <CardIcon
-          size={iconSize}
-          className={iconClassName}
-        >
+        <CardIcon size={iconSize} className={iconClassName}>
           {iconNode}
         </CardIcon>
       );
@@ -90,10 +87,7 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          'luca-flex luca-w-full luca-flex-col luca-gap-3',
-          className
-        )}
+        className={cn('luca-flex luca-w-full luca-flex-col luca-gap-3', className)}
         {...props}
       >
         {children}
@@ -104,8 +98,7 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
 
 CardHeader.displayName = 'CardHeader';
 
-export interface CardTitleProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   children: React.ReactNode;
 }
 
@@ -128,28 +121,26 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
 
 CardTitle.displayName = 'CardTitle';
 
-export interface CardDescriptionProps
-  extends React.HTMLAttributes<HTMLParagraphElement> {
+export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
   children: React.ReactNode;
 }
 
-export const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  CardDescriptionProps
->(({ className, children, ...props }, ref) => {
-  return (
-    <p
-      ref={ref}
-      className={cn(
-        'luca-text-sm luca-leading-relaxed luca-transition-colors luca-duration-200 luca-whitespace-pre-line',
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </p>
-  );
-});
+export const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <p
+        ref={ref}
+        className={cn(
+          'luca-text-sm luca-leading-relaxed luca-transition-colors luca-duration-200 luca-whitespace-pre-line',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </p>
+    );
+  }
+);
 
 CardDescription.displayName = 'CardDescription';
 
@@ -160,14 +151,7 @@ export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
 export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <div
-        ref={ref}
-        className={cn(
-          'luca-w-full luca-text-sm',
-          className
-        )}
-        {...props}
-      >
+      <div ref={ref} className={cn('luca-w-full luca-text-sm', className)} {...props}>
         {children}
       </div>
     );
@@ -187,10 +171,7 @@ const iconSizeClasses: Record<'md' | 'lg', string> = {
 };
 
 export const CardIcon = React.forwardRef<HTMLDivElement, CardIconProps>(
-  (
-    { className, children, size = 'lg', ...props },
-    ref
-  ) => {
+  ({ className, children, size = 'lg', ...props }, ref) => {
     return (
       <div
         ref={ref}

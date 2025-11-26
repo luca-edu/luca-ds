@@ -103,5 +103,3 @@ export const Controlled: Story = {
     helpText: 'Escribe algo para ver el contador',
   },
 };
-
-

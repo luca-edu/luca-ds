@@ -42,9 +42,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => {
-    const [value, setValue] = React.useState<string>(
-      args.defaultValue ?? args.items[0]?.key ?? ''
-    );
+    const [value, setValue] = React.useState<string>(args.defaultValue ?? args.items[0]?.key ?? '');
 
     return (
       <TabList
@@ -69,9 +67,7 @@ export const ThreeTabs: Story = {
     defaultValue: 'overview',
   },
   render: (args) => {
-    const [value, setValue] = React.useState<string>(
-      args.defaultValue ?? args.items[0]?.key ?? ''
-    );
+    const [value, setValue] = React.useState<string>(args.defaultValue ?? args.items[0]?.key ?? '');
 
     return (
       <TabList
@@ -96,9 +92,7 @@ export const WithDisabledTab: Story = {
     defaultValue: 'overview',
   },
   render: (args) => {
-    const [value, setValue] = React.useState<string>(
-      args.defaultValue ?? args.items[0]?.key ?? ''
-    );
+    const [value, setValue] = React.useState<string>(args.defaultValue ?? args.items[0]?.key ?? '');
 
     return (
       <TabList
@@ -124,9 +118,7 @@ export const FullWidth: Story = {
     className: 'w-[400px]',
   },
   render: (args) => {
-    const [value, setValue] = React.useState<string>(
-      args.defaultValue ?? args.items[0]?.key ?? ''
-    );
+    const [value, setValue] = React.useState<string>(args.defaultValue ?? args.items[0]?.key ?? '');
 
     return (
       <TabList
@@ -140,5 +132,3 @@ export const FullWidth: Story = {
     );
   },
 };
-
-

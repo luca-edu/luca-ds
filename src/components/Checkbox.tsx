@@ -147,30 +147,15 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         !disabled &&
         'luca-bg-white luca-border-neutral-200 hover:luca-border-neutral-300',
       // Estado hover (unchecked)
-      !isChecked &&
-        !isIndeterminate &&
-        !disabled &&
-        `hover:${colors.borderHover}`,
+      !isChecked && !isIndeterminate && !disabled && `hover:${colors.borderHover}`,
       // Estado checked - default style
-      isChecked &&
-        !isFilled &&
-        !disabled &&
-        `${colors.bg} ${colors.border}`,
+      isChecked && !isFilled && !disabled && `${colors.bg} ${colors.border}`,
       // Estado checked - filled style (fondo claro con borde oscuro)
-      isChecked &&
-        isFilled &&
-        !disabled &&
-        `${colors.bgFilled} ${colors.borderFilled}`,
+      isChecked && isFilled && !disabled && `${colors.bgFilled} ${colors.borderFilled}`,
       // Estado indeterminate - default style
-      isIndeterminate &&
-        !isFilled &&
-        !disabled &&
-        `${colors.bg} ${colors.border}`,
+      isIndeterminate && !isFilled && !disabled && `${colors.bg} ${colors.border}`,
       // Estado indeterminate - filled style
-      isIndeterminate &&
-        isFilled &&
-        !disabled &&
-        `${colors.bgFilled} ${colors.borderFilled}`,
+      isIndeterminate && isFilled && !disabled && `${colors.bgFilled} ${colors.borderFilled}`,
       // Estado disabled
       disabled &&
         'luca-bg-neutral-100 luca-border-neutral-200 luca-cursor-not-allowed luca-opacity-60',
@@ -181,26 +166,15 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const iconClasses = cn(
       'luca-absolute luca-transition-all luca-duration-200',
       // Icono para estilo default
-      (isChecked || isIndeterminate) &&
-        !isFilled &&
-        !disabled &&
-        colors.icon,
+      (isChecked || isIndeterminate) && !isFilled && !disabled && colors.icon,
       // Icono para estilo filled
-      (isChecked || isIndeterminate) &&
-        isFilled &&
-        !disabled &&
-        colors.iconFilled,
+      (isChecked || isIndeterminate) && isFilled && !disabled && colors.iconFilled,
       // Sin icono cuando no está checked ni indeterminate
       !isChecked && !isIndeterminate && 'luca-opacity-0'
     );
 
     return (
-      <div
-        className={cn(
-          'luca-flex luca-items-center luca-gap-2.5',
-          wrapperClassName
-        )}
-      >
+      <div className={cn('luca-flex luca-items-center luca-gap-2.5', wrapperClassName)}>
         <div className="luca-relative luca-shrink-0">
           <input
             ref={inputRef}
@@ -218,10 +192,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           />
           <label
             htmlFor={checkboxId}
-            className={cn(
-              'luca-cursor-pointer',
-              disabled && 'luca-cursor-not-allowed'
-            )}
+            className={cn('luca-cursor-pointer', disabled && 'luca-cursor-not-allowed')}
           >
             <div className={checkboxSquareClasses}>
               {isIndeterminate ? (
@@ -251,4 +222,3 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;
-

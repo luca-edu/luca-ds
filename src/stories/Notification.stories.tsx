@@ -17,7 +17,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Componente de notificación flexible que soporta múltiples variantes, posicionamiento flotante, cierre automático y acciones personalizadas.',
+        component:
+          'Componente de notificación flexible que soporta múltiples variantes, posicionamiento flotante, cierre automático y acciones personalizadas.',
       },
     },
   },
@@ -62,7 +63,14 @@ const meta = {
     },
     position: {
       control: 'select',
-      options: ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'],
+      options: [
+        'top-left',
+        'top-center',
+        'top-right',
+        'bottom-left',
+        'bottom-center',
+        'bottom-right',
+      ],
       description: 'Posición de la notificación cuando está en modo flotante',
       table: {
         defaultValue: { summary: 'top-right' },
@@ -177,7 +185,10 @@ export const WithActions: Story = {
             <NotificationAction onClick={() => console.log('Actualizar ahora')}>
               Actualizar ahora
             </NotificationAction>
-            <NotificationAction actionVariant="secondary" onClick={() => console.log('Recordar después')}>
+            <NotificationAction
+              actionVariant="secondary"
+              onClick={() => console.log('Recordar después')}
+            >
               Recordar después
             </NotificationAction>
           </NotificationActions>
@@ -245,11 +256,7 @@ export const WithoutIcon: Story = {
 export const TitleAndDescriptionCombinations: Story = {
   render: () => (
     <div className="luca-flex luca-max-w-[600px] luca-flex-col luca-gap-4 luca-p-6">
-      <Notification
-        variant="success"
-        title="Solo título"
-        dismissible
-      />
+      <Notification variant="success" title="Solo título" dismissible />
 
       <Notification
         variant="info"
@@ -327,7 +334,10 @@ export const FloatingPositions: Story = {
                 <NotificationAction onClick={() => console.log('Acción ejecutada')}>
                   Acción
                 </NotificationAction>
-                <NotificationAction actionVariant="secondary" onClick={() => setActivePosition(null)}>
+                <NotificationAction
+                  actionVariant="secondary"
+                  onClick={() => setActivePosition(null)}
+                >
                   Cerrar
                 </NotificationAction>
               </NotificationActions>
@@ -340,7 +350,8 @@ export const FloatingPositions: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demuestra las 6 posiciones disponibles para notificaciones flotantes: top-left, top-center, top-right, bottom-left, bottom-center, bottom-right.',
+        story:
+          'Demuestra las 6 posiciones disponibles para notificaciones flotantes: top-left, top-center, top-right, bottom-left, bottom-center, bottom-right.',
       },
     },
   },
@@ -403,7 +414,8 @@ export const AutoClose: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Notificación que se cierra automáticamente después de un tiempo especificado usando la propiedad autoClose (en milisegundos).',
+        story:
+          'Notificación que se cierra automáticamente después de un tiempo especificado usando la propiedad autoClose (en milisegundos).',
       },
     },
   },
@@ -449,9 +461,7 @@ export const WithMaxWidth: Story = {
             actions={
               <NotificationActions>
                 <NotificationAction>Ver detalles</NotificationAction>
-                <NotificationAction actionVariant="secondary">
-                  Omitir
-                </NotificationAction>
+                <NotificationAction actionVariant="secondary">Omitir</NotificationAction>
               </NotificationActions>
             }
           />
@@ -470,9 +480,7 @@ export const WithMaxWidth: Story = {
             actions={
               <NotificationActions>
                 <NotificationAction>Acción principal</NotificationAction>
-                <NotificationAction actionVariant="secondary">
-                  Acción secundaria
-                </NotificationAction>
+                <NotificationAction actionVariant="secondary">Acción secundaria</NotificationAction>
               </NotificationActions>
             }
           />
@@ -519,24 +527,25 @@ export const FloatingWithAutoClose: Story = {
       setNotifications((prev) => prev.filter((n) => n.id !== id));
     };
 
-    const notificationConfig: Record<NotificationVariant, { title: string; description: string }> = {
-      success: {
-        title: 'Operación exitosa',
-        description: 'Los cambios se guardaron correctamente.',
-      },
-      info: {
-        title: 'Nueva información',
-        description: 'Hay actualizaciones disponibles.',
-      },
-      warning: {
-        title: 'Advertencia',
-        description: 'Por favor revisa esta acción.',
-      },
-      danger: {
-        title: 'Error',
-        description: 'Ocurrió un problema.',
-      },
-    };
+    const notificationConfig: Record<NotificationVariant, { title: string; description: string }> =
+      {
+        success: {
+          title: 'Operación exitosa',
+          description: 'Los cambios se guardaron correctamente.',
+        },
+        info: {
+          title: 'Nueva información',
+          description: 'Hay actualizaciones disponibles.',
+        },
+        warning: {
+          title: 'Advertencia',
+          description: 'Por favor revisa esta acción.',
+        },
+        danger: {
+          title: 'Error',
+          description: 'Ocurrió un problema.',
+        },
+      };
 
     return (
       <div className="luca-flex luca-min-h-[600px] luca-w-[900px] luca-flex-col luca-gap-6 luca-p-6">
@@ -545,7 +554,8 @@ export const FloatingWithAutoClose: Story = {
             Múltiples Notificaciones Flotantes
           </h3>
           <p className="luca-mb-4 luca-text-sm luca-text-neutral-600">
-            Haz clic en los botones para crear notificaciones flotantes que se cierran automáticamente en 3 segundos.
+            Haz clic en los botones para crear notificaciones flotantes que se cierran
+            automáticamente en 3 segundos.
           </p>
         </div>
 
@@ -627,7 +637,8 @@ export const FloatingWithAutoClose: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demo interactiva que combina notificaciones flotantes en diferentes posiciones con cierre automático. Ideal para sistemas de notificaciones en tiempo real.',
+        story:
+          'Demo interactiva que combina notificaciones flotantes en diferentes posiciones con cierre automático. Ideal para sistemas de notificaciones en tiempo real.',
       },
     },
   },
@@ -678,7 +689,8 @@ export const Controlled: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Ejemplo de notificación controlada mediante estado de React. Útil para manejar la visibilidad programáticamente.',
+        story:
+          'Ejemplo de notificación controlada mediante estado de React. Útil para manejar la visibilidad programáticamente.',
       },
     },
   },
@@ -735,7 +747,9 @@ export const WithUseNotificationHook: Story = {
       <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
         {notificationContextHolder}
         <div className="luca-flex luca-flex-col luca-gap-4">
-          <h3 className="luca-text-lg luca-font-semibold">Notification API - Hook useNotification</h3>
+          <h3 className="luca-text-lg luca-font-semibold">
+            Notification API - Hook useNotification
+          </h3>
           <div className="luca-flex luca-flex-wrap luca-gap-4">
             <Button
               onClick={() =>
@@ -793,7 +807,8 @@ export const WithUseNotificationHook: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Ejemplo de uso del hook useNotification() para mostrar notificaciones programáticamente. El contextHolder debe renderizarse una vez en la aplicación.',
+        story:
+          'Ejemplo de uso del hook useNotification() para mostrar notificaciones programáticamente. El contextHolder debe renderizarse una vez en la aplicación.',
       },
     },
   },
@@ -880,7 +895,9 @@ export const WithUseNotificationHookPositions: Story = {
       <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
         {notificationContextHolder}
         <div className="luca-flex luca-flex-col luca-gap-4">
-          <h3 className="luca-text-lg luca-font-semibold">Notification API - Todas las Posiciones</h3>
+          <h3 className="luca-text-lg luca-font-semibold">
+            Notification API - Todas las Posiciones
+          </h3>
           <div className="luca-grid luca-grid-cols-3 luca-gap-4">
             {positions.map((position) => (
               <Button
@@ -973,10 +990,7 @@ export const WithUseNotificationHookStacking: Story = {
             >
               Agregar Info
             </Button>
-            <Button
-              variant="secondary"
-              onClick={() => notificationApi.destroy()}
-            >
+            <Button variant="secondary" onClick={() => notificationApi.destroy()}>
               Limpiar Todas
             </Button>
           </div>
@@ -987,7 +1001,8 @@ export const WithUseNotificationHookStacking: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demostración del apilado de múltiples notificaciones en la misma posición. Usa destroy() para limpiar todas las notificaciones.',
+        story:
+          'Demostración del apilado de múltiples notificaciones en la misma posición. Usa destroy() para limpiar todas las notificaciones.',
       },
     },
   },
@@ -1016,7 +1031,10 @@ export const WithUseNotificationHookActions: Story = {
                       <NotificationAction onClick={() => console.log('Ver cambios')}>
                         Ver cambios
                       </NotificationAction>
-                      <NotificationAction actionVariant="secondary" onClick={() => console.log('Deshacer')}>
+                      <NotificationAction
+                        actionVariant="secondary"
+                        onClick={() => console.log('Deshacer')}
+                      >
                         Deshacer
                       </NotificationAction>
                     </NotificationActions>
@@ -1038,7 +1056,10 @@ export const WithUseNotificationHookActions: Story = {
                       <NotificationAction onClick={() => console.log('Actualizar ahora')}>
                         Actualizar ahora
                       </NotificationAction>
-                      <NotificationAction actionVariant="secondary" onClick={() => console.log('Recordar después')}>
+                      <NotificationAction
+                        actionVariant="secondary"
+                        onClick={() => console.log('Recordar después')}
+                      >
                         Recordar después
                       </NotificationAction>
                     </NotificationActions>
@@ -1056,7 +1077,8 @@ export const WithUseNotificationHookActions: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Notificaciones con acciones usando la API. Puedes incluir NotificationActions y NotificationAction en la propiedad actions.',
+        story:
+          'Notificaciones con acciones usando la API. Puedes incluir NotificationActions y NotificationAction en la propiedad actions.',
       },
     },
   },
@@ -1137,7 +1159,8 @@ export const WithUseNotificationHookOpen: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Uso del método open() para crear notificaciones con cualquier variante especificada manualmente.',
+        story:
+          'Uso del método open() para crear notificaciones con cualquier variante especificada manualmente.',
       },
     },
   },

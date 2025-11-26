@@ -40,8 +40,7 @@ const tabBaseStyles =
 const tabSelectedStyles =
   'luca-bg-[#fdc700] luca-text-[#111827] luca-shadow-[0px_1px_2px_rgba(0,0,0,0.05)]';
 
-const tabUnselectedStyles =
-  'hover:luca-text-[#3843d0] focus-visible:luca-outline-[#3843d0]';
+const tabUnselectedStyles = 'hover:luca-text-[#3843d0] focus-visible:luca-outline-[#3843d0]';
 
 const tabDisabledStyles =
   'luca-cursor-not-allowed luca-text-gray-400 hover:luca-text-gray-400 focus-visible:luca-outline-none luca-opacity-60';
@@ -62,14 +61,9 @@ export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
   ) => {
     const isControlled = value !== undefined;
 
-    const firstEnabledKey = React.useMemo(
-      () => items.find((item) => !item.disabled)?.key,
-      [items]
-    );
+    const firstEnabledKey = React.useMemo(() => items.find((item) => !item.disabled)?.key, [items]);
 
-    const [uncontrolledValue, setUncontrolledValue] = React.useState<
-      string | undefined
-    >(() => {
+    const [uncontrolledValue, setUncontrolledValue] = React.useState<string | undefined>(() => {
       if (defaultValue !== undefined) return defaultValue;
       return firstEnabledKey;
     });
@@ -78,19 +72,14 @@ export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
       if (isControlled) return;
       if (defaultValue === undefined) return;
 
-      const defaultExists = items.some(
-        (item) => item.key === defaultValue && !item.disabled
-      );
+      const defaultExists = items.some((item) => item.key === defaultValue && !item.disabled);
       setUncontrolledValue(defaultExists ? defaultValue : firstEnabledKey);
     }, [defaultValue, firstEnabledKey, isControlled, items]);
 
     React.useEffect(() => {
       if (isControlled) return;
       setUncontrolledValue((current) => {
-        if (
-          current &&
-          items.some((item) => item.key === current && !item.disabled)
-        ) {
+        if (current && items.some((item) => item.key === current && !item.disabled)) {
           return current;
         }
         return firstEnabledKey ?? current;
@@ -111,9 +100,7 @@ export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
           const isSelected = item.key === currentValue;
           const disabled = Boolean(item.disabled);
           const computedTabIndex =
-            isSelected || (!currentValue && item.key === firstEnabledKey)
-              ? 0
-              : -1;
+            isSelected || (!currentValue && item.key === firstEnabledKey) ? 0 : -1;
 
           return (
             <button
@@ -153,5 +140,3 @@ export const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
 );
 
 TabList.displayName = 'TabList';
-
-

@@ -3,13 +3,7 @@ import { ButtonIcon } from '../components/ButtonIcon';
 import React from 'react';
 // Importamos el SVG de la flecha como componente React
 const ArrowIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M10.7 7.33333H2V8.66667H10.7L6.7 12.6667L7.63333 13.6L13.2333 8L7.63333 2.4L6.7 3.33333L10.7 7.33333Z"
       fill="currentColor"

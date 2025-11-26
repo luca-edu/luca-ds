@@ -61,12 +61,13 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   // Base styles
-  const baseStyles = 'luca-inline-flex luca-items-center luca-justify-center luca-px-[10px] luca-py-[3px] luca-text-xs luca-leading-5 luca-font-normal';
+  const baseStyles =
+    'luca-inline-flex luca-items-center luca-justify-center luca-px-[10px] luca-py-[3px] luca-text-xs luca-leading-5 luca-font-normal';
 
   // Rounded styles
   const roundedStyles = {
     semi: 'luca-rounded',
-    full: 'luca-rounded-[30px]'
+    full: 'luca-rounded-[30px]',
   };
 
   // Gap when showing icon
@@ -82,7 +83,7 @@ export const Badge: React.FC<BadgeProps> = ({
       warning: 'luca-bg-warning-500 luca-text-white',
       danger: 'luca-bg-danger-600 luca-text-white',
       success: 'luca-bg-success-600 luca-text-white',
-      info: 'luca-bg-info-400 luca-text-white'
+      info: 'luca-bg-info-400 luca-text-white',
     },
     outline: {
       primary: 'luca-border luca-border-primary-600 luca-text-primary-600',
@@ -92,7 +93,7 @@ export const Badge: React.FC<BadgeProps> = ({
       warning: 'luca-border luca-border-warning-500 luca-text-warning-500',
       danger: 'luca-border luca-border-danger-600 luca-text-danger-600',
       success: 'luca-border luca-border-success-600 luca-text-success-600',
-      info: 'luca-border luca-border-info-400 luca-text-info-400'
+      info: 'luca-border luca-border-info-400 luca-text-info-400',
     },
     duotone: {
       primary: 'luca-bg-primary-600/10 luca-text-primary-600',
@@ -102,8 +103,8 @@ export const Badge: React.FC<BadgeProps> = ({
       warning: 'luca-bg-warning-50 luca-text-warning-600',
       danger: 'luca-bg-danger-50 luca-text-danger-600',
       success: 'luca-bg-success-50 luca-text-success-600',
-      info: 'luca-bg-info-50 luca-text-info-600'
-    }
+      info: 'luca-bg-info-50 luca-text-info-600',
+    },
   };
 
   // Icon colors for duotone variant
@@ -115,7 +116,7 @@ export const Badge: React.FC<BadgeProps> = ({
     warning: '#d97706',
     danger: '#DC2626',
     success: '#16A34A',
-    info: '#38BDF8'
+    info: '#38BDF8',
   };
 
   return (
@@ -130,10 +131,7 @@ export const Badge: React.FC<BadgeProps> = ({
       {...props}
     >
       {showIcon && rounded === 'full' && variant === 'duotone' && (
-        <CheckIcon
-          className="luca-shrink-0"
-          color={iconColors[color]}
-        />
+        <CheckIcon className="luca-shrink-0" color={iconColors[color]} />
       )}
       {children}
     </span>

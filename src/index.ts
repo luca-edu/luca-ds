@@ -5,7 +5,8 @@ import { ConfigProvider } from 'antd';
 ConfigProvider.config({
   theme: {
     token: {
-      fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
+      fontFamily:
+        'Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
     },
   },
 });
@@ -41,9 +42,7 @@ export { TabList } from './components/TabList';
 export type { TabListProps, TabListItem } from './components/TabList';
 
 export { Layout, LayoutContent } from './components/Layout';
-export type {
-  LayoutProps,
-} from './components/Layout';
+export type { LayoutProps } from './components/Layout';
 export { LayoutHeader } from './components/LayoutHeader';
 export type { LayoutHeaderProps } from './components/LayoutHeader';
 
@@ -82,19 +81,9 @@ export type {
 } from './components/Notification';
 
 export { Toast, useToast, toast, ToastProvider } from './components/Toast';
-export type {
-  ToastProps,
-  ToastPosition,
-  ToastApiConfig,
-  ToastApi,
-} from './components/Toast';
+export type { ToastProps, ToastPosition, ToastApiConfig, ToastApi } from './components/Toast';
 
-export {
-  Selector,
-  SelectorAction,
-  SelectorDetail,
-  SelectorLabel,
-} from './components/Selector';
+export { Selector, SelectorAction, SelectorDetail, SelectorLabel } from './components/Selector';
 export type {
   SelectorProps,
   SelectorActionProps,
@@ -103,17 +92,10 @@ export type {
 } from './components/Selector';
 
 export { InputField, TextAreaField } from './components/InputField';
-export type {
-  InputFieldProps,
-  TextAreaFieldProps,
-} from './components/InputField';
+export type { InputFieldProps, TextAreaFieldProps } from './components/InputField';
 
 export { Tooltip } from './components/Tooltip';
-export type {
-  TooltipProps,
-  TooltipVariant,
-  TooltipPlacement,
-} from './components/Tooltip';
+export type { TooltipProps, TooltipVariant, TooltipPlacement } from './components/Tooltip';
 
 export { Dropdown, DropdownItem } from './components/Dropdown';
 export type {
@@ -125,6 +107,14 @@ export type {
 
 export { EmptyStateCard } from './components/EmptyStateCard';
 export type { EmptyStateCardProps } from './components/EmptyStateCard';
+
+export { ProgressBar } from './components/ProgressBar';
+export type {
+  ProgressBarProps,
+  ProgressBarVariant,
+  ProgressBarSize,
+} from './components/ProgressBar';
+
 export { Steps } from './components/Steps';
 export type { StepsProps, Step } from './components/Steps';
 export { RadioButton } from './components/RadioButton';
@@ -134,24 +124,12 @@ export type {
   RadioButtonStyle,
 } from './components/RadioButton';
 export { Checkbox } from './components/Checkbox';
-export type {
-  CheckboxProps,
-  CheckboxVariant,
-  CheckboxStyle,
-} from './components/Checkbox';
+export type { CheckboxProps, CheckboxVariant, CheckboxStyle } from './components/Checkbox';
 export { AmountButton } from './components/AmountButton';
-export type {
-  AmountButtonProps,
-  AmountButtonVariant,
-} from './components/AmountButton';
+export type { AmountButtonProps, AmountButtonVariant } from './components/AmountButton';
 
 export { NavTabs } from './components/NavTabs';
-export type {
-  NavTabsProps,
-  NavTabsVariant,
-  NavTabsStyle,
-  NavTabItem,
-} from './components/NavTabs';
+export type { NavTabsProps, NavTabsVariant, NavTabsStyle, NavTabItem } from './components/NavTabs';
 
 export { Sidebar } from './components/Sidebar';
 export type {

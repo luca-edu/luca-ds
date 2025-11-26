@@ -4,7 +4,6 @@ import { Button } from './Button';
 import { cn } from '../utils/cn';
 import { createStyles } from 'antd-style';
 
-
 const useStyle = createStyles(() => ({
   content: {
     padding: '32px !important',
@@ -56,7 +55,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     const classNames = {
       content: styles.content,
     };
-  
+
     return (
       <AntdModal
         open={isOpen || false}
@@ -101,11 +100,19 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           )}
           {children}
           {buttons && (
-            <div className="luca-flex luca-justify-end luca-gap-2"> 
+            <div className="luca-flex luca-justify-end luca-gap-2">
               {buttons.map((button) => (
-              <Button variant={button.variant} onClick={button.onClick} leftIcon={button.leftIcon} rightIcon={button.rightIcon}>{button.text}</Button>
-            ))}
-          </div>
+                <Button
+                  key={button.text}
+                  variant={button.variant}
+                  onClick={button.onClick}
+                  leftIcon={button.leftIcon}
+                  rightIcon={button.rightIcon}
+                >
+                  {button.text}
+                </Button>
+              ))}
+            </div>
           )}
         </div>
       </AntdModal>

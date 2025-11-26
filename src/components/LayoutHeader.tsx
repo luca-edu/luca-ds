@@ -32,11 +32,7 @@ export const LayoutHeader: React.FC<LayoutHeaderProps> = ({
       {title}
     </h3>
     <div className="luca-flex luca-flex-row luca-items-center luca-justify-center luca-w-full luca-mt-4">
-      <img
-        src={avatarImage}
-        alt={avatarAlt}
-        className="luca-w-[169px] luca-h-[140px]"
-      />
+      <img src={avatarImage} alt={avatarAlt} className="luca-w-[169px] luca-h-[140px]" />
     </div>
     <div className="luca-font-semibold luca-text-base luca-text-[#111827] luca-leading-[180%] luca-text-center luca-mt-6">
       {subtitle}

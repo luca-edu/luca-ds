@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '../utils/cn';
 import type { NotificationVariant } from '../types/variants';
-import {
-  VARIANT_ICONS,
-  VARIANT_TOKENS,
-  baseShadow,
-  CloseIcon,
-} from '../shared/notificationTokens';
+import { VARIANT_ICONS, VARIANT_TOKENS, baseShadow, CloseIcon } from '../shared/notificationTokens';
 
 export type ToastPosition =
   | 'top-left'
@@ -30,10 +25,14 @@ export interface ToastProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;
   className?: string;
+  customStyles?: React.CSSProperties;
 }
 
 // Componente interno del Toast (sin animaciones)
-const ToastContent = React.forwardRef<HTMLDivElement, Omit<ToastProps, 'position' | 'autoClose' | 'visible' | 'onVisibleChange'>>(
+const ToastContent = React.forwardRef<
+  HTMLDivElement,
+  Omit<ToastProps, 'position' | 'autoClose' | 'visible' | 'onVisibleChange'>
+>(
   (
     {
       variant = 'success',
@@ -42,6 +41,7 @@ const ToastContent = React.forwardRef<HTMLDivElement, Omit<ToastProps, 'position
       dismissible = false,
       onDismiss,
       className,
+      customStyles,
       closeButtonAriaLabel = 'Cerrar notificación',
       ...props
     },
@@ -62,6 +62,7 @@ const ToastContent = React.forwardRef<HTMLDivElement, Omit<ToastProps, 'position
           baseShadow,
           className
         )}
+        style={customStyles}
         {...props}
       >
         {showIcon && (
@@ -77,9 +78,7 @@ const ToastContent = React.forwardRef<HTMLDivElement, Omit<ToastProps, 'position
           </span>
         )}
 
-        <span className="luca-text-sm luca-leading-6">
-          {message}
-        </span>
+        <span className="luca-text-sm luca-leading-6">{message}</span>
 
         {dismissible && (
           <button
@@ -162,21 +161,22 @@ export const Toast: React.FC<ToastProps> = ({
   onVisibleChange,
   dismissible = false,
   onDismiss,
+  customStyles,
   ...rest
 }) => {
   const [internalVisible, setInternalVisible] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const exitTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   // Determinar si el componente está controlado o no
   const isControlled = controlledVisible !== undefined;
   const visible = isControlled ? controlledVisible : internalVisible;
-  
+
   // Manejar el cierre con animación
   const handleDismiss = () => {
     setIsExiting(true);
-    
+
     // Esperar a que termine la animación de salida antes de actualizar el estado
     exitTimeoutRef.current = setTimeout(() => {
       if (isControlled) {
@@ -189,7 +189,7 @@ export const Toast: React.FC<ToastProps> = ({
       setIsExiting(false);
     }, 300); // Duración de la animación
   };
-  
+
   // Efecto para manejar cambios en visible (modo controlado)
   useEffect(() => {
     if (isControlled && !controlledVisible) {
@@ -201,14 +201,14 @@ export const Toast: React.FC<ToastProps> = ({
       setIsExiting(false);
     }
   }, [isControlled, controlledVisible]);
-  
+
   // Configurar temporizador automático
   useEffect(() => {
     if (autoClose && typeof autoClose === 'number' && autoClose > 0 && visible && !isExiting) {
       timeoutRef.current = setTimeout(() => {
         handleDismiss();
       }, autoClose);
-      
+
       return () => {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
@@ -216,7 +216,7 @@ export const Toast: React.FC<ToastProps> = ({
       };
     }
   }, [autoClose, visible, isExiting]);
-  
+
   // Limpiar timeouts al desmontar
   useEffect(() => {
     return () => {
@@ -228,15 +228,15 @@ export const Toast: React.FC<ToastProps> = ({
       }
     };
   }, []);
-  
+
   const positionClass = positionClasses[position];
   const animationClass = getAnimationClasses(position, !isExiting && visible);
-  
+
   // No renderizar si no está visible y no está en modo controlado
   if (!visible && !isControlled && !isExiting) {
     return null;
   }
-  
+
   return (
     <div
       className={cn(
@@ -245,12 +245,9 @@ export const Toast: React.FC<ToastProps> = ({
         positionClass,
         animationClass
       )}
+      style={customStyles}
     >
-      <ToastContent
-        {...rest}
-        dismissible={dismissible}
-        onDismiss={handleDismiss}
-      />
+      <ToastContent {...rest} dismissible={dismissible} onDismiss={handleDismiss} />
     </div>
   );
 };
@@ -268,6 +265,7 @@ export interface ToastApiConfig {
   autoClose?: number | false;
   closeButtonAriaLabel?: string;
   className?: string;
+  customStyles?: React.CSSProperties;
   onDismiss?: () => void;
 }
 
@@ -359,7 +357,13 @@ const ToastItem: React.FC<{
   }, [toast.id, onDismiss, onRemove]);
 
   React.useEffect(() => {
-    if (toast.autoClose && typeof toast.autoClose === 'number' && toast.autoClose > 0 && toast.visible && !isExiting) {
+    if (
+      toast.autoClose &&
+      typeof toast.autoClose === 'number' &&
+      toast.autoClose > 0 &&
+      toast.visible &&
+      !isExiting
+    ) {
       timeoutRef.current = setTimeout(() => {
         handleDismiss();
       }, toast.autoClose);
@@ -387,7 +391,10 @@ const ToastItem: React.FC<{
     return null;
   }
 
-  const animationClass = getAnimationClasses(toast.position || 'top-right', !isExiting && toast.visible);
+  const animationClass = getAnimationClasses(
+    toast.position || 'top-right',
+    !isExiting && toast.visible
+  );
 
   return (
     <div
@@ -404,6 +411,7 @@ const ToastItem: React.FC<{
         dismissible={toast.dismissible ?? false}
         closeButtonAriaLabel={toast.closeButtonAriaLabel}
         className={toast.className}
+        customStyles={toast.customStyles}
         onDismiss={handleDismiss}
       />
     </div>
@@ -436,10 +444,13 @@ const ToastContextHolder: React.FC = () => {
     return grouped;
   }, [toasts]);
 
-  const handleDismiss = React.useCallback((id: string) => {
-    const toast = toasts.find((t) => t.id === id);
-    toast?.onDismiss?.();
-  }, [toasts]);
+  const handleDismiss = React.useCallback(
+    (id: string) => {
+      const toast = toasts.find((t) => t.id === id);
+      toast?.onDismiss?.();
+    },
+    [toasts]
+  );
 
   return (
     <>
@@ -553,4 +564,3 @@ export const toast = {
 
 // Exportar el provider para que se use en la raíz de la app
 export { ToastProvider };
-
