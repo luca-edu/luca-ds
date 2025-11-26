@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState, useEffect } from 'react';
 import { ButtonRecordVoice } from '../components/ButtonRecordVoice';
@@ -86,9 +87,7 @@ export const RecordingAnimated: Story = {
 
     useEffect(() => {
       const interval = setInterval(() => {
-        setAudioLevels(
-          Array.from({ length: 9 }, () => Math.random() * 100)
-        );
+        setAudioLevels(Array.from({ length: 9 }, () => Math.random() * 100));
       }, 100);
 
       return () => clearInterval(interval);
@@ -105,12 +104,83 @@ export const RecordingAnimated: Story = {
   },
 };
 
-// Interactive example with state management
-export const Interactive: Story = {
+// Uncontrolled example - Component manages its own state and records real audio
+export const Uncontrolled: Story = {
+  render: () => {
+    const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
+    const [hasPermission, setHasPermission] = useState<boolean | undefined>(undefined);
+
+    const handleRecordingData = (blob: Blob) => {
+      console.log('Recording data received:', blob.size, 'bytes');
+      setRecordedBlob(blob);
+
+      // Create URL for playback
+      const url = URL.createObjectURL(blob);
+      console.log('Audio URL:', url);
+    };
+
+    const handlePermissionChange = (granted: boolean) => {
+      console.log('Permission changed:', granted);
+      setHasPermission(granted);
+    };
+
+    const handleStartRecording = () => {
+      console.log('Recording started');
+      setRecordedBlob(null);
+    };
+
+    const handleStopRecording = () => {
+      console.log('Recording stopped');
+    };
+
+    const handleDeleteRecording = () => {
+      console.log('Recording deleted');
+      setRecordedBlob(null);
+    };
+
+    return (
+      <div className="luca-space-y-4">
+        <div className="luca-text-center luca-space-y-2">
+          <p className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+            Uncontrolled Mode - Real Audio Recording
+          </p>
+          <p className="luca-text-xs luca-text-neutral-500">
+            Component manages its own state and captures real microphone audio
+          </p>
+          {hasPermission !== undefined && (
+            <p className="luca-text-xs luca-text-neutral-500">
+              Microphone: {hasPermission ? '✓ Granted' : '✗ Denied'}
+            </p>
+          )}
+          {recordedBlob && (
+            <div className="luca-space-y-1">
+              <p className="luca-text-xs luca-text-success-600 luca-font-semibold">
+                Recorded: {(recordedBlob.size / 1024).toFixed(2)} KB
+              </p>
+              <audio controls src={URL.createObjectURL(recordedBlob)} className="luca-w-full" />
+            </div>
+          )}
+        </div>
+        <ButtonRecordVoice
+          onStartRecording={handleStartRecording}
+          onStopRecording={handleStopRecording}
+          onDeleteRecording={handleDeleteRecording}
+          onRecordingData={handleRecordingData}
+          onPermissionChange={handlePermissionChange}
+        />
+      </div>
+    );
+  },
+};
+
+// Interactive example with controlled state management
+export const Controlled: Story = {
   render: () => {
     const [state, setState] = useState<'default' | 'recording' | 'disabled'>('default');
     const [audioLevels, setAudioLevels] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+    const [hasPermission, setHasPermission] = useState<boolean | undefined>(undefined);
+    const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
 
     const handleStartRecording = () => {
       console.log('Starting recording...');
@@ -118,9 +188,7 @@ export const Interactive: Story = {
 
       // Simulate audio levels
       const id = setInterval(() => {
-        setAudioLevels(
-          Array.from({ length: 9 }, () => Math.random() * 100)
-        );
+        setAudioLevels(Array.from({ length: 9 }, () => Math.random() * 100));
       }, 100);
       setIntervalId(id);
     };
@@ -143,21 +211,51 @@ export const Interactive: Story = {
         setIntervalId(null);
       }
       setAudioLevels([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setRecordedBlob(null);
+    };
+
+    const handleRecordingData = (blob: Blob) => {
+      console.log('Recording data received:', blob.size, 'bytes');
+      setRecordedBlob(blob);
+    };
+
+    const handlePermissionChange = (granted: boolean) => {
+      console.log('Permission changed:', granted);
+      setHasPermission(granted);
     };
 
     return (
       <div className="luca-space-y-4">
-        <div className="luca-text-center">
+        <div className="luca-text-center luca-space-y-2">
+          <p className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+            Controlled Mode - Simulated Audio Levels
+          </p>
+          <p className="luca-text-xs luca-text-neutral-500">
+            Parent component manages state and provides simulated audio levels
+          </p>
           <p className="luca-text-sm luca-font-semibold">
             Current State: <span className="luca-text-primary-600">{state}</span>
           </p>
+          {hasPermission !== undefined && (
+            <p className="luca-text-xs luca-text-neutral-500">
+              Microphone: {hasPermission ? '✓ Granted' : '✗ Denied'}
+            </p>
+          )}
+          {recordedBlob && (
+            <p className="luca-text-xs luca-text-success-600">
+              Recorded: {(recordedBlob.size / 1024).toFixed(2)} KB
+            </p>
+          )}
         </div>
         <ButtonRecordVoice
           state={state}
           audioLevels={audioLevels}
+          hasPermission={hasPermission}
           onStartRecording={handleStartRecording}
           onStopRecording={handleStopRecording}
           onDeleteRecording={handleDeleteRecording}
+          onRecordingData={handleRecordingData}
+          onPermissionChange={handlePermissionChange}
         />
       </div>
     );
@@ -174,10 +272,7 @@ export const StatesComparison: Story = {
       </div>
       <div>
         <h3 className="luca-text-sm luca-font-semibold luca-mb-2">Recording</h3>
-        <ButtonRecordVoice
-          state="recording"
-          audioLevels={[30, 60, 40, 80, 100, 70, 50, 60, 40]}
-        />
+        <ButtonRecordVoice state="recording" audioLevels={[30, 60, 40, 80, 100, 70, 50, 60, 40]} />
       </div>
       <div>
         <h3 className="luca-text-sm luca-font-semibold luca-mb-2">Disabled</h3>
@@ -187,80 +282,59 @@ export const StatesComparison: Story = {
   ),
 };
 
-// With max duration
+// With max duration (uncontrolled)
 export const WithMaxDuration: Story = {
   render: () => {
-    const [state, setState] = useState<'default' | 'recording' | 'disabled'>('default');
-    const [audioLevels, setAudioLevels] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-    const maxDuration = 10; // 10 seconds
+    const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
+    const maxDuration = 5; // 5 seconds
+
+    const handleRecordingData = (blob: Blob) => {
+      console.log('Recording data received:', blob.size, 'bytes');
+      setRecordedBlob(blob);
+    };
 
     const handleStartRecording = () => {
-      console.log('Starting recording...');
-      setState('recording');
-
-      // Simulate audio levels
-      const id = setInterval(() => {
-        setAudioLevels(
-          Array.from({ length: 9 }, () => Math.random() * 100)
-        );
-      }, 100);
-      setIntervalId(id);
-
-      // Auto-stop after max duration
-      const tid = setTimeout(() => {
-        console.log('Max duration reached, stopping...');
-        handleStopRecording();
-      }, maxDuration * 1000);
-      setTimeoutId(tid);
+      console.log('Recording started');
+      setRecordedBlob(null);
     };
 
     const handleStopRecording = () => {
-      console.log('Stopping recording...');
-      setState('default');
-      if (intervalId) {
-        clearInterval(intervalId);
-        setIntervalId(null);
-      }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        setTimeoutId(null);
-      }
-      setAudioLevels([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      console.log('Recording stopped (max duration reached or manually stopped)');
     };
 
     const handleDeleteRecording = () => {
-      console.log('Deleting recording...');
-      setState('default');
-      if (intervalId) {
-        clearInterval(intervalId);
-        setIntervalId(null);
-      }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        setTimeoutId(null);
-      }
-      setAudioLevels([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      console.log('Recording deleted');
+      setRecordedBlob(null);
     };
 
     return (
       <div className="luca-space-y-4">
-        <div className="luca-text-center">
+        <div className="luca-text-center luca-space-y-2">
+          <p className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+            Auto-Stop with Max Duration
+          </p>
           <p className="luca-text-sm">
-            Max duration: <span className="luca-font-semibold">{maxDuration}s</span>
+            Max duration:{' '}
+            <span className="luca-font-semibold luca-text-primary-600">{maxDuration}s</span>
           </p>
-          <p className="luca-text-sm luca-text-neutral-500">
-            Recording will auto-stop after {maxDuration} seconds
+          <p className="luca-text-xs luca-text-neutral-500">
+            Recording will automatically stop after {maxDuration} seconds
           </p>
+          {recordedBlob && (
+            <div className="luca-space-y-1">
+              <p className="luca-text-xs luca-text-success-600 luca-font-semibold">
+                Recorded: {(recordedBlob.size / 1024).toFixed(2)} KB
+              </p>
+              <audio controls src={URL.createObjectURL(recordedBlob)} className="luca-w-full" />
+            </div>
+          )}
         </div>
         <ButtonRecordVoice
-          state={state}
-          audioLevels={audioLevels}
           maxDuration={maxDuration}
           onStartRecording={handleStartRecording}
           onStopRecording={handleStopRecording}
           onDeleteRecording={handleDeleteRecording}
+          onRecordingData={handleRecordingData}
         />
       </div>
     );

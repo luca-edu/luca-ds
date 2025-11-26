@@ -36,7 +36,12 @@ export const VoiceRecordingVisualizer: React.FC<VoiceRecordingVisualizerProps> =
   };
 
   return (
-    <div className={cn('luca-flex luca-gap-[6.316px] luca-items-center luca-justify-center', className)}>
+    <div
+      className={cn(
+        'luca-flex luca-gap-[6.316px] luca-items-center luca-justify-center',
+        className
+      )}
+    >
       {levels.map((level, index) => (
         <div
           key={index}
