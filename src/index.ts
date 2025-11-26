@@ -145,5 +145,14 @@ export type { AudioVisualizerProps } from './components/AudioVisualizer';
 export { TextBox } from './components/TextBox';
 export type { TextBoxProps } from './components/TextBox';
 
+export { ButtonRecordVoice } from './components/ButtonRecordVoice';
+export type {
+  ButtonRecordVoiceProps,
+  ButtonRecordVoiceState,
+} from './components/ButtonRecordVoice';
+
+export { VoiceRecordingVisualizer } from './components/VoiceRecordingVisualizer';
+export type { VoiceRecordingVisualizerProps } from './components/VoiceRecordingVisualizer';
+
 // Utils
 export { cn } from './utils/cn';

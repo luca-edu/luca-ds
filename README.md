@@ -13,7 +13,7 @@ A modern UI component library built with React, TypeScript, and Tailwind CSS.
 ## Installation
 
 ```bash
-npm install luca-ds
+npm i @lucaedu-2/luca-ds
 ```
 
 ## Usage
