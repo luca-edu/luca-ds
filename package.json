@@ -78,6 +78,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@heroicons/react": "^2.2.0",
     "antd": "^5.28.0",
     "antd-style": "^3.7.1",
     "clsx": "^2.1.1",

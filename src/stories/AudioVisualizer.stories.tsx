@@ -171,8 +171,8 @@ export const Interactive = {
 
 // Custom waveform data example
 const customWaveformData = [
-  0.1, 0.3, 0.5, 0.7, 0.9, 1.0, 0.9, 0.7, 0.5, 0.3, 0.1, 0.2, 0.4, 0.6, 0.8,
-  0.6, 0.4, 0.2, 0.3, 0.5, 0.7, 0.5, 0.3, 0.1, 0.2, 0.4, 0.6, 0.4, 0.2, 0.1,
+  0.1, 0.3, 0.5, 0.7, 0.9, 1.0, 0.9, 0.7, 0.5, 0.3, 0.1, 0.2, 0.4, 0.6, 0.8, 0.6, 0.4, 0.2, 0.3,
+  0.5, 0.7, 0.5, 0.3, 0.1, 0.2, 0.4, 0.6, 0.4, 0.2, 0.1,
 ];
 
 export const CustomWaveform: Story = {
@@ -188,38 +188,29 @@ export const AllVariations = {
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6 luca-p-8 luca-bg-gray-50">
       <div className="luca-flex luca-flex-col luca-gap-2">
-        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Default (No Duration)</h3>
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">
+          Default (No Duration)
+        </h3>
         <AudioVisualizer isPlaying={false} showCompleted={false} />
       </div>
 
       <div className="luca-flex luca-flex-col luca-gap-2">
-        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">With Progress Bar - Beginning</h3>
-        <AudioVisualizer
-          isPlaying={true}
-          showCompleted={false}
-          currentTime={15}
-          duration={180}
-        />
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">
+          With Progress Bar - Beginning
+        </h3>
+        <AudioVisualizer isPlaying={true} showCompleted={false} currentTime={15} duration={180} />
       </div>
 
       <div className="luca-flex luca-flex-col luca-gap-2">
-        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">With Progress Bar - Halfway</h3>
-        <AudioVisualizer
-          isPlaying={true}
-          showCompleted={false}
-          currentTime={90}
-          duration={180}
-        />
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">
+          With Progress Bar - Halfway
+        </h3>
+        <AudioVisualizer isPlaying={true} showCompleted={false} currentTime={90} duration={180} />
       </div>
 
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Completed</h3>
-        <AudioVisualizer
-          isPlaying={false}
-          showCompleted={true}
-          currentTime={180}
-          duration={180}
-        />
+        <AudioVisualizer isPlaying={false} showCompleted={true} currentTime={180} duration={180} />
       </div>
 
       <div className="luca-flex luca-flex-col luca-gap-2">
