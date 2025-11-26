@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { cn } from '../utils/cn';
-import { ChevronRightIcon, ChevronLeftIcon, ChevronDownIcon, LucaLogoLarge, LucaLogoSmall } from '../shared/icons';
+import {
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ChevronDownIcon,
+  LucaLogoLarge,
+  LucaLogoSmall,
+} from '../shared/icons';
 
 export type SidebarVariant =
   | 'primary'
@@ -174,9 +180,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const isItemActive = (item: SidebarMenuItem): boolean => {
     if (activeKey === item.key) return true;
     if (item.submenu) {
-      return item.submenu.some(
-        (sub) => activeKey === `${item.key}-${sub.key}`
-      );
+      return item.submenu.some((sub) => activeKey === `${item.key}-${sub.key}`);
     }
     return false;
   };
@@ -197,10 +201,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
     >
       {/* Header con Logo */}
       <div className="luca-flex luca-flex-col luca-gap-6 luca-items-center luca-px-4 luca-pt-6 luca-pb-0 luca-shrink-0">
-        <div className={cn(
-          'luca-flex luca-flex-col luca-gap-2.5',
-          collapsed ? 'luca-items-center' : 'luca-items-start luca-w-full'
-        )}>
+        <div
+          className={cn(
+            'luca-flex luca-flex-col luca-gap-2.5',
+            collapsed ? 'luca-items-center' : 'luca-items-start luca-w-full'
+          )}
+        >
           {collapsed ? (
             logoIcon ? (
               <div
@@ -223,9 +229,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 height: logoHeight || 48,
               }}
             >
-              {logo || (
-                <LucaLogoLarge />
-              )}
+              {logo || <LucaLogoLarge />}
             </div>
           )}
         </div>
@@ -248,15 +252,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     collapsed ? 'luca-justify-center' : 'luca-justify-start',
                     isActive
                       ? cn(colors.activeBg, colors.activeText)
-                      : cn(
-                          colors.inactiveText,
-                          colors.inactiveHoverBg,
-                          colors.inactiveHover
-                        ),
+                      : cn(colors.inactiveText, colors.inactiveHoverBg, colors.inactiveHover),
                     item.disabled &&
                       'luca-cursor-not-allowed luca-opacity-60 hover:luca-bg-transparent hover:luca-text-neutral-500'
                   )}
-                  title={collapsed ? (typeof item.label === 'string' ? item.label : item.key) : undefined}
+                  title={
+                    collapsed ? (typeof item.label === 'string' ? item.label : item.key) : undefined
+                  }
                 >
                   {item.icon && (
                     <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
@@ -328,11 +330,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Footer */}
       <div className="luca-flex luca-flex-1 luca-flex-col luca-gap-2 luca-items-center luca-justify-end luca-pb-6 luca-px-2 luca-shrink-0">
-        {footer || (defaultFooter && (
-          <div className='luca-flex luca-flex-col luca-font-["Poppins"] luca-font-light luca-justify-center luca-leading-none luca-text-[10px] luca-text-neutral-500 luca-whitespace-nowrap'>
-            <p className="luca-leading-normal">{footerText}</p>
-          </div>
-        ))}
+        {footer ||
+          (defaultFooter && (
+            <div className='luca-flex luca-flex-col luca-font-["Poppins"] luca-font-light luca-justify-center luca-leading-none luca-text-[10px] luca-text-neutral-500 luca-whitespace-nowrap'>
+              <p className="luca-leading-normal">{footerText}</p>
+            </div>
+          ))}
       </div>
 
       {/* Botón de colapsar/expandir */}
@@ -361,4 +364,3 @@ export const Sidebar: React.FC<SidebarProps> = ({
 Sidebar.displayName = 'Sidebar';
 
 export default Sidebar;
-

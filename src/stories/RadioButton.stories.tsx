@@ -110,15 +110,17 @@ export const AllVariants: Story = {
 
     return (
       <div className="luca-flex luca-flex-col luca-gap-4">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map((variant) => (
-          <RadioButton
-            key={variant}
-            label={`Radio button ${variant}`}
-            variant={variant}
-            checked={selected === variant}
-            onChange={() => setSelected(variant)}
-          />
-        ))}
+        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
+          (variant) => (
+            <RadioButton
+              key={variant}
+              label={`Radio button ${variant}`}
+              variant={variant}
+              checked={selected === variant}
+              onChange={() => setSelected(variant)}
+            />
+          )
+        )}
       </div>
     );
   },
@@ -207,4 +209,3 @@ export const StyleComparison: Story = {
     );
   },
 };
-

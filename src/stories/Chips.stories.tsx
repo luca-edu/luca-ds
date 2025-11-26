@@ -154,9 +154,7 @@ export const AllVariations = {
       </div>
 
       <div className="luca-flex luca-flex-col luca-gap-2">
-        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">
-          Non-Removable Chips
-        </h3>
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Non-Removable Chips</h3>
         <Chips chips={sampleChips} removable={false} />
       </div>
 
@@ -192,9 +190,7 @@ export const AllVariations = {
       </div>
 
       <div className="luca-flex luca-flex-col luca-gap-2">
-        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">
-          Single Chip
-        </h3>
+        <h3 className="luca-text-sm luca-font-semibold luca-text-gray-700">Single Chip</h3>
         <Chips
           chips={[{ id: 1, title: 'Single Item' }]}
           removable={true}

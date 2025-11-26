@@ -3,11 +3,7 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 /** @type {import('tailwindcss').Config} */
 export default {
   prefix: 'luca-',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./playground/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './playground/**/*.{js,ts,jsx,tsx}'],
   theme: {
     screens: {
       xs: '475px',
@@ -20,6 +16,15 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+      },
+      keyframes: {
+        'progress-bar-stripes': {
+          '0%': { backgroundPosition: '1rem 0' },
+          '100%': { backgroundPosition: '0 0' },
+        },
+      },
+      animation: {
+        'progress-bar-stripes': 'progress-bar-stripes 1s linear infinite',
       },
       colors: {
         primary: {
@@ -117,4 +122,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

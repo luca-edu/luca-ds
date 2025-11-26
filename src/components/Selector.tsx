@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '../utils/cn';
 import { ButtonIcon } from './ButtonIcon';
@@ -14,9 +13,7 @@ const useSelectorContext = () => {
   const context = React.useContext(SelectorContext);
 
   if (!context) {
-    throw new Error(
-      'Los componentes compuestos de Selector deben usarse dentro de <Selector>.'
-    );
+    throw new Error('Los componentes compuestos de Selector deben usarse dentro de <Selector>.');
   }
 
   return context;
@@ -55,29 +52,26 @@ export const Selector = React.forwardRef<HTMLDivElement, SelectorProps>(
 
 Selector.displayName = 'Selector';
 
-export interface SelectorLabelProps
-  extends React.HTMLAttributes<HTMLSpanElement> {}
+export type SelectorLabelProps = React.HTMLAttributes<HTMLSpanElement>;
 
-export const SelectorLabel = React.forwardRef<
-  HTMLSpanElement,
-  SelectorLabelProps
->(({ className, ...props }, ref) => {
-  return (
-    <span
-      ref={ref}
-      className={cn(
-        'luca-text-sm luca-font-semibold luca-leading-6 luca-text-neutral-900',
-        className
-      )}
-      {...props}
-    />
-  );
-});
+export const SelectorLabel = React.forwardRef<HTMLSpanElement, SelectorLabelProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <span
+        ref={ref}
+        className={cn(
+          'luca-text-sm luca-font-semibold luca-leading-6 luca-text-neutral-900',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
 
 SelectorLabel.displayName = 'SelectorLabel';
 
-export interface SelectorDetailProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface SelectorDetailProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   as?: 'button' | 'span';
 }
 
@@ -93,10 +87,7 @@ export const SelectorDetail = React.forwardRef<
     return (
       <span
         ref={forwardedRef as React.ForwardedRef<HTMLSpanElement>}
-        className={cn(
-          'luca-text-sm luca-leading-6 luca-text-primary-600',
-          className
-        )}
+        className={cn('luca-text-sm luca-leading-6 luca-text-primary-600', className)}
         {...spanProps}
       >
         {children}
@@ -127,44 +118,35 @@ export const SelectorDetail = React.forwardRef<
 
 SelectorDetail.displayName = 'SelectorDetail';
 
-export interface SelectorActionProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface SelectorActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: React.ReactNode;
   iconVariant?: 'plus' | 'minus';
 }
 
-export const SelectorAction = React.forwardRef<
-  HTMLButtonElement,
-  SelectorActionProps
->(({ className, iconVariant = 'plus', icon, type = 'button', ...props }, ref) => {
-  const { disabled } = useSelectorContext();
-  const resolvedIcon =
-    icon ??
-    (iconVariant === 'minus' ? (
-      <MinusIcon size={16} />
-    ) : (
-      <PlusIcon size={16} />
-    ));
+export const SelectorAction = React.forwardRef<HTMLButtonElement, SelectorActionProps>(
+  ({ className, iconVariant = 'plus', icon, type = 'button', ...props }, ref) => {
+    const { disabled } = useSelectorContext();
+    const resolvedIcon =
+      icon ?? (iconVariant === 'minus' ? <MinusIcon size={16} /> : <PlusIcon size={16} />);
 
-  return (
-    <ButtonIcon
-      ref={ref}
-      type={type}
-      state={disabled ? 'disabled' : 'default'}
-      outline="rounded"
-      className={cn(
-        'luca-size-8 luca-border-neutral-200 luca-bg-white luca-text-primary-600',
-        !disabled &&
-          'hover:luca-border-primary-200 hover:luca-bg-[#edf5ff] hover:luca-text-primary-600 focus-visible:luca-outline-none focus-visible:luca-ring-2 focus-visible:luca-ring-offset-2 focus-visible:luca-ring-primary-200',
-        className
-      )}
-      icon={resolvedIcon}
-      disabled={disabled}
-      {...props}
-    />
-  );
-});
+    return (
+      <ButtonIcon
+        ref={ref}
+        type={type}
+        state={disabled ? 'disabled' : 'default'}
+        outline="rounded"
+        className={cn(
+          'luca-size-8 luca-border-neutral-200 luca-bg-white luca-text-primary-600',
+          !disabled &&
+            'hover:luca-border-primary-200 hover:luca-bg-[#edf5ff] hover:luca-text-primary-600 focus-visible:luca-outline-none focus-visible:luca-ring-2 focus-visible:luca-ring-offset-2 focus-visible:luca-ring-primary-200',
+          className
+        )}
+        icon={resolvedIcon}
+        disabled={disabled}
+        {...props}
+      />
+    );
+  }
+);
 
 SelectorAction.displayName = 'SelectorAction';
-
-

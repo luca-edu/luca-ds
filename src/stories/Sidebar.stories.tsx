@@ -33,7 +33,16 @@ const BookIcon = () => (
 
 const RobotIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <rect x="6" y="8" width="12" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    <rect
+      x="6"
+      y="8"
+      width="12"
+      height="10"
+      rx="2"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
     <circle cx="9" cy="13" r="1" fill="currentColor" />
     <circle cx="15" cy="13" r="1" fill="currentColor" />
     <path d="M9 5V8M15 5V8" stroke="currentColor" strokeWidth="1.5" />
@@ -292,18 +301,18 @@ export const AllVariants: Story = {
 
     return (
       <div className="luca-h-screen luca-flex luca-gap-4 luca-p-4">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map((variant) => (
-          <Sidebar
-            key={variant}
-            variant={variant}
-            items={defaultItems}
-            activeKey={activeKeys[variant]}
-            onActiveKeyChange={(key) =>
-              setActiveKeys((prev) => ({ ...prev, [variant]: key }))
-            }
-            footerText={`${variant} - V1.0 © 2025`}
-          />
-        ))}
+        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
+          (variant) => (
+            <Sidebar
+              key={variant}
+              variant={variant}
+              items={defaultItems}
+              activeKey={activeKeys[variant]}
+              onActiveKeyChange={(key) => setActiveKeys((prev) => ({ ...prev, [variant]: key }))}
+              footerText={`${variant} - V1.0 © 2025`}
+            />
+          )
+        )}
       </div>
     );
   },
@@ -325,9 +334,7 @@ export const CustomLogo: Story = {
       </div>
     );
 
-    const logoIcon = (
-      <div className="luca-text-white luca-font-bold luca-text-lg">L</div>
-    );
+    const logoIcon = <div className="luca-text-white luca-font-bold luca-text-lg">L</div>;
 
     return (
       <div className="luca-h-screen luca-flex">
@@ -372,4 +379,3 @@ export const WithoutCollapseButton: Story = {
     );
   },
 };
-

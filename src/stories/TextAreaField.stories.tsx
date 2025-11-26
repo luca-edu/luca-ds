@@ -58,8 +58,7 @@ export const Scrollable: Story = {
       'Contenido\n\n' +
       Array.from({ length: 12 })
         .map(
-          () =>
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae gravida arcu.'
+          () => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae gravida arcu.'
         )
         .join('\n'),
     rows: 8,
@@ -71,11 +70,7 @@ export const Controlled: Story = {
     const [value, setValue] = React.useState('Contenido inicial');
 
     return (
-      <TextAreaField
-        {...args}
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-      />
+      <TextAreaField {...args} value={value} onChange={(event) => setValue(event.target.value)} />
     );
   },
   args: {
@@ -84,6 +79,3 @@ export const Controlled: Story = {
     maxLength: 500,
   },
 };
-
-
-

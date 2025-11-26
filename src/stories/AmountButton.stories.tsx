@@ -55,13 +55,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => {
     const [value, setValue] = useState(args.value || 1);
-    return (
-      <AmountButton
-        {...args}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-      />
-    );
+    return <AmountButton {...args} value={value} onChange={(newValue) => setValue(newValue)} />;
   },
 };
 
@@ -69,13 +63,7 @@ export const Default: Story = {
 export const AtMinimum: Story = {
   render: (args) => {
     const [value, setValue] = useState(0);
-    return (
-      <AmountButton
-        {...args}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-      />
-    );
+    return <AmountButton {...args} value={value} onChange={(newValue) => setValue(newValue)} />;
   },
 };
 
@@ -83,13 +71,7 @@ export const AtMinimum: Story = {
 export const AtIntermediate: Story = {
   render: (args) => {
     const [value, setValue] = useState(1);
-    return (
-      <AmountButton
-        {...args}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-      />
-    );
+    return <AmountButton {...args} value={value} onChange={(newValue) => setValue(newValue)} />;
   },
 };
 
@@ -97,13 +79,7 @@ export const AtIntermediate: Story = {
 export const AtNormal: Story = {
   render: (args) => {
     const [value, setValue] = useState(2);
-    return (
-      <AmountButton
-        {...args}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-      />
-    );
+    return <AmountButton {...args} value={value} onChange={(newValue) => setValue(newValue)} />;
   },
 };
 
@@ -120,12 +96,7 @@ export const WithMax: Story = {
   render: (args) => {
     const [value, setValue] = useState(5);
     return (
-      <AmountButton
-        {...args}
-        value={value}
-        max={10}
-        onChange={(newValue) => setValue(newValue)}
-      />
+      <AmountButton {...args} value={value} max={10} onChange={(newValue) => setValue(newValue)} />
     );
   },
 };
@@ -135,12 +106,7 @@ export const CustomStep: Story = {
   render: (args) => {
     const [value, setValue] = useState(10);
     return (
-      <AmountButton
-        {...args}
-        value={value}
-        step={5}
-        onChange={(newValue) => setValue(newValue)}
-      />
+      <AmountButton {...args} value={value} step={5} onChange={(newValue) => setValue(newValue)} />
     );
   },
 };
@@ -172,11 +138,7 @@ export const ManualInputComparison: Story = {
       <div className="luca-flex luca-flex-col luca-gap-4">
         <div className="luca-flex luca-items-center luca-gap-4">
           <span className="luca-w-40 luca-text-sm luca-font-medium">Sin input manual:</span>
-          <AmountButton
-            value={value1}
-            onChange={setValue1}
-            allowManualInput={false}
-          />
+          <AmountButton value={value1} onChange={setValue1} allowManualInput={false} />
         </div>
         <div className="luca-flex luca-items-center luca-gap-4">
           <span className="luca-w-40 luca-text-sm luca-font-medium">Con input manual:</span>
@@ -208,20 +170,20 @@ export const AllVariants: Story = {
 
     return (
       <div className="luca-flex luca-flex-col luca-gap-4">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map((variant) => (
-          <div key={variant} className="luca-flex luca-items-center luca-gap-4">
-            <span className="luca-w-20 luca-text-sm luca-font-medium luca-text-neutral-700">
-              {variant}:
-            </span>
-            <AmountButton
-              variant={variant}
-              value={values[variant]}
-              onChange={(newValue) =>
-                setValues((prev) => ({ ...prev, [variant]: newValue }))
-              }
-            />
-          </div>
-        ))}
+        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
+          (variant) => (
+            <div key={variant} className="luca-flex luca-items-center luca-gap-4">
+              <span className="luca-w-20 luca-text-sm luca-font-medium luca-text-neutral-700">
+                {variant}:
+              </span>
+              <AmountButton
+                variant={variant}
+                value={values[variant]}
+                onChange={(newValue) => setValues((prev) => ({ ...prev, [variant]: newValue }))}
+              />
+            </div>
+          )
+        )}
       </div>
     );
   },
@@ -257,4 +219,3 @@ export const AllStates: Story = {
     );
   },
 };
-

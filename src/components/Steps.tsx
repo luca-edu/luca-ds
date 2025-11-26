@@ -91,17 +91,13 @@ export const Steps: React.FC<StepsProps> = ({
                   <div
                     className={cn(
                       'luca-box-border luca-flex luca-items-center luca-justify-center luca-p-[3px] luca-rounded-2xl luca-size-8 luca-border-[3px] luca-border-solid luca-border-white',
-                      isActive || isCompleted
-                        ? 'luca-bg-[#ffba31]'
-                        : 'luca-bg-[#f3f4f6]'
+                      isActive || isCompleted ? 'luca-bg-[#ffba31]' : 'luca-bg-[#f3f4f6]'
                     )}
                   >
                     <p
                       className={cn(
                         "luca-font-['Poppins'] luca-font-bold luca-leading-[21px] luca-text-sm luca-shrink-0",
-                        isActive || isCompleted
-                          ? 'luca-text-[#111827]'
-                          : 'luca-text-[#9ca3af]'
+                        isActive || isCompleted ? 'luca-text-[#111827]' : 'luca-text-[#9ca3af]'
                       )}
                     >
                       {index + 1}
@@ -145,9 +141,7 @@ export const Steps: React.FC<StepsProps> = ({
                     <p
                       className={cn(
                         'luca-flex-1 luca-font-["Poppins"] luca-font-normal luca-leading-4 luca-text-xs luca-whitespace-pre-wrap',
-                        isActive
-                          ? 'luca-text-[#6b7280]'
-                          : 'luca-text-[#9ca3af]',
+                        isActive ? 'luca-text-[#6b7280]' : 'luca-text-[#9ca3af]',
                         isFirst && 'luca-text-left',
                         !isFirst && !isLast && 'luca-text-center',
                         isLast && 'luca-text-right'
@@ -163,29 +157,28 @@ export const Steps: React.FC<StepsProps> = ({
         </div>
 
         {/* Robot animado */}
-        {showRobot && ( 
-            <div
+        {showRobot && (
+          <div
             className={cn(
-                'luca-absolute luca-size-[90px] luca-top-[-15px] luca-transition-all luca-duration-[700ms] luca-ease-in-out',
-                isAnimating && 'luca-animate-[robotWalk_0.6s_ease-in-out]'
+              'luca-absolute luca-size-[90px] luca-top-[-15px] luca-transition-all luca-duration-[700ms] luca-ease-in-out',
+              isAnimating && 'luca-animate-[robotWalk_0.6s_ease-in-out]'
             )}
             style={{
-                left: `${robotPosition}px`,
+              left: `${robotPosition}px`,
             }}
-            >
+          >
             <div className="luca-absolute luca-left-[-39px] luca-size-[90px] luca-top-[-10px] luca-animate-[levitar_3s_ease-in-out_infinite]">
-                {
-                    robotImageUrl ?
-                    (
-                        <img
-                            alt="Luca Robot"
-                            className="luca-absolute luca-inset-0 luca-max-w-none luca-object-cover luca-pointer-events-none luca-size-full"
-                            src={robotImageUrl}
-                        />
-                    ) : <LucaRobotIcon className='luca-absolute luca-left-[-13px] luca-top-[-10px]' />
-                }
+              {robotImageUrl ? (
+                <img
+                  alt="Luca Robot"
+                  className="luca-absolute luca-inset-0 luca-max-w-none luca-object-cover luca-pointer-events-none luca-size-full"
+                  src={robotImageUrl}
+                />
+              ) : (
+                <LucaRobotIcon className="luca-absolute luca-left-[-13px] luca-top-[-10px]" />
+              )}
             </div>
-            </div>
+          </div>
         )}
       </div>
     </div>
@@ -195,4 +188,3 @@ export const Steps: React.FC<StepsProps> = ({
 Steps.displayName = 'Steps';
 
 export default Steps;
-

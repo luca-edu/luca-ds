@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Tooltip as AntTooltip,
-  type TooltipProps as AntTooltipProps,
-} from 'antd';
+import { Tooltip as AntTooltip, type TooltipProps as AntTooltipProps } from 'antd';
 import { cn } from '../utils/cn';
 
 export type TooltipVariant =
@@ -141,10 +138,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             className="luca-absolute luca-right-[-7px] luca-top-1/2 luca-translate-y-[-50%] luca-rotate-180"
           >
-            <path
-              d="M0 6L7 0V12L0 6Z"
-              fill={arrowColor}
-            />
+            <path d="M0 6L7 0V12L0 6Z" fill={arrowColor} />
           </svg>
         );
       case 'right':
@@ -157,10 +151,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             className="luca-absolute luca-left-[-7px] luca-top-1/2 luca-translate-y-[-50%] luca-rotate-180"
           >
-            <path
-              d="M7 6L0 0V12L7 6Z"
-              fill={arrowColor}
-            />
+            <path d="M7 6L0 0V12L7 6Z" fill={arrowColor} />
           </svg>
         );
       default:
@@ -198,9 +189,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
       arrow={false}
       {...rest}
     >
-      <span className={cn('luca-inline-flex luca-items-center', className)}>
-        {children}
-      </span>
+      <span className={cn('luca-inline-flex luca-items-center', className)}>{children}</span>
     </AntTooltip>
   );
 };

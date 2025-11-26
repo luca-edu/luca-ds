@@ -143,11 +143,11 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
     }
 
     const numValue = Number(inputVal);
-    
+
     // Validar que sea un número válido
     if (!isNaN(numValue) && onChange) {
       let newValue = numValue;
-      
+
       // Aplicar límites min/max
       if (min !== undefined && newValue < min) {
         newValue = min;
@@ -155,7 +155,7 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
       if (max !== undefined && newValue > max) {
         newValue = max;
       }
-      
+
       onChange(newValue);
     }
   };
@@ -222,12 +222,7 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
   );
 
   return (
-    <div
-      className={cn(
-        'luca-flex luca-h-10 luca-items-center luca-relative',
-        className
-      )}
-    >
+    <div className={cn('luca-flex luca-h-10 luca-items-center luca-relative', className)}>
       {/* Botón de decrementar */}
       <button
         type="button"
@@ -249,9 +244,7 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
       <div
         className={displayClasses}
         style={{
-          width: allowManualInput
-            ? 'auto'
-            : `${displayWidth}rem`,
+          width: allowManualInput ? 'auto' : `${displayWidth}rem`,
           minWidth: '2rem',
           paddingLeft: '0.5rem',
           paddingRight: '0.5rem',
@@ -317,4 +310,3 @@ export const AmountButton: React.FC<AmountButtonProps> = ({
 AmountButton.displayName = 'AmountButton';
 
 export default AmountButton;
-

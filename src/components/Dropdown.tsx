@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Dropdown as AntDropdown,
-  Input,
-  Tag,
-} from 'antd';
+import { Dropdown as AntDropdown, Input, Tag } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import { cn } from '../utils/cn';
 import { ChevronDownIcon, CheckIcon, MinusIcon } from '../shared/icons';
@@ -26,13 +22,13 @@ export interface DropdownOption {
   label: string;
   description?: string;
   disabled?: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface DropdownProps {
   label?: string;
   placeholder?: string;
-  items: Record<string, any>[];
+  items: Record<string, unknown>[];
   value?: string[];
   defaultValue?: string[];
   onChange?: (keys: string[]) => void;
@@ -232,9 +228,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   helpText,
   message,
 }) => {
-  const [internalValue, setInternalValue] = React.useState<string[]>(
-    defaultValue ?? []
-  );
+  const [internalValue, setInternalValue] = React.useState<string[]>(defaultValue ?? []);
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const isControlled = value !== undefined;
@@ -243,28 +237,28 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   // Helper functions para obtener valores usando las keys personalizadas
   const getItemValue = React.useCallback(
-    (item: Record<string, any>): string => {
+    (item: Record<string, unknown>): string => {
       return String(item[valueKey] ?? '');
     },
     [valueKey]
   );
 
   const getItemLabel = React.useCallback(
-    (item: Record<string, any>): string => {
+    (item: Record<string, unknown>): string => {
       return String(item[labelKey] ?? '');
     },
     [labelKey]
   );
 
   const getItemDescription = React.useCallback(
-    (item: Record<string, any>): string | undefined => {
+    (item: Record<string, unknown>): string | undefined => {
       return item[descriptionKey] ? String(item[descriptionKey]) : undefined;
     },
     [descriptionKey]
   );
 
   const getItemDisabled = React.useCallback(
-    (item: Record<string, any>): boolean => {
+    (item: Record<string, unknown>): boolean => {
       return Boolean(item[disabledKey]);
     },
     [disabledKey]
@@ -283,10 +277,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   }, [open, searchTerm]);
 
   const enabledKeys = React.useMemo(
-    () =>
-      items
-        .filter((item) => !getItemDisabled(item))
-        .map((item) => getItemValue(item)),
+    () => items.filter((item) => !getItemDisabled(item)).map((item) => getItemValue(item)),
     [items, getItemDisabled, getItemValue]
   );
 
@@ -314,8 +305,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   const handleSelectAll = React.useCallback(() => {
     const areAllSelected =
-      enabledKeys.length > 0 &&
-      enabledKeys.every((key) => selectedKeys.includes(key));
+      enabledKeys.length > 0 && enabledKeys.every((key) => selectedKeys.includes(key));
 
     const next = areAllSelected ? [] : enabledKeys;
 
@@ -351,7 +341,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   }, [enableSearch, items, searchTerm, getItemLabel, getItemDescription]);
 
   const renderItem = React.useCallback(
-    (item: Record<string, any>) => {
+    (item: Record<string, unknown>) => {
       const itemValue = getItemValue(item);
       return (
         <DropdownItem
@@ -365,27 +355,30 @@ export const Dropdown: React.FC<DropdownProps> = ({
         />
       );
     },
-    [selectedKeys, toggleKey, getItemValue, getItemLabel, getItemDescription, getItemDisabled, variant]
+    [
+      selectedKeys,
+      toggleKey,
+      getItemValue,
+      getItemLabel,
+      getItemDescription,
+      getItemDisabled,
+      variant,
+    ]
   );
 
   const shouldVirtualize =
-    filteredItems.length > virtualizationThreshold &&
-    filteredItems.length > 0;
+    filteredItems.length > virtualizationThreshold && filteredItems.length > 0;
 
   const areAllEnabledSelected =
-    enabledKeys.length > 0 &&
-    enabledKeys.every((key) => selectedKeys.includes(key));
+    enabledKeys.length > 0 && enabledKeys.every((key) => selectedKeys.includes(key));
 
   const hasPartialSelection =
-    !areAllEnabledSelected &&
-    selectedKeys.some((key) => enabledKeys.includes(key));
+    !areAllEnabledSelected && selectedKeys.some((key) => enabledKeys.includes(key));
 
   const summaryContent = React.useMemo<React.ReactNode>(() => {
     if (selectedKeys.length === 0) {
       return (
-        <span className="luca-text-sm luca-font-medium luca-text-neutral-500">
-          {placeholder}
-        </span>
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-500">{placeholder}</span>
       );
     }
 
@@ -393,11 +386,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       const key = selectedKeys[0];
       const selectedItem = items.find((item) => getItemValue(item) === key);
       const label = selectedItem ? getItemLabel(selectedItem) : placeholder;
-      return (
-        <>
-          {label}
-        </>
-      );
+      return <>{label}</>;
     }
 
     if (
@@ -418,20 +407,14 @@ export const Dropdown: React.FC<DropdownProps> = ({
             colors.bgTag,
             colors.textTag
           )}
-          closeIcon={
-            <span className={cn('luca-ml-1 luca-font-bold', colors.textTag)}>
-              ×
-            </span>
-          }
+          closeIcon={<span className={cn('luca-ml-1 luca-font-bold', colors.textTag)}>×</span>}
         >
           {allSelectedLabel} ({enabledKeys.length})
         </Tag>
       );
     }
 
-    const visibleItems = items.filter((item) =>
-      selectedKeys.includes(item.key)
-    );
+    const visibleItems = items.filter((item) => selectedKeys.includes(item.key as string));
 
     const countItemsSelected = visibleItems.length;
 
@@ -465,7 +448,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         itemHeight={virtualItemHeight}
         itemKey={(item) => getItemValue(item)}
       >
-        {(item: Record<string, any>) => renderItem(item)}
+        {(item: Record<string, unknown>) => renderItem(item)}
       </VirtualList>
     );
 
@@ -577,50 +560,53 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
       <div className="luca-flex luca-flex-col luca-gap-1">
         <AntDropdown
-        trigger={['click']}
-        disabled={disabled}
-        open={open}
-        onOpenChange={setOpen}
-        menu={{
-          items: [],
-        }}
-        popupRender={() => menuContent}
-        overlayClassName={cn('luca-dropdown-overlay', overlayClassName)}
-      >
-        <button
-          type="button"
-          id={fieldId}
-          className={cn(
-            'luca-flex luca-w-full luca-items-center luca-justify-between luca-rounded-md luca-border luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-transition-colors luca-duration-200',
-            hasError
-              ? 'luca-border-danger-500 focus:luca-border-danger-500 focus:luca-ring-2 focus:luca-ring-danger-200'
-              : cn(
-                  colors.border,
-                  colors.borderHover,
-                  colors.borderFocus,
-                  colors.textFocus,
-                  'focus:luca-outline-none focus:luca-ring-2',
-                  colors.ring
-                ),
-            colors.text,
-            colors.textHover,
-            disabled &&
-              'luca-cursor-not-allowed luca-border-neutral-200 luca-bg-neutral-100 luca-text-neutral-400',
-            sizeStyles[size],
-            className
-          )}
+          trigger={['click']}
           disabled={disabled}
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-invalid={hasError || undefined}
-          aria-describedby={[helpTextId, messageId].filter(Boolean).join(' ') || undefined}
+          open={open}
+          onOpenChange={setOpen}
+          menu={{
+            items: [],
+          }}
+          popupRender={() => menuContent}
+          overlayClassName={cn('luca-dropdown-overlay', overlayClassName)}
         >
-          <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left">
-            {summaryContent}
-          </div>
-          <ChevronDownIcon size={16} className={hasError ? 'luca-text-danger-500' : colors.icon} />
-        </button>
-      </AntDropdown>
+          <button
+            type="button"
+            id={fieldId}
+            className={cn(
+              'luca-flex luca-w-full luca-items-center luca-justify-between luca-rounded-md luca-border luca-bg-white luca-px-4 luca-py-2 luca-text-sm luca-font-medium luca-transition-colors luca-duration-200',
+              hasError
+                ? 'luca-border-danger-500 focus:luca-border-danger-500 focus:luca-ring-2 focus:luca-ring-danger-200'
+                : cn(
+                    colors.border,
+                    colors.borderHover,
+                    colors.borderFocus,
+                    colors.textFocus,
+                    'focus:luca-outline-none focus:luca-ring-2',
+                    colors.ring
+                  ),
+              colors.text,
+              colors.textHover,
+              disabled &&
+                'luca-cursor-not-allowed luca-border-neutral-200 luca-bg-neutral-100 luca-text-neutral-400',
+              sizeStyles[size],
+              className
+            )}
+            disabled={disabled}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+            aria-invalid={hasError || undefined}
+            aria-describedby={[helpTextId, messageId].filter(Boolean).join(' ') || undefined}
+          >
+            <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left">
+              {summaryContent}
+            </div>
+            <ChevronDownIcon
+              size={16}
+              className={hasError ? 'luca-text-danger-500' : colors.icon}
+            />
+          </button>
+        </AntDropdown>
 
         {hasError && message && (
           <p
@@ -692,16 +678,12 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
         )}
         aria-hidden
       >
-        {checked ? (
-          <CheckIcon size={14} />
-        ) : indeterminate ? (
-          <MinusIcon size={12} />
-        ) : null}
+        {checked ? <CheckIcon size={14} /> : indeterminate ? <MinusIcon size={12} /> : null}
       </span>
       <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-center luca-gap-0.5">
-          <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-break-words luca-text-left luca-w-full">
-            {label}
-          </span>
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-break-words luca-text-left luca-w-full">
+          {label}
+        </span>
         {description && (
           <span className="luca-text-xs luca-font-normal luca-text-neutral-400 luca-break-words luca-text-left luca-w-full">
             {description}

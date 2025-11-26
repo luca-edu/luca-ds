@@ -3,8 +3,7 @@ import { Card } from './Card';
 import { cn } from '../utils/cn';
 import { EmptyStateIcon } from '../shared/icons';
 
-export interface EmptyStateCardProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface EmptyStateCardProps extends React.HTMLAttributes<HTMLDivElement> {
   illustrationSrc?: string;
   illustrationAlt?: string;
   title?: string;
@@ -13,10 +12,7 @@ export interface EmptyStateCardProps
   compact?: boolean;
 }
 
-export const EmptyStateCard = React.forwardRef<
-  HTMLDivElement,
-  EmptyStateCardProps
->(
+export const EmptyStateCard = React.forwardRef<HTMLDivElement, EmptyStateCardProps>(
   (
     {
       illustrationSrc,
@@ -38,19 +34,19 @@ export const EmptyStateCard = React.forwardRef<
         className={cn(
           'luca-flex luca-min-h-[260px] luca-flex-col luca-items-center luca-justify-center luca-gap-4 luca-text-center luca-max-w-full',
           compact && 'luca-min-h-[200px]',
-          className,
+          className
         )}
         {...props}
       >
         <div className="luca-flex luca-flex-col luca-items-center luca-gap-3">
           <div className="luca-flex luca-h-[120px] luca-w-[120px] luca-items-center luca-justify-center luca-p-6">
             {illustrationSrc ? (
-            <img
-              src={illustrationSrc}
-              alt={illustrationAlt}
-              className="luca-max-h-full luca-max-w-full luca-object-contain luca-opacity-80"
-              loading="lazy"
-            />
+              <img
+                src={illustrationSrc}
+                alt={illustrationAlt}
+                className="luca-max-h-full luca-max-w-full luca-object-contain luca-opacity-80"
+                loading="lazy"
+              />
             ) : (
               <EmptyStateIcon />
             )}
@@ -58,9 +54,7 @@ export const EmptyStateCard = React.forwardRef<
 
           <div className="luca-flex luca-flex-col luca-items-center luca-gap-1">
             {title && (
-              <h3 className="luca-text-base luca-font-semibold luca-text-neutral-700">
-                {title}
-              </h3>
+              <h3 className="luca-text-base luca-font-semibold luca-text-neutral-700">{title}</h3>
             )}
             {description && (
               <p className="luca-max-w-[320px] luca-text-sm luca-font-normal luca-leading-6 luca-text-neutral-400">
@@ -81,5 +75,3 @@ export const EmptyStateCard = React.forwardRef<
 );
 
 EmptyStateCard.displayName = 'EmptyStateCard';
-
-

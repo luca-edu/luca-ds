@@ -32,17 +32,7 @@ export interface ChipsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Chips = React.forwardRef<HTMLDivElement, ChipsProps>(
-  (
-    {
-      chips,
-      onRemove,
-      removable = true,
-      className,
-      chipClassName,
-      ...props
-    },
-    ref
-  ) => {
+  ({ chips, onRemove, removable = true, className, chipClassName, ...props }, ref) => {
     const handleRemove = (id: string | number) => {
       if (onRemove) {
         onRemove(id);

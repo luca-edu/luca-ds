@@ -142,20 +142,22 @@ export const AllVariants: Story = {
 
     return (
       <div className="luca-flex luca-flex-col luca-gap-4">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map((variant) => (
-          <Checkbox
-            key={variant}
-            label={`Checkbox ${variant}`}
-            variant={variant}
-            checked={checkedStates[variant]}
-            onChange={(e) =>
-              setCheckedStates((prev) => ({
-                ...prev,
-                [variant]: e.target.checked,
-              }))
-            }
-          />
-        ))}
+        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
+          (variant) => (
+            <Checkbox
+              key={variant}
+              label={`Checkbox ${variant}`}
+              variant={variant}
+              checked={checkedStates[variant]}
+              onChange={(e) =>
+                setCheckedStates((prev) => ({
+                  ...prev,
+                  [variant]: e.target.checked,
+                }))
+              }
+            />
+          )
+        )}
       </div>
     );
   },
@@ -276,27 +278,20 @@ export const IndeterminateExample: Story = {
           <Checkbox
             label="Item 1"
             checked={checkedItems.item1}
-            onChange={(e) =>
-              setCheckedItems((prev) => ({ ...prev, item1: e.target.checked }))
-            }
+            onChange={(e) => setCheckedItems((prev) => ({ ...prev, item1: e.target.checked }))}
           />
           <Checkbox
             label="Item 2"
             checked={checkedItems.item2}
-            onChange={(e) =>
-              setCheckedItems((prev) => ({ ...prev, item2: e.target.checked }))
-            }
+            onChange={(e) => setCheckedItems((prev) => ({ ...prev, item2: e.target.checked }))}
           />
           <Checkbox
             label="Item 3"
             checked={checkedItems.item3}
-            onChange={(e) =>
-              setCheckedItems((prev) => ({ ...prev, item3: e.target.checked }))
-            }
+            onChange={(e) => setCheckedItems((prev) => ({ ...prev, item3: e.target.checked }))}
           />
         </div>
       </div>
     );
   },
 };
-

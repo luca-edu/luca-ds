@@ -12,8 +12,7 @@ type NotificationContextValue = {
   variant: NotificationVariant;
 };
 
-const NotificationContext =
-  React.createContext<NotificationContextValue | null>(null);
+const NotificationContext = React.createContext<NotificationContextValue | null>(null);
 
 const useNotificationContext = () => {
   const context = React.useContext(NotificationContext);
@@ -35,8 +34,7 @@ export type NotificationPosition =
   | 'bottom-center'
   | 'bottom-right';
 
-export interface NotificationProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface NotificationProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: NotificationVariant;
   title?: string;
   description?: React.ReactNode;
@@ -64,10 +62,7 @@ const getPositionClasses = (position: NotificationPosition): string => {
   return positionMap[position];
 };
 
-const getAnimationClasses = (
-  position: NotificationPosition,
-  isExiting: boolean
-): string => {
+const getAnimationClasses = (position: NotificationPosition, isExiting: boolean): string => {
   // Determinar la dirección de la animación según la posición
   const animationMap: Record<NotificationPosition, { enter: string; exit: string }> = {
     'top-left': {
@@ -185,11 +180,7 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
                   tokens.descriptionColor
                 )}
               >
-                {title && (
-                  <p className={cn('luca-font-medium', tokens.titleColor)}>
-                    {title}
-                  </p>
-                )}
+                {title && <p className={cn('luca-font-medium', tokens.titleColor)}>{title}</p>}
 
                 {(description ?? children) && (
                   <p className="luca-text-sm luca-leading-6 luca-text-inherit">
@@ -229,54 +220,38 @@ export const Notification = React.forwardRef<HTMLDivElement, NotificationProps>(
 
 Notification.displayName = 'Notification';
 
-export interface NotificationActionsProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+export type NotificationActionsProps = React.HTMLAttributes<HTMLDivElement>;
 
-export const NotificationActions = React.forwardRef<
-  HTMLDivElement,
-  NotificationActionsProps
->(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        'luca-flex luca-flex-wrap luca-gap-5 luca-text-sm luca-leading-[22px]',
-        className
-      )}
-      {...props}
-    />
-  );
-});
+export const NotificationActions = React.forwardRef<HTMLDivElement, NotificationActionsProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'luca-flex luca-flex-wrap luca-gap-5 luca-text-sm luca-leading-[22px]',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
 
 NotificationActions.displayName = 'NotificationActions';
 
 export type NotificationActionVariant = 'primary' | 'secondary';
 
-export interface NotificationActionProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface NotificationActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   actionVariant?: NotificationActionVariant;
 }
 
-export const NotificationAction = React.forwardRef<
-  HTMLButtonElement,
-  NotificationActionProps
->(
-  (
-    {
-      actionVariant = 'primary',
-      className,
-      type = 'button',
-      ...props
-    },
-    ref
-  ) => {
+export const NotificationAction = React.forwardRef<HTMLButtonElement, NotificationActionProps>(
+  ({ actionVariant = 'primary', className, type = 'button', ...props }, ref) => {
     const { variant } = useNotificationContext();
     const tokens = VARIANT_TOKENS[variant];
 
     const actionVariantClasses =
-      actionVariant === 'primary'
-        ? tokens.primaryActionColor
-        : tokens.secondaryActionColor;
+      actionVariant === 'primary' ? tokens.primaryActionColor : tokens.secondaryActionColor;
 
     return (
       <button
@@ -352,16 +327,19 @@ const useNotificationContextApi = () => {
 const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [notifications, setNotifications] = React.useState<NotificationInstance[]>([]);
 
-  const addNotification = React.useCallback((notification: Omit<NotificationInstance, 'id' | 'visible'>) => {
-    const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const newNotification: NotificationInstance = {
-      ...notification,
-      id,
-      visible: true,
-    };
-    setNotifications((prev) => [...prev, newNotification]);
-    return id;
-  }, []);
+  const addNotification = React.useCallback(
+    (notification: Omit<NotificationInstance, 'id' | 'visible'>) => {
+      const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const newNotification: NotificationInstance = {
+        ...notification,
+        id,
+        visible: true,
+      };
+      setNotifications((prev) => [...prev, newNotification]);
+      return id;
+    },
+    []
+  );
 
   const removeNotification = React.useCallback((id: string) => {
     setNotifications((prev) => prev.filter((notification) => notification.id !== id));
@@ -381,7 +359,9 @@ const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     [notifications, addNotification, removeNotification, clearAll]
   );
 
-  return <NotificationContextApi.Provider value={value}>{children}</NotificationContextApi.Provider>;
+  return (
+    <NotificationContextApi.Provider value={value}>{children}</NotificationContextApi.Provider>
+  );
 };
 
 // Componente NotificationItem para usar dentro del context holder (sin posición fija)
@@ -471,10 +451,13 @@ const NotificationContextHolder: React.FC = () => {
     return grouped;
   }, [notifications]);
 
-  const handleDismiss = React.useCallback((id: string) => {
-    const notification = notifications.find((n) => n.id === id);
-    notification?.onDismiss?.();
-  }, [notifications]);
+  const handleDismiss = React.useCallback(
+    (id: string) => {
+      const notification = notifications.find((n) => n.id === id);
+      notification?.onDismiss?.();
+    },
+    [notifications]
+  );
 
   return (
     <>
@@ -512,16 +495,19 @@ const NotificationContextHolder: React.FC = () => {
 export const useNotification = (): [NotificationApi, React.ReactElement] => {
   const [notifications, setNotifications] = React.useState<NotificationInstance[]>([]);
 
-  const addNotification = React.useCallback((notification: Omit<NotificationInstance, 'id' | 'visible'>) => {
-    const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const newNotification: NotificationInstance = {
-      ...notification,
-      id,
-      visible: true,
-    };
-    setNotifications((prev) => [...prev, newNotification]);
-    return id;
-  }, []);
+  const addNotification = React.useCallback(
+    (notification: Omit<NotificationInstance, 'id' | 'visible'>) => {
+      const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const newNotification: NotificationInstance = {
+        ...notification,
+        id,
+        visible: true,
+      };
+      setNotifications((prev) => [...prev, newNotification]);
+      return id;
+    },
+    []
+  );
 
   const removeNotification = React.useCallback((id: string) => {
     setNotifications((prev) => prev.filter((notification) => notification.id !== id));
@@ -588,4 +574,3 @@ export const notification = {
 
 // Exportar el provider para que se use en la raíz de la app
 export { NotificationProvider };
-

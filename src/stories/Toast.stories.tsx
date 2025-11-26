@@ -55,7 +55,8 @@ const meta = {
     },
     autoClose: {
       control: 'number',
-      description: 'Tiempo en milisegundos para cerrar automáticamente. Usa false para deshabilitar.',
+      description:
+        'Tiempo en milisegundos para cerrar automáticamente. Usa false para deshabilitar.',
       table: {
         defaultValue: { summary: 'false' },
       },
@@ -97,7 +98,7 @@ export const AllPositions: Story = {
       'left-center',
       'right-center',
     ];
-    
+
     return (
       <div className="luca-relative luca-w-full luca-h-screen luca-bg-neutral-50">
         {positions.map((position) => (
@@ -124,12 +125,10 @@ export const WithAutoClose: Story = {
   },
   render: () => {
     const [visible, setVisible] = useState(false);
-    
+
     return (
       <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
-        <Button onClick={() => setVisible(true)}>
-          Mostrar Toast (se cierra en 3 segundos)
-        </Button>
+        <Button onClick={() => setVisible(true)}>Mostrar Toast (se cierra en 3 segundos)</Button>
         {visible && (
           <Toast
             variant="success"
@@ -160,7 +159,7 @@ export const AllVariants: Story = {
       'warning',
       'info',
     ];
-    
+
     return (
       <div className="luca-relative luca-w-full luca-h-screen luca-bg-neutral-50">
         {variants.map((variant, index) => (
@@ -172,11 +171,14 @@ export const AllVariants: Story = {
               index === 0
                 ? 'top-left'
                 : index === 1
-                ? 'top-right'
-                : index === 2
-                ? 'bottom-left'
-                : 'bottom-right'
+                  ? 'top-right'
+                  : index === 2
+                    ? 'bottom-left'
+                    : 'bottom-right'
             }
+            customStyles={{
+              position: 'absolute',
+            }}
             dismissible
           />
         ))}
@@ -198,9 +200,7 @@ export const Controlled: Story = {
     return (
       <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
         <div className="luca-flex luca-gap-4">
-          <Button onClick={() => setVisible(true)}>
-            Mostrar Toast
-          </Button>
+          <Button onClick={() => setVisible(true)}>Mostrar Toast</Button>
           <Button variant="secondary" onClick={() => setVisible(false)}>
             Ocultar Toast
           </Button>
@@ -231,7 +231,7 @@ export const AutoCloseWithManualDismiss: Story = {
   },
   render: () => {
     const [visible, setVisible] = useState(false);
-    
+
     return (
       <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
         <Button onClick={() => setVisible(true)}>
@@ -263,19 +263,21 @@ export const MultipleToasts: Story = {
     autoClose: 4000,
   },
   render: () => {
-    const [toasts, setToasts] = useState<Array<{ id: number; variant: 'success' | 'danger' | 'warning' | 'info' }>>([]);
+    const [toasts, setToasts] = useState<
+      Array<{ id: number; variant: 'success' | 'danger' | 'warning' | 'info' }>
+    >([]);
     const [idCounter, setIdCounter] = useState(0);
-    
+
     const addToast = (variant: 'success' | 'danger' | 'warning' | 'info') => {
       const newId = idCounter + 1;
       setIdCounter(newId);
       setToasts([...toasts, { id: newId, variant }]);
     };
-    
+
     const removeToast = (id: number) => {
       setToasts(toasts.filter((t) => t.id !== id));
     };
-    
+
     return (
       <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
         <div className="luca-flex luca-gap-4">
@@ -285,7 +287,7 @@ export const MultipleToasts: Story = {
           <Button onClick={() => addToast('info')}>Info Toast</Button>
         </div>
         <div className="luca-relative luca-w-full luca-h-screen">
-          {toasts.map((toast, index) => (
+          {toasts.map((toast) => (
             <Toast
               key={toast.id}
               variant={toast.variant}
@@ -373,7 +375,8 @@ export const WithUseToastHook: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Ejemplo de uso del hook useToast() para mostrar toasts programáticamente. El contextHolder debe renderizarse una vez en la aplicación.',
+        story:
+          'Ejemplo de uso del hook useToast() para mostrar toasts programáticamente. El contextHolder debe renderizarse una vez en la aplicación.',
       },
     },
   },
@@ -566,10 +569,7 @@ export const WithUseToastHookStacking: Story = {
             >
               Agregar Info Toast
             </Button>
-            <Button
-              variant="secondary"
-              onClick={() => toastApi.destroy()}
-            >
+            <Button variant="secondary" onClick={() => toastApi.destroy()}>
               Limpiar Todos
             </Button>
           </div>
@@ -580,7 +580,8 @@ export const WithUseToastHookStacking: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demostración del apilado de múltiples toasts en la misma posición. Usa destroy() para limpiar todos los toasts.',
+        story:
+          'Demostración del apilado de múltiples toasts en la misma posición. Usa destroy() para limpiar todos los toasts.',
       },
     },
   },
@@ -663,9 +664,113 @@ export const WithUseToastHookOpen: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Uso del método open() para crear toasts con cualquier variante especificada manualmente.',
+        story:
+          'Uso del método open() para crear toasts con cualquier variante especificada manualmente.',
       },
     },
   },
 };
 
+// Story con custom styles
+export const WithCustomStyles: Story = {
+  args: {
+    variant: 'success',
+    message: 'Toast con estilos personalizados',
+    position: 'top-center',
+    dismissible: true,
+  },
+  render: () => {
+    const [toastApi, toastContextHolder] = toast.useToast();
+
+    return (
+      <div className="luca-p-20 luca-flex luca-flex-col luca-gap-4">
+        {toastContextHolder}
+        <div className="luca-flex luca-flex-col luca-gap-4">
+          <h3 className="luca-text-lg luca-font-semibold">Toast con customStyles</h3>
+          <p className="luca-text-sm luca-text-neutral-600">
+            Usa la propiedad customStyles para sobrescribir los estilos del toast.
+          </p>
+          <div className="luca-flex luca-flex-wrap luca-gap-4">
+            <Button
+              onClick={() =>
+                toastApi.success({
+                  message: 'Toast con fondo degradado',
+                  position: 'top-center',
+                  dismissible: true,
+                  customStyles: {
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                  },
+                })
+              }
+            >
+              Degradado Morado
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.error({
+                  message: 'Toast con bordes personalizados',
+                  position: 'top-right',
+                  dismissible: true,
+                  customStyles: {
+                    border: '3px solid #dc2626',
+                    borderRadius: '24px',
+                    padding: '20px 24px',
+                    fontSize: '16px',
+                  },
+                })
+              }
+            >
+              Bordes Personalizados
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.warning({
+                  message: 'Toast con sombra personalizada',
+                  position: 'bottom-center',
+                  dismissible: true,
+                  customStyles: {
+                    boxShadow:
+                      '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)',
+                    transform: 'scale(1.05)',
+                  },
+                })
+              }
+            >
+              Sombra Grande
+            </Button>
+            <Button
+              onClick={() =>
+                toastApi.info({
+                  message: 'Toast con estilos combinados',
+                  position: 'bottom-right',
+                  dismissible: true,
+                  customStyles: {
+                    background: '#1e293b',
+                    color: '#f1f5f9',
+                    borderRadius: '16px',
+                    border: '2px solid #3b82f6',
+                    padding: '18px 24px',
+                    fontSize: '15px',
+                    fontWeight: '500',
+                  },
+                })
+              }
+            >
+              Estilo Oscuro
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demostración de cómo usar customStyles para sobrescribir completamente los estilos del toast.',
+      },
+    },
+  },
+};
