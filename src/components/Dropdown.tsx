@@ -352,6 +352,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           disabled={getItemDisabled(item)}
           onToggle={() => toggleKey(itemValue)}
           variant={variant}
+          multiple={multiple}
         />
       );
     },
@@ -631,6 +632,7 @@ export interface DropdownItemProps {
   onToggle?: () => void;
   indeterminate?: boolean;
   variant?: DropdownVariant;
+  multiple?: boolean;
 }
 
 export const DropdownItem: React.FC<DropdownItemProps> = ({
@@ -641,6 +643,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
   onToggle,
   indeterminate = false,
   variant = 'primary',
+  multiple = true,
 }) => {
   const colors = variantColors[variant];
   const handleClick = React.useCallback(
@@ -669,17 +672,19 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
         disabled && 'luca-cursor-not-allowed luca-opacity-70'
       )}
     >
-      <span
-        className={cn(
-          'luca-flex luca-h-6 luca-w-6 luca-items-center luca-justify-center luca-rounded-md luca-border-2 luca-transition-colors luca-duration-150',
-          checked
-            ? cn(colors.borderCheckbox, colors.bgCheckbox, 'luca-text-white')
-            : 'luca-border-neutral-200 luca-bg-white luca-text-transparent'
-        )}
-        aria-hidden
-      >
-        {checked ? <CheckIcon size={14} /> : indeterminate ? <MinusIcon size={12} /> : null}
-      </span>
+      {multiple && (
+        <span
+          className={cn(
+            'luca-flex luca-h-6 luca-w-6 luca-items-center luca-justify-center luca-rounded-md luca-border-2 luca-transition-colors luca-duration-150',
+            checked
+              ? cn(colors.borderCheckbox, colors.bgCheckbox, 'luca-text-white')
+              : 'luca-border-neutral-200 luca-bg-white luca-text-transparent'
+          )}
+          aria-hidden
+        >
+          {checked ? <CheckIcon size={14} /> : indeterminate ? <MinusIcon size={12} /> : null}
+        </span>
+      )}
       <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-center luca-gap-0.5">
         <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-break-words luca-text-left luca-w-full">
           {label}
