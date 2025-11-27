@@ -159,7 +159,7 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
               >
                 <span>
                   {label}
-                  {required && <span className="luca-text-danger-500 luca-pl-1">*</span>}
+                  {required && <span className="luca-pl-1">*</span>}
                 </span>
               </label>
             )}
@@ -323,7 +323,7 @@ export const TextAreaField = React.forwardRef<AntTextAreaRef, TextAreaFieldProps
               >
                 <span>
                   {label}
-                  {required && <span className="luca-text-danger-500 luca-pl-1">*</span>}
+                  {required && <span className="luca-pl-1">*</span>}
                 </span>
               </label>
             )}

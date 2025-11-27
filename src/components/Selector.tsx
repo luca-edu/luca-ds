@@ -36,7 +36,7 @@ export const Selector = React.forwardRef<HTMLDivElement, SelectorProps>(
           className={cn(
             selectorBaseStyles,
             !disabled &&
-              'hover:luca-border-primary-100 hover:luca-bg-neutral-50 focus-within:luca-border-primary-100 focus-within:luca-bg-neutral-50',
+              'hover:luca-border-primary-500 focus-within:luca-border-primary-100 focus-within:luca-bg-neutral-50',
             disabled &&
               'luca-border-neutral-200 luca-bg-neutral-50 luca-opacity-70 luca-cursor-not-allowed',
             className
