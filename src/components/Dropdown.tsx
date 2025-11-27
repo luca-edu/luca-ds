@@ -533,7 +533,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             >
               <span>
                 {label}
-                {required && <span className="luca-text-danger-500 luca-pl-1">*</span>}
+                {required && <span className="luca-pl-1">*</span>}
               </span>
             </label>
           )}
