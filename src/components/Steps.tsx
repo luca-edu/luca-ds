@@ -39,7 +39,7 @@ export const Steps: React.FC<StepsProps> = ({
       // Calcular la posición relativa del step dentro del contenedor
       const stepCenterX = stepRect.left + stepRect.width / 2 - containerRect.left;
       // El robot debe estar centrado sobre el step, ajustado para que esté arriba
-      const newPosition = stepCenterX - 45; // 45px es la mitad del ancho del robot (90px)
+      const newPosition = stepCenterX - 40; // 45px es la mitad del ancho del robot (90px)
 
       return newPosition;
     };
@@ -167,7 +167,7 @@ export const Steps: React.FC<StepsProps> = ({
               left: `${robotPosition}px`,
             }}
           >
-            <div className="luca-absolute luca-left-[-39px] luca-size-[90px] luca-top-[-10px] luca-animate-[levitar_3s_ease-in-out_infinite]">
+            <div className="luca-absolute luca-left-[-45px] luca-size-[90px] luca-top-[-10px] luca-animate-[levitar_3s_ease-in-out_infinite]">
               {robotImageUrl ? (
                 <img
                   alt="Luca Robot"

@@ -50,7 +50,7 @@ export const Default: Story = {
     const [currentStep, setCurrentStep] = useState(args.currentStep || 0);
 
     return (
-      <div className="luca-w-full luca-max-w-4xl">
+      <div className="luca-w-full">
         <Steps {...args} currentStep={currentStep} />
         <div className="luca-mt-8 luca-flex luca-gap-4 luca-justify-center">
           <Button
