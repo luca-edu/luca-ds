@@ -35,6 +35,10 @@ const meta = {
       action: 'changed',
       description: 'Callback fired when value changes',
     },
+    maxWidth: {
+      control: 'text',
+      description: 'Maximum width of the container (e.g. "500px", "50%")',
+    },
   },
 } satisfies Meta<typeof TextBox>;
 
@@ -45,6 +49,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     placeholder: 'Write answer',
+  },
+};
+
+// With custom max width
+export const WithMaxWidth: Story = {
+  args: {
+    placeholder: 'This box has a max-width of 400px',
+    maxWidth: '400px',
   },
 };
 

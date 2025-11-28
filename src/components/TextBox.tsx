@@ -37,6 +37,11 @@ export interface TextBoxProps
   disabled?: boolean;
 
   /**
+   * Maximum width of the container
+   */
+  maxWidth?: string | number;
+
+  /**
    * Additional className for the container
    */
   className?: string;
@@ -52,6 +57,7 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
       maxLength,
       disabled = false,
       className,
+      maxWidth,
       ...props
     },
     ref
@@ -103,8 +109,9 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
 
     return (
       <div
+        style={{ maxWidth }}
         className={cn(
-          'luca-flex luca-flex-col luca-min-h-[96px] luca-h-auto luca-w-full luca-max-w-[718px] luca-isolate',
+          'luca-flex luca-flex-col luca-min-h-[96px] luca-h-auto luca-w-full luca-isolate',
           className
         )}
       >
