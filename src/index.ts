@@ -114,6 +114,15 @@ export type { EmptyStateCardProps } from './components/EmptyStateCard';
 export { CardAvatar } from './components/CardAvatar';
 export type { CardAvatarProps, CardAvatarType, CardAvatarState } from './components/CardAvatar';
 
+export { CardLesson } from './components/CardLesson';
+export type {
+  CardLessonProps,
+  CardLessonVariant,
+  CardLessonSize,
+  CardLessonState,
+  CardLessonBadge,
+} from './components/CardLesson';
+
 export { ProgressBar } from './components/ProgressBar';
 export type {
   ProgressBarProps,
