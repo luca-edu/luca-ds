@@ -38,6 +38,9 @@ export type { ButtonIconProps, ButtonIconSize } from './components/ButtonIcon';
 export { Badge } from './components/Badge';
 export type { BadgeProps } from './components/Badge';
 
+export { Tag } from './components/Tag';
+export type { TagProps, TagVariant, TagSize, TagState } from './components/Tag';
+
 export { TabList } from './components/TabList';
 export type { TabListProps, TabListItem } from './components/TabList';
 

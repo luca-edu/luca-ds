@@ -157,6 +157,34 @@ export const QuestionIcon: React.FC<IconProps> = ({ size = 16, className, ...pro
   </svg>
 );
 
+export const CalculatorIcon: React.FC<IconProps> = ({ size = 16, className, ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={cn('luca-block', className)}
+    width={size}
+    height={size}
+    aria-hidden="true"
+    focusable="false"
+    {...props}
+  >
+    <path
+      d="M7 2C5.89543 2 5 2.89543 5 4V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V4C19 2.89543 18.1046 2 17 2H7Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path d="M8 6H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 10H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 14H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 18H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M14 14H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M14 18H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
 export const EmptyStateIcon: React.FC<IconProps> = ({
   width = 120,
   height = 120,
