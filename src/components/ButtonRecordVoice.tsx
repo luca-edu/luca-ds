@@ -88,38 +88,24 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
   const isDefault = state === 'default';
   const isDisabled = state === 'disabled';
 
-  // Visualizer logic - prepare audio levels for display
   const prepareVisualizerLevels = React.useCallback((levels: number[]) => {
-    // Ensure we have exactly 9 bars
     const normalizedLevels = [...levels];
     while (normalizedLevels.length < 9) {
       normalizedLevels.push(0);
     }
     normalizedLevels.length = 9;
 
-    // Apply minimum level of 10 to ensure bars are always visible
     const levelsWithMin = normalizedLevels.map((level) => Math.max(10, level));
 
-    // Reorder bars to display from center outwards
-    // Original array: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    // Display order:  [4, 3, 5, 2, 6, 1, 7, 0, 8]
     const centerOutOrder = [4, 5, 3, 2, 0, 2, 3, 6, 8];
-    console.log('Levels:', levelsWithMin);
-    console.log('Center out order:', centerOutOrder);
     return centerOutOrder.map((i) => levelsWithMin[i]);
   }, []);
 
   const getBarHeight = React.useCallback((level: number): number => {
-    // Convert percentage (0-100) to height in pixels
-    const maxHeight = 36; // Maximum height in pixels for 100% level
-    const minHeight = 8; // Minimum height in pixels for 10% level
-
-    // Clamp level between 10-100 (percentage)
+    const maxHeight = 36;
+    const minHeight = 8;
     const clampedLevel = Math.max(10, Math.min(100, level));
-    // Convert to pixel height with proper scaling
-    const percentage = (clampedLevel - 10) / 90; // Scale 10-100 to 0-1
-    console.log('Percentage:', percentage);
-    console.log('Height:', Math.round(minHeight + (maxHeight - minHeight) * percentage));
+    const percentage = (clampedLevel - 10) / 90;
     return Math.round(minHeight + (maxHeight - minHeight) * percentage);
   }, []);
 
@@ -216,23 +202,19 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
 
         const source = audioContext.createMediaStreamSource(stream);
         const analyser = audioContext.createAnalyser();
-        analyser.fftSize = 32; // Generates ~16 frequency bars (matching reference code)
+        analyser.fftSize = 32;
         analyser.smoothingTimeConstant = 0.8;
 
         source.connect(analyser);
         analyserRef.current = analyser;
 
-        // Start analyzing audio
         analyzeAudio();
       }
 
-      // Check if the browser supports the requested format
       let mimeType = audioFormat;
       if (!MediaRecorder.isTypeSupported(mimeType)) {
-        // Fallback to webm if requested format not supported
         mimeType = 'audio/webm';
         if (!MediaRecorder.isTypeSupported(mimeType)) {
-          // Last fallback
           mimeType = '';
         }
       }
@@ -255,12 +237,9 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
 
       mediaRecorder.start();
 
-      // Update internal state if not controlled
       if (controlledState === undefined) {
         setInternalState('recording');
       }
-
-      // Set max duration timer if specified
       if (maxDuration && maxDuration > 0) {
         maxDurationTimerRef.current = window.setTimeout(() => {
           if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
@@ -324,38 +303,32 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
     onStopRecording?.();
   };
 
-  // Sync external state changes with internal MediaRecorder (only for controlled mode)
   React.useEffect(() => {
     if (controlledState === undefined) return;
 
     if (controlledState === 'recording') {
-      // If external state changes to recording but we're not recording, start
       if (!mediaRecorderRef.current || mediaRecorderRef.current.state === 'inactive') {
         startRecording();
       }
     } else if (controlledState === 'default') {
-      // If external state changes to default, stop and cleanup
       if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
         cleanup();
       }
     }
   }, [controlledState, startRecording, cleanup]);
 
-  // Check permission on mount if hasPermission is undefined
   React.useEffect(() => {
     if (hasPermission === undefined) {
       checkPermission();
     }
   }, [hasPermission, checkPermission]);
 
-  // Cleanup on unmount
   React.useEffect(() => {
     return () => {
       cleanup();
     };
   }, [cleanup]);
 
-  // Default state (show microphone)
   if (isDefault) {
     return (
       <button
