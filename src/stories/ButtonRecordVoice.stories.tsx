@@ -76,7 +76,10 @@ export const Disabled: Story = {
 export const Recording: Story = {
   args: {
     state: 'recording',
-    audioLevels: [30, 60, 40, 80, 100, 70, 50, 60, 40],
+    // Levels will be reordered to display from center outwards
+    // Order [0, 1, 2, 3, 4, 5, 6, 7, 8] -> Display [4, 3, 5, 2, 6, 1, 7, 0, 8]
+    // This creates a center-to-sides pattern
+    audioLevels: [20, 40, 60, 80, 100, 85, 65, 45, 25],
   },
 };
 
@@ -87,7 +90,8 @@ export const RecordingAnimated: Story = {
 
     useEffect(() => {
       const interval = setInterval(() => {
-        setAudioLevels(Array.from({ length: 9 }, () => Math.random() * 100));
+        // Simulate more realistic audio levels with variation
+        setAudioLevels(Array.from({ length: 9 }, () => 20 + Math.random() * 80));
       }, 100);
 
       return () => clearInterval(interval);
@@ -340,3 +344,4 @@ export const WithMaxDuration: Story = {
     );
   },
 };
+
