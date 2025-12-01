@@ -111,6 +111,9 @@ export type {
 export { EmptyStateCard } from './components/EmptyStateCard';
 export type { EmptyStateCardProps } from './components/EmptyStateCard';
 
+export { CardAvatar } from './components/CardAvatar';
+export type { CardAvatarProps, CardAvatarType, CardAvatarState } from './components/CardAvatar';
+
 export { ProgressBar } from './components/ProgressBar';
 export type {
   ProgressBarProps,
