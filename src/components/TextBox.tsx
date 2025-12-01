@@ -85,6 +85,15 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
       }
     };
 
+    // Handle container click to focus textarea
+    const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+      // Don't focus if clicking the submit button
+      if ((event.target as HTMLElement).closest('button')) {
+        return;
+      }
+      textareaRef.current?.focus();
+    };
+
     // Handle keyboard events
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
       // Submit on Enter (without Shift)
@@ -116,10 +125,12 @@ export const TextBox = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
         )}
       >
         <div
+          onClick={handleContainerClick}
           className={cn(
             'luca-flex-1 luca-min-h-[96px] luca-w-full luca-relative luca-z-[1]',
             'luca-bg-white luca-rounded-[16px]',
             'luca-border luca-border-solid luca-border-neutral-200',
+            disabled ? 'luca-opacity-60 luca-cursor-not-allowed' : 'luca-cursor-text',
             disabled && 'luca-opacity-60 luca-cursor-not-allowed'
           )}
         >

@@ -1,7 +1,6 @@
 import React from 'react';
 import { MicrophoneIcon, TrashIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { cn } from '../utils/cn';
-import { VoiceRecordingVisualizer } from './VoiceRecordingVisualizer';
 
 export type ButtonRecordVoiceState = 'default' | 'recording' | 'disabled';
 
@@ -89,6 +88,43 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
   const isDefault = state === 'default';
   const isDisabled = state === 'disabled';
 
+  // Visualizer logic - prepare audio levels for display
+  const prepareVisualizerLevels = React.useCallback((levels: number[]) => {
+    // Ensure we have exactly 9 bars
+    const normalizedLevels = [...levels];
+    while (normalizedLevels.length < 9) {
+      normalizedLevels.push(0);
+    }
+    normalizedLevels.length = 9;
+
+    // Apply minimum level of 10 to ensure bars are always visible
+    const levelsWithMin = normalizedLevels.map((level) => Math.max(10, level));
+
+    // Reorder bars to display from center outwards
+    // Original array: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    // Display order:  [4, 3, 5, 2, 6, 1, 7, 0, 8]
+    const centerOutOrder = [4, 5, 3, 2, 0, 2, 3, 6, 8];
+    console.log('Levels:', levelsWithMin);
+    console.log('Center out order:', centerOutOrder);
+    return centerOutOrder.map((i) => levelsWithMin[i]);
+  }, []);
+
+  const getBarHeight = React.useCallback((level: number): number => {
+    // Convert percentage (0-100) to height in pixels
+    const maxHeight = 36; // Maximum height in pixels for 100% level
+    const minHeight = 8; // Minimum height in pixels for 10% level
+
+    // Clamp level between 10-100 (percentage)
+    const clampedLevel = Math.max(10, Math.min(100, level));
+    // Convert to pixel height with proper scaling
+    const percentage = (clampedLevel - 10) / 90; // Scale 10-100 to 0-1
+    console.log('Percentage:', percentage);
+    console.log('Height:', Math.round(minHeight + (maxHeight - minHeight) * percentage));
+    return Math.round(minHeight + (maxHeight - minHeight) * percentage);
+  }, []);
+
+  const visualizerLevels = prepareVisualizerLevels(audioLevels);
+
   const mediaRecorderRef = React.useRef<MediaRecorder | null>(null);
   const mediaStreamRef = React.useRef<MediaStream | null>(null);
   const audioChunksRef = React.useRef<Blob[]>([]);
@@ -137,31 +173,26 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
 
   // Analyze audio levels from microphone
   const analyzeAudio = React.useCallback(() => {
-    if (!analyserRef.current || !controlledAudioLevels) {
-      const analyser = analyserRef.current;
-      if (!analyser) return;
-
-      const dataArray = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(dataArray);
-
-      // Split frequency data into 9 bars
-      const barCount = 9;
-      const barSize = Math.floor(dataArray.length / barCount);
-      const newLevels = [];
-
-      for (let i = 0; i < barCount; i++) {
-        const start = i * barSize;
-        const end = start + barSize;
-        const barData = dataArray.slice(start, end);
-        const average = barData.reduce((sum, value) => sum + value, 0) / barData.length;
-        // Convert to 0-100 scale
-        newLevels.push(Math.min(100, (average / 255) * 100));
-      }
-
-      setInternalAudioLevels(newLevels);
-
-      animationFrameRef.current = requestAnimationFrame(analyzeAudio);
+    // Only analyze if we have an analyser and we're NOT using controlled levels
+    if (!analyserRef.current || controlledAudioLevels) {
+      return;
     }
+
+    const analyser = analyserRef.current;
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(dataArray);
+
+    // Take first 9 values and ensure minimum visibility
+    const rawLevels = Array.from(dataArray.slice(0, 9));
+    const newLevels = rawLevels.map((v) => {
+      // Convert 0-255 to 0-100 and apply minimum of 10
+      const percentage = (v / 255) * 100;
+      return Math.max(10, percentage);
+    });
+
+    setInternalAudioLevels(newLevels);
+
+    animationFrameRef.current = requestAnimationFrame(analyzeAudio);
   }, [controlledAudioLevels]);
 
   // Request microphone access and start recording
@@ -185,7 +216,7 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
 
         const source = audioContext.createMediaStreamSource(stream);
         const analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
+        analyser.fftSize = 32; // Generates ~16 frequency bars (matching reference code)
         analyser.smoothingTimeConstant = 0.8;
 
         source.connect(analyser);
@@ -408,7 +439,17 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
           animation: 'fadeIn 0.4s ease-out 0.1s forwards',
         }}
       >
-        <VoiceRecordingVisualizer audioLevels={audioLevels} />
+        <div className="luca-flex luca-gap-[4px] luca-items-center luca-justify-center">
+          {visualizerLevels.map((level, index) => (
+            <div
+              key={index}
+              className="luca-bg-accent-500 luca-rounded-full luca-shrink-0 luca-w-[4px] luca-transition-all luca-duration-100"
+              style={{
+                height: `${getBarHeight(level)}px`,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Send button */}

@@ -151,8 +151,5 @@ export type {
   ButtonRecordVoiceState,
 } from './components/ButtonRecordVoice';
 
-export { VoiceRecordingVisualizer } from './components/VoiceRecordingVisualizer';
-export type { VoiceRecordingVisualizerProps } from './components/VoiceRecordingVisualizer';
-
 // Utils
 export { cn } from './utils/cn';
