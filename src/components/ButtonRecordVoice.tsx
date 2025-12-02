@@ -62,6 +62,11 @@ export interface ButtonRecordVoiceProps {
    * Additional className
    */
   className?: string;
+
+  /**
+   * Optional text to display when state is 'default' or 'disabled'
+   */
+  label?: string;
 }
 
 export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
@@ -76,6 +81,7 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
   hasPermission,
   onPermissionChange,
   className,
+  label,
 }) => {
   // Internal state for uncontrolled mode
   const [internalState, setInternalState] = React.useState<ButtonRecordVoiceState>('default');
@@ -337,14 +343,20 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
         className={cn(
           'luca-h-[68px] luca-w-[221px] luca-relative luca-rounded-full',
           'luca-bg-primary-600 luca-border luca-border-solid luca-border-primary-300',
-          'luca-flex luca-items-center luca-justify-center luca-overflow-clip',
+          'luca-flex luca-items-center luca-overflow-clip',
           'hover:luca-bg-primary-700 luca-transition-all luca-duration-300',
           'luca-cursor-pointer',
+          label ? 'luca-justify-start luca-pl-6 luca-gap-3' : 'luca-justify-center',
           className
         )}
         aria-label="Start recording"
       >
         <MicrophoneIcon className="luca-size-8 luca-text-white luca-transition-transform luca-duration-300" />
+        {label && (
+          <span className="luca-text-white luca-text-base luca-font-medium luca-leading-none">
+            {label}
+          </span>
+        )}
       </button>
     );
   }
@@ -356,13 +368,19 @@ export const ButtonRecordVoice: React.FC<ButtonRecordVoiceProps> = ({
         className={cn(
           'luca-h-[68px] luca-w-[221px] luca-relative luca-rounded-full',
           'luca-bg-neutral-100 luca-border luca-border-solid luca-border-neutral-200',
-          'luca-flex luca-items-center luca-justify-center luca-overflow-clip',
+          'luca-flex luca-items-center luca-overflow-clip',
           'luca-cursor-not-allowed luca-opacity-60',
+          label ? 'luca-justify-start luca-pl-6 luca-gap-3' : 'luca-justify-center',
           className
         )}
         aria-label="Recording disabled"
       >
         <MicrophoneIcon className="luca-size-8 luca-text-neutral-400" />
+        {label && (
+          <span className="luca-text-neutral-400 luca-text-base luca-font-medium luca-leading-none">
+            {label}
+          </span>
+        )}
       </div>
     );
   }
