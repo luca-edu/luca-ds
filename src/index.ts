@@ -38,6 +38,9 @@ export type { ButtonIconProps, ButtonIconSize } from './components/ButtonIcon';
 export { Badge } from './components/Badge';
 export type { BadgeProps } from './components/Badge';
 
+export { Tag } from './components/Tag';
+export type { TagProps, TagVariant, TagSize, TagState } from './components/Tag';
+
 export { TabList } from './components/TabList';
 export type { TabListProps, TabListItem } from './components/TabList';
 
@@ -107,6 +110,21 @@ export type {
 
 export { EmptyStateCard } from './components/EmptyStateCard';
 export type { EmptyStateCardProps } from './components/EmptyStateCard';
+
+export { CardAvatar } from './components/CardAvatar';
+export type { CardAvatarProps, CardAvatarType, CardAvatarState } from './components/CardAvatar';
+
+export { CardLesson } from './components/CardLesson';
+export type {
+  CardLessonProps,
+  CardLessonVariant,
+  CardLessonSize,
+  CardLessonState,
+  CardLessonBadge,
+} from './components/CardLesson';
+
+export { Pagination } from './components/Pagination';
+export type { PaginationProps, PaginationVariant, PaginationSize } from './components/Pagination';
 
 export { ProgressBar } from './components/ProgressBar';
 export type {

@@ -589,7 +589,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
               colors.text,
               colors.textHover,
               disabled &&
-                'luca-cursor-not-allowed luca-border-neutral-200 luca-bg-neutral-100 luca-text-neutral-400',
+                'luca-cursor-not-allowed luca-border-neutral-200 luca-bg-neutral-100 luca-text-neutral-300 hover:luca-text-neutral-400 hover:luca-bg-neutral-100',
               sizeStyles[size],
               className
             )}

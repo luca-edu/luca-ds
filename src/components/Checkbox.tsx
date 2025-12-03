@@ -15,10 +15,26 @@ export type CheckboxStyle = 'default' | 'filled';
 
 export interface CheckboxProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {
+  /**
+   * Label text (deprecated in favor of children)
+   */
   label?: string;
+
+  /**
+   * Custom content to display next to the checkbox
+   * Takes priority over label prop
+   */
+  children?: React.ReactNode;
+
   variant?: CheckboxVariant;
   style?: CheckboxStyle;
+
+  /**
+   * Whether to show the label/children
+   * @default true
+   */
   showLabel?: boolean;
+
   indeterminate?: boolean;
   className?: string;
   wrapperClassName?: string;
@@ -106,6 +122,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       label,
+      children,
       variant = 'primary',
       style = 'default',
       showLabel = true,
@@ -130,6 +147,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const isChecked = checked ?? false;
     const isFilled = style === 'filled';
     const isIndeterminate = indeterminate && !isChecked;
+    const content = children ?? label;
 
     // Sincronizar el atributo indeterminate del input
     React.useEffect(() => {
@@ -203,7 +221,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             </div>
           </label>
         </div>
-        {showLabel && label && (
+        {showLabel && content && (
           <label
             htmlFor={checkboxId}
             className={cn(
@@ -211,7 +229,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               disabled && 'luca-cursor-not-allowed luca-opacity-60'
             )}
           >
-            {label}
+            {content}
           </label>
         )}
       </div>

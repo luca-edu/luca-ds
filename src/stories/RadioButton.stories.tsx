@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { RadioButton } from '../components/RadioButton';
-import React, { useState } from 'react';
+import { CalculatorIcon } from '../shared/icons';
 
 const meta = {
   title: 'Components/RadioButton',
@@ -205,6 +206,96 @@ export const StyleComparison: Story = {
             onChange={(e) => setSelected2(e.target.value)}
           />
         </div>
+      </div>
+    );
+  },
+};
+
+// Story con contenido dinámico (iconos)
+export const WithIcon: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<string>('option1');
+
+    return (
+      <div className="luca-flex luca-flex-col luca-gap-3">
+        <RadioButton
+          name="withIcon"
+          value="option1"
+          checked={selected === 'option1'}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <CalculatorIcon size={20} className="luca-text-primary-600" />
+            <span>Matemáticas</span>
+          </div>
+        </RadioButton>
+        <RadioButton
+          name="withIcon"
+          value="option2"
+          checked={selected === 'option2'}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span className="luca-text-2xl">🎨</span>
+            <span>Arte</span>
+          </div>
+        </RadioButton>
+        <RadioButton
+          name="withIcon"
+          value="option3"
+          checked={selected === 'option3'}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span className="luca-text-2xl">🎵</span>
+            <span>Música</span>
+          </div>
+        </RadioButton>
+      </div>
+    );
+  },
+};
+
+// Story con contenido HTML personalizado
+export const WithCustomHTML: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<string>('premium');
+
+    return (
+      <div className="luca-flex luca-flex-col luca-gap-3">
+        <RadioButton
+          name="plan"
+          value="basic"
+          checked={selected === 'basic'}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <div className="luca-flex luca-flex-col">
+            <span className="luca-font-semibold">Plan Básico</span>
+            <span className="luca-text-xs luca-text-neutral-500">Gratis para siempre</span>
+          </div>
+        </RadioButton>
+        <RadioButton
+          name="plan"
+          value="premium"
+          checked={selected === 'premium'}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <div className="luca-flex luca-flex-col">
+            <span className="luca-font-semibold">Plan Premium</span>
+            <span className="luca-text-xs luca-text-neutral-500">$9.99/mes</span>
+          </div>
+        </RadioButton>
+        <RadioButton
+          name="plan"
+          value="enterprise"
+          checked={selected === 'enterprise'}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <div className="luca-flex luca-flex-col">
+            <span className="luca-font-semibold">Plan Empresarial</span>
+            <span className="luca-text-xs luca-text-neutral-500">Contactar ventas</span>
+          </div>
+        </RadioButton>
       </div>
     );
   },

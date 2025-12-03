@@ -195,8 +195,8 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
             maxLength={maxLength}
             status={status === 'danger' ? 'error' : undefined}
             className={cn(
-              'luca-h-12 luca-w-full luca-rounded-[8px] luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-text-sm luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
-              'placeholder:luca-text-neutral-400 placeholder:luca-opacity-100',
+              'luca-h-12 luca-w-full luca-rounded-[8px] luca-border luca-border-neutral-200 luca-bg-white luca-px-4 luca-text-base luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
+              'placeholder:luca-text-neutral-400 placeholder:luca-opacity-100 placeholder:luca-text-base',
               !disabled &&
                 'hover:luca-border-primary-100 focus:luca-border-primary-200 focus:luca-ring-2 focus:luca-ring-primary-200 focus:luca-outline-none',
               disabled &&
@@ -359,8 +359,8 @@ export const TextAreaField = React.forwardRef<AntTextAreaRef, TextAreaFieldProps
             rows={rows}
             status={status === 'danger' ? 'error' : undefined}
             className={cn(
-              'luca-w-full luca-rounded-[8px] luca-border luca-border-neutral-200 luca-bg-white luca-p-4 luca-text-sm luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
-              'placeholder:luca-text-neutral-400 placeholder:luca-opacity-100',
+              'luca-w-full luca-rounded-[8px] luca-border luca-border-neutral-200 luca-bg-white luca-p-4 luca-text-base luca-leading-6 luca-text-neutral-700 luca-transition-colors luca-duration-200',
+              'placeholder:luca-text-neutral-400 placeholder:luca-opacity-100 placeholder:luca-text-base',
               'luca-resize-y luca-overflow-auto',
               !disabled &&
                 'hover:luca-border-primary-100 focus:luca-border-primary-200 focus:luca-ring-2 focus:luca-ring-primary-200 focus:luca-outline-none',
