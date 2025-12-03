@@ -126,6 +126,14 @@ export type {
 export { Pagination } from './components/Pagination';
 export type { PaginationProps, PaginationVariant, PaginationSize } from './components/Pagination';
 
+export { Accordion } from './components/Accordion';
+export type {
+  AccordionProps,
+  AccordionVariant,
+  AccordionSize,
+  AccordionItemType,
+} from './components/Accordion';
+
 export { ProgressBar } from './components/ProgressBar';
 export type {
   ProgressBarProps,
