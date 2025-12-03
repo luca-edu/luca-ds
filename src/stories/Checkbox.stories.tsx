@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Checkbox } from '../components/Checkbox';
-import React, { useState } from 'react';
+import { CalculatorIcon } from '../shared/icons';
 
 const meta = {
   title: 'Components/Checkbox',
@@ -291,6 +292,149 @@ export const IndeterminateExample: Story = {
             onChange={(e) => setCheckedItems((prev) => ({ ...prev, item3: e.target.checked }))}
           />
         </div>
+      </div>
+    );
+  },
+};
+
+// Story con contenido dinámico (iconos)
+export const WithIcon: Story = {
+  render: () => {
+    const [checkedStates, setCheckedStates] = useState({
+      math: false,
+      art: false,
+      music: false,
+    });
+
+    return (
+      <div className="luca-flex luca-flex-col luca-gap-3">
+        <Checkbox
+          checked={checkedStates.math}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, math: e.target.checked }))}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <CalculatorIcon size={20} className="luca-text-primary-600" />
+            <span>Matemáticas</span>
+          </div>
+        </Checkbox>
+        <Checkbox
+          checked={checkedStates.art}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, art: e.target.checked }))}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span className="luca-text-2xl">🎨</span>
+            <span>Arte</span>
+          </div>
+        </Checkbox>
+        <Checkbox
+          checked={checkedStates.music}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, music: e.target.checked }))}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span className="luca-text-2xl">🎵</span>
+            <span>Música</span>
+          </div>
+        </Checkbox>
+      </div>
+    );
+  },
+};
+
+// Story con contenido HTML personalizado
+export const WithCustomHTML: Story = {
+  render: () => {
+    const [checkedStates, setCheckedStates] = useState({
+      notifications: false,
+      newsletter: false,
+      updates: false,
+    });
+
+    return (
+      <div className="luca-flex luca-flex-col luca-gap-3">
+        <Checkbox
+          checked={checkedStates.notifications}
+          onChange={(e) =>
+            setCheckedStates((prev) => ({ ...prev, notifications: e.target.checked }))
+          }
+        >
+          <div className="luca-flex luca-flex-col">
+            <span className="luca-font-semibold">Notificaciones por email</span>
+            <span className="luca-text-xs luca-text-neutral-500">
+              Recibe actualizaciones importantes en tu correo
+            </span>
+          </div>
+        </Checkbox>
+        <Checkbox
+          checked={checkedStates.newsletter}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, newsletter: e.target.checked }))}
+        >
+          <div className="luca-flex luca-flex-col">
+            <span className="luca-font-semibold">Newsletter semanal</span>
+            <span className="luca-text-xs luca-text-neutral-500">
+              Contenido exclusivo cada semana
+            </span>
+          </div>
+        </Checkbox>
+        <Checkbox
+          checked={checkedStates.updates}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, updates: e.target.checked }))}
+        >
+          <div className="luca-flex luca-flex-col">
+            <span className="luca-font-semibold">Actualizaciones de producto</span>
+            <span className="luca-text-xs luca-text-neutral-500">
+              Entérate de nuevas funcionalidades
+            </span>
+          </div>
+        </Checkbox>
+      </div>
+    );
+  },
+};
+
+// Story con badges/chips
+export const WithBadges: Story = {
+  render: () => {
+    const [checkedStates, setCheckedStates] = useState({
+      feature1: false,
+      feature2: false,
+      feature3: false,
+    });
+
+    return (
+      <div className="luca-flex luca-flex-col luca-gap-3">
+        <Checkbox
+          checked={checkedStates.feature1}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, feature1: e.target.checked }))}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span>Característica Premium</span>
+            <span className="luca-bg-accent-100 luca-text-accent-700 luca-px-2 luca-py-0.5 luca-rounded luca-text-xs luca-font-medium">
+              NUEVO
+            </span>
+          </div>
+        </Checkbox>
+        <Checkbox
+          checked={checkedStates.feature2}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, feature2: e.target.checked }))}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span>Soporte 24/7</span>
+            <span className="luca-bg-success-50 luca-text-success-700 luca-px-2 luca-py-0.5 luca-rounded luca-text-xs luca-font-medium">
+              POPULAR
+            </span>
+          </div>
+        </Checkbox>
+        <Checkbox
+          checked={checkedStates.feature3}
+          onChange={(e) => setCheckedStates((prev) => ({ ...prev, feature3: e.target.checked }))}
+        >
+          <div className="luca-flex luca-items-center luca-gap-2">
+            <span>Acceso API</span>
+            <span className="luca-bg-primary-50 luca-text-primary-700 luca-px-2 luca-py-0.5 luca-rounded luca-text-xs luca-font-medium">
+              PRO
+            </span>
+          </div>
+        </Checkbox>
       </div>
     );
   },

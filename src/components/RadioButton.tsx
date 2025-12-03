@@ -14,10 +14,26 @@ export type RadioButtonStyle = 'default' | 'filled';
 
 export interface RadioButtonProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'style'> {
+  /**
+   * Label text (deprecated in favor of children)
+   */
   label?: string;
+
+  /**
+   * Custom content to display next to the radio button
+   * Takes priority over label prop
+   */
+  children?: React.ReactNode;
+
   variant?: RadioButtonVariant;
   style?: RadioButtonStyle;
+
+  /**
+   * Whether to show the label/children
+   * @default true
+   */
   showLabel?: boolean;
+
   className?: string;
   wrapperClassName?: string;
 }
@@ -104,6 +120,7 @@ export const RadioButton = React.forwardRef<HTMLInputElement, RadioButtonProps>(
   (
     {
       label,
+      children,
       variant = 'primary',
       style = 'default',
       showLabel = true,
@@ -124,6 +141,7 @@ export const RadioButton = React.forwardRef<HTMLInputElement, RadioButtonProps>(
     const colors = variantColors[variant];
     const isChecked = checked ?? false;
     const isFilled = style === 'filled';
+    const content = children ?? label;
 
     // Estilos del círculo del radio
     const radioCircleClasses = cn(
@@ -181,7 +199,7 @@ export const RadioButton = React.forwardRef<HTMLInputElement, RadioButtonProps>(
             </div>
           </label>
         </div>
-        {showLabel && label && (
+        {showLabel && content && (
           <label
             htmlFor={radioId}
             className={cn(
@@ -189,7 +207,7 @@ export const RadioButton = React.forwardRef<HTMLInputElement, RadioButtonProps>(
               disabled && 'luca-cursor-not-allowed luca-opacity-60'
             )}
           >
-            {label}
+            {content}
           </label>
         )}
       </div>
