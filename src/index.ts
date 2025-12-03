@@ -123,6 +123,9 @@ export type {
   CardLessonBadge,
 } from './components/CardLesson';
 
+export { Pagination } from './components/Pagination';
+export type { PaginationProps, PaginationVariant, PaginationSize } from './components/Pagination';
+
 export { ProgressBar } from './components/ProgressBar';
 export type {
   ProgressBarProps,
