@@ -158,6 +158,23 @@ export type {
 export { Toggle } from './components/Toggle';
 export type { ToggleProps, ToggleVariant, ToggleSize, ToggleState } from './components/Toggle';
 
+export { Avatar } from './components/Avatar';
+export type {
+  AvatarProps,
+  AvatarVariant,
+  AvatarSize,
+  AvatarState,
+  AvatarType,
+} from './components/Avatar';
+
+export { TextButton } from './components/TextButton';
+export type {
+  TextButtonProps,
+  TextButtonVariant,
+  TextButtonSize,
+  TextButtonState,
+} from './components/TextButton';
+
 export { ProgressBar } from './components/ProgressBar';
 export type {
   ProgressBarProps,
