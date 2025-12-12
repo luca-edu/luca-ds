@@ -28,7 +28,7 @@ export interface DropdownOption {
 export interface DropdownProps {
   label?: string;
   placeholder?: string;
-  items: Record<string, unknown>[];
+  items: DropdownOption[];
   value?: string[];
   defaultValue?: string[];
   onChange?: (keys: string[]) => void;
