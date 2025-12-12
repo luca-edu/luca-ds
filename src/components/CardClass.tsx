@@ -125,6 +125,11 @@ export interface CardClassProps extends React.HTMLAttributes<HTMLDivElement> {
    * Click handler
    */
   onClick?: () => void;
+
+  /**
+   * Class name
+   */
+  className?: string;
 }
 
 const cardClassBaseStyles =
@@ -520,7 +525,47 @@ export const CardClass = React.forwardRef<HTMLDivElement, CardClassProps>(
           {...props}
         >
           <div className="luca-flex luca-flex-col luca-gap-2 luca-items-center luca-justify-center luca-px-0 luca-py-6 luca-w-full">
-            <EmptyStateIcon width={120} height={120} />
+            <div className="luca-flex luca-gap-2 luca-items-center luca-w-full">
+              {subjectIcon && (
+                <div className={cn('luca-shrink-0 luca-overflow-hidden', sizeStyles.iconSize)}>
+                  {subjectIcon}
+                </div>
+              )}
+              {classId && (
+                <div className="luca-flex luca-flex-col luca-items-start luca-justify-center luca-shrink-0">
+                  <div
+                    className={cn(
+                      'luca-flex luca-flex-col luca-items-center luca-justify-center luca-rounded-lg',
+                      sizeStyles.classIdPadding,
+                      styles.classIdBg
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        'luca-flex luca-flex-col luca-justify-center luca-font-semibold luca-whitespace-nowrap',
+                        sizeStyles.classIdText,
+                        styles.classIdText
+                      )}
+                    >
+                      <p>{classId}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {showAlternateBadge && alternateBadgeText && (
+                <div className="luca-flex luca-flex-1 luca-flex-col luca-items-end luca-justify-center luca-min-h-0 luca-min-w-0">
+                  <div className="luca-bg-info-50 luca-flex luca-gap-1 luca-h-6 luca-items-center luca-justify-center luca-px-2.5 luca-py-0.75 luca-rounded">
+                    <BookOpenIcon className="luca-w-4 luca-h-4 luca-text-info-600" />
+                    <p className="luca-text-xs luca-font-normal luca-leading-[16px] luca-text-info-600">
+                      {alternateBadgeText}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="luca-flex luca-flex-col luca-items-center luca-justify-center luca-gap-2 luca-pt-6">
+              <EmptyStateIcon width={120} height={120} />
+            </div>
             <div className="luca-text-xs luca-text-neutral-400 luca-text-center luca-leading-[16px] luca-max-w-[280px]">
               <p>¡Esta clase está vacía!</p>
               <br />
