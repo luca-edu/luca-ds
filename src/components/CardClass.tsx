@@ -515,7 +515,7 @@ export const CardClass = React.forwardRef<HTMLDivElement, CardClassProps>(
           className={cn(
             cardClassBaseStyles,
             sizeStyles.padding,
-            'luca-h-auto luca-min-h-[368px] luca-items-center luca-justify-center',
+            'luca-h-auto luca-min-h-[370px] luca-items-center luca-justify-start',
             styles.bg,
             styles.border,
             isDisabled && 'luca-opacity-50 luca-cursor-not-allowed',
@@ -524,7 +524,7 @@ export const CardClass = React.forwardRef<HTMLDivElement, CardClassProps>(
           )}
           {...props}
         >
-          <div className="luca-flex luca-flex-col luca-gap-2 luca-items-center luca-justify-center luca-px-0 luca-py-6 luca-w-full">
+          <div className="luca-flex luca-flex-col luca-gap-2 luca-items-center luca-justify-center luca-px-0 luca-w-full">
             <div className="luca-flex luca-gap-2 luca-items-center luca-w-full">
               {subjectIcon && (
                 <div className={cn('luca-shrink-0 luca-overflow-hidden', sizeStyles.iconSize)}>
