@@ -599,7 +599,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             aria-invalid={hasError || undefined}
             aria-describedby={[helpTextId, messageId].filter(Boolean).join(' ') || undefined}
           >
-            <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left">
+            <div className="luca-flex luca-max-w-[calc(100%-1.75rem)] luca-flex-wrap luca-gap-1 luca-items-center luca-whitespace-normal luca-text-left luca-text-base">
               {summaryContent}
             </div>
             <ChevronDownIcon
