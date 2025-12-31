@@ -85,6 +85,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         )}
         classNames={classNames}
         onCancel={onClose}
+        zIndex={2000}
         {...rest}
       >
         <div className="luca-flex luca-flex-col luca-mt-6">
