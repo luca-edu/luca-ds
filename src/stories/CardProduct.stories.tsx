@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CardProduct } from '../components/CardProduct';
-import ArmorYellowIcon from '../assets/images/armorYellow.svg';
+import { ArmorIcon as ArmorYellowIcon } from '../shared/icons';
 
 const meta: Meta<typeof CardProduct> = {
   title: 'Components/CardProduct',
@@ -71,12 +71,12 @@ const meta: Meta<typeof CardProduct> = {
         defaultValue: { summary: 'false' },
       },
     },
-    imageSrc: {
+    image: {
       control: 'text',
       description: 'Imagen del producto',
       table: {
-        defaultValue: { summary: ArmorYellowIcon },
-        value: ArmorYellowIcon,
+        defaultValue: { summary: '<ArmorYellowIcon />' },
+        value: <ArmorYellowIcon />,
       },
     },
   },
@@ -92,7 +92,7 @@ export const Default: Story = {
     size: 'md',
     color: 'primary',
     state: 'default',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -103,7 +103,7 @@ export const Hover: Story = {
     size: 'md',
     color: 'primary',
     state: 'hover',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -114,7 +114,7 @@ export const Disabled: Story = {
     size: 'md',
     color: 'primary',
     state: 'disabled',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -126,7 +126,7 @@ export const Blocked: Story = {
     color: 'primary',
     state: 'blocked',
     blockedLevelText: 'Nivel Máster',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -137,7 +137,7 @@ export const Exclusive: Story = {
     size: 'md',
     color: 'primary',
     state: 'exclusive',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -148,7 +148,7 @@ export const ExclusiveHover: Story = {
     size: 'md',
     color: 'primary',
     state: 'exclusiveHover',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -161,7 +161,7 @@ export const Clickable: Story = {
     state: 'default',
     clickable: true,
     onClick: () => alert('CardProduct clicked!'),
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -172,7 +172,7 @@ export const Primary: Story = {
     gemsValue: 550,
     color: 'primary',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -182,7 +182,7 @@ export const Accent: Story = {
     gemsValue: 550,
     color: 'accent',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -192,7 +192,7 @@ export const Success: Story = {
     gemsValue: 550,
     color: 'success',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -202,7 +202,7 @@ export const Warning: Story = {
     gemsValue: 550,
     color: 'warning',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -212,7 +212,7 @@ export const Danger: Story = {
     gemsValue: 550,
     color: 'danger',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -222,7 +222,7 @@ export const Info: Story = {
     gemsValue: 550,
     color: 'info',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -232,7 +232,7 @@ export const Neutral: Story = {
     gemsValue: 550,
     color: 'neutral',
     size: 'md',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -243,7 +243,7 @@ export const ExtraSmall: Story = {
     gemsValue: 100,
     size: 'xs',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -253,7 +253,7 @@ export const Small: Story = {
     gemsValue: 250,
     size: 'sm',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -263,7 +263,7 @@ export const Medium: Story = {
     gemsValue: 550,
     size: 'md',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -273,7 +273,7 @@ export const Large: Story = {
     gemsValue: 750,
     size: 'lg',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -283,7 +283,7 @@ export const ExtraLarge: Story = {
     gemsValue: 1000,
     size: 'xl',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -300,7 +300,7 @@ export const AllStates: Story = {
             size="md"
             color="primary"
             state="default"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -308,7 +308,7 @@ export const AllStates: Story = {
             size="md"
             color="primary"
             state="hover"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -316,7 +316,7 @@ export const AllStates: Story = {
             size="md"
             color="primary"
             state="disabled"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -324,7 +324,7 @@ export const AllStates: Story = {
             size="md"
             color="primary"
             state="blocked"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -332,7 +332,7 @@ export const AllStates: Story = {
             size="md"
             color="primary"
             state="exclusive"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -340,7 +340,7 @@ export const AllStates: Story = {
             size="md"
             color="primary"
             state="exclusiveHover"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
       </div>
@@ -365,49 +365,49 @@ export const AllColors: Story = {
             gemsValue={550}
             size="md"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Accent"
             gemsValue={550}
             size="md"
             color="accent"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Success"
             gemsValue={550}
             size="md"
             color="success"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Warning"
             gemsValue={550}
             size="md"
             color="warning"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Danger"
             gemsValue={550}
             size="md"
             color="danger"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Info"
             gemsValue={550}
             size="md"
             color="info"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Neutral"
             gemsValue={550}
             size="md"
             color="neutral"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
       </div>
@@ -430,35 +430,35 @@ export const AllSizes: Story = {
             gemsValue={100}
             size="xs"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Small"
             gemsValue={250}
             size="sm"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Medium"
             gemsValue={550}
             size="md"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Large"
             gemsValue={750}
             size="lg"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="XL"
             gemsValue={1000}
             size="xl"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
       </div>
@@ -483,7 +483,7 @@ export const Responsive: Story = {
             gemsValue={550}
             size="md"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
         <p className="luca-text-xs luca-text-neutral-500 luca-mt-2">
@@ -525,7 +525,7 @@ export const WithCustomImage: Story = {
               gemsValue={550}
               size="md"
               color="primary"
-              imageSrc={ArmorYellowIcon}
+              image={<ArmorYellowIcon />}
             />
           </div>
         </div>
@@ -544,7 +544,7 @@ export const WithoutGems: Story = {
     showGems: false,
     size: 'md',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -556,7 +556,7 @@ export const WithoutText: Story = {
     showText: false,
     size: 'md',
     color: 'primary',
-    imageSrc: ArmorYellowIcon,
+    image: <ArmorYellowIcon />,
   },
 };
 
@@ -574,7 +574,7 @@ export const AllVariants: Story = {
             size="md"
             color="primary"
             state="default"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -582,7 +582,7 @@ export const AllVariants: Story = {
             size="md"
             color="primary"
             state="hover"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -590,7 +590,7 @@ export const AllVariants: Story = {
             size="md"
             color="primary"
             state="disabled"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -598,7 +598,7 @@ export const AllVariants: Story = {
             size="md"
             color="primary"
             state="blocked"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -606,7 +606,7 @@ export const AllVariants: Story = {
             size="md"
             color="primary"
             state="exclusive"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Name product"
@@ -614,7 +614,7 @@ export const AllVariants: Story = {
             size="md"
             color="primary"
             state="exclusiveHover"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
       </div>
@@ -630,49 +630,49 @@ export const AllVariants: Story = {
             gemsValue={550}
             size="md"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Accent"
             gemsValue={550}
             size="md"
             color="accent"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Success"
             gemsValue={550}
             size="md"
             color="success"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Warning"
             gemsValue={550}
             size="md"
             color="warning"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Danger"
             gemsValue={550}
             size="md"
             color="danger"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Info"
             gemsValue={550}
             size="md"
             color="info"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Neutral"
             gemsValue={550}
             size="md"
             color="neutral"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
       </div>
@@ -686,35 +686,35 @@ export const AllVariants: Story = {
             gemsValue={100}
             size="xs"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Small"
             gemsValue={250}
             size="sm"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Medium"
             gemsValue={550}
             size="md"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="Large"
             gemsValue={750}
             size="lg"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
           <CardProduct
             productName="XL"
             gemsValue={1000}
             size="xl"
             color="primary"
-            imageSrc={ArmorYellowIcon}
+            image={<ArmorYellowIcon />}
           />
         </div>
       </div>
