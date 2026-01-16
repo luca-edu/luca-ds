@@ -175,6 +175,14 @@ export type {
   TextButtonState,
 } from './components/TextButton';
 
+export { SubsectionStore } from './components/SubsectionStore';
+export type {
+  SubsectionStoreProps,
+  SubsectionStoreVariant,
+  SubsectionStoreSize,
+  SubsectionStoreState,
+} from './components/SubsectionStore';
+
 export { ProgressBar } from './components/ProgressBar';
 export type {
   ProgressBarProps,
@@ -217,6 +225,22 @@ export type {
   ButtonRecordVoiceProps,
   ButtonRecordVoiceState,
 } from './components/ButtonRecordVoice';
+
+export { AwardInteraction } from './components/AwardInteraction';
+export type {
+  AwardInteractionProps,
+  AwardInteractionSize,
+  AwardInteractionColor,
+  AwardInteractionState,
+} from './components/AwardInteraction';
+
+export { CardProduct } from './components/CardProduct';
+export type {
+  CardProductProps,
+  CardProductSize,
+  CardProductColor,
+  CardProductState,
+} from './components/CardProduct';
 
 // Utils
 export { cn } from './utils/cn';
