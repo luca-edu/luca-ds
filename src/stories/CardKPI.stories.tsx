@@ -46,6 +46,8 @@ export const Default: Story = {
     description1: 'Description 1',
     description2: 'Description 2',
     icon: <CalculatorIcon size={16} />,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
     showIcon: true,
   },
 };
@@ -57,6 +59,8 @@ export const WithIcon: Story = {
     description2: '+12%',
     icon: <CheckIcon size={16} />,
     showIcon: true,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
 };
 
@@ -66,6 +70,8 @@ export const WithoutIcon: Story = {
     description1: '1,234',
     description2: '+12%',
     showIcon: false,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
 };
 
@@ -75,6 +81,8 @@ export const SingleDescription: Story = {
     description1: '1,234',
     icon: <CalculatorIcon size={16} />,
     showIcon: true,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
 };
 
@@ -85,6 +93,8 @@ export const AllVariants: Story = {
     description2: 'Description 2',
     icon: <CalculatorIcon size={16} />,
     showIcon: true,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
   render: (args) => (
     <div className="luca-flex luca-flex-wrap luca-gap-4 luca-p-8 luca-w-full luca-max-w-6xl">
@@ -109,6 +119,8 @@ export const AllSizes: Story = {
     description2: '+12%',
     icon: <CalculatorIcon size={16} />,
     showIcon: true,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
   render: (args) => (
     <div className="luca-flex luca-flex-col luca-gap-6 luca-p-8 luca-w-full luca-max-w-4xl">
@@ -131,6 +143,8 @@ export const States: Story = {
     description2: '+12%',
     icon: <CalculatorIcon size={16} />,
     showIcon: true,
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
   render: (args) => (
     <div className="luca-flex luca-flex-col luca-gap-6 luca-p-8 luca-w-full luca-max-w-4xl">
@@ -157,6 +171,8 @@ export const Clickable: Story = {
     onClick: () => {
       console.log('Card clicked!');
     },
+    icon2: <CheckIcon size={16} />,
+    showIcon2: true,
   },
 };
 
@@ -173,6 +189,8 @@ export const WithCustomContent: Story = {
         description2={<span className="luca-text-success-600 luca-font-semibold">+15.3%</span>}
         icon={<CheckIcon size={16} />}
         variant="success"
+        icon2={<CheckIcon size={16} />}
+        showIcon2={true}
       />
       <CardKPI
         title="Cursos Completados"
@@ -184,6 +202,8 @@ export const WithCustomContent: Story = {
         description2={<span className="luca-text-warning-600 luca-font-semibold">-2.1%</span>}
         icon={<QuestionIcon size={16} />}
         variant="warning"
+        icon2={<CheckIcon size={16} />}
+        showIcon2={true}
       />
       <CardKPI
         title={
@@ -202,6 +222,8 @@ export const WithCustomContent: Story = {
         description2={<span className="luca-text-primary-600 luca-font-semibold">+8.5%</span>}
         icon={<CalculatorIcon size={16} />}
         variant="primary"
+        icon2={<CheckIcon size={16} />}
+        showIcon2={true}
       />
     </div>
   ),
@@ -232,6 +254,8 @@ export const WithHTMLContent: Story = {
         icon={<CalculatorIcon size={16} />}
         variant="primary"
         size="lg"
+        icon2={<CheckIcon size={16} />}
+        showIcon2={true}
       />
       <CardKPI
         title="Métricas Avanzadas"
@@ -250,6 +274,8 @@ export const WithHTMLContent: Story = {
         icon={<QuestionIcon size={16} />}
         variant="danger"
         size="lg"
+        icon2={<CheckIcon size={16} />}
+        showIcon2={true}
       />
     </div>
   ),
@@ -268,6 +294,8 @@ export const ResponsiveExample: Story = {
               description2="+12%"
               icon={<CalculatorIcon size={16} />}
               size="lg"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
             <CardKPI
               title="Cursos"
@@ -276,6 +304,8 @@ export const ResponsiveExample: Story = {
               icon={<CheckIcon size={16} />}
               size="lg"
               variant="success"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
             <CardKPI
               title="Ingresos"
@@ -284,6 +314,8 @@ export const ResponsiveExample: Story = {
               icon={<QuestionIcon size={16} />}
               size="lg"
               variant="accent"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
           </div>
         </div>
@@ -298,6 +330,8 @@ export const ResponsiveExample: Story = {
               description2="+12%"
               icon={<CalculatorIcon size={16} />}
               size="md"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
             <CardKPI
               title="Cursos"
@@ -306,6 +340,8 @@ export const ResponsiveExample: Story = {
               icon={<CheckIcon size={16} />}
               size="md"
               variant="success"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
           </div>
         </div>
@@ -320,6 +356,8 @@ export const ResponsiveExample: Story = {
               description2="+12%"
               icon={<CalculatorIcon size={16} />}
               size="sm"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
             <CardKPI
               title="Cursos"
@@ -328,6 +366,8 @@ export const ResponsiveExample: Story = {
               icon={<CheckIcon size={16} />}
               size="sm"
               variant="success"
+              icon2={<CheckIcon size={16} />}
+              showIcon2={true}
             />
           </div>
         </div>
@@ -350,6 +390,8 @@ export const RealWorldExample: Story = {
           size="md"
           clickable
           onClick={() => console.log('Estudiantes clicked')}
+          icon2={<CheckIcon size={16} />}
+          showIcon2={true}
         />
         <CardKPI
           title="Cursos Activos"
@@ -360,6 +402,8 @@ export const RealWorldExample: Story = {
           size="md"
           clickable
           onClick={() => console.log('Cursos clicked')}
+          icon2={<CheckIcon size={16} />}
+          showIcon2={true}
         />
         <CardKPI
           title="Tasa de Completación"
@@ -370,6 +414,8 @@ export const RealWorldExample: Story = {
           size="md"
           clickable
           onClick={() => console.log('Tasa clicked')}
+          icon2={<CheckIcon size={16} />}
+          showIcon2={true}
         />
         <CardKPI
           title="Ingresos Mensuales"
@@ -380,6 +426,8 @@ export const RealWorldExample: Story = {
           size="md"
           clickable
           onClick={() => console.log('Ingresos clicked')}
+          icon2={<CheckIcon size={16} />}
+          showIcon2={true}
         />
       </div>
     </div>

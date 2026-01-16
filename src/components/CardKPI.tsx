@@ -232,8 +232,10 @@ const cardKPIVariantStyles: Record<
   },
 };
 
-export interface CardKPIProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'description1' | 'description2'> {
+export interface CardKPIProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'title' | 'description1' | 'description2'
+> {
   /**
    * Color variant of the card
    * @default 'primary'
@@ -279,6 +281,17 @@ export interface CardKPIProps
   showIcon?: boolean;
 
   /**
+   * Icon to display in the card
+   */
+  icon2?: React.ReactNode;
+
+  /**
+   * Whether to show the icon
+   * @default true
+   */
+  showIcon2?: boolean;
+
+  /**
    * Click handler
    */
   onClick?: () => void;
@@ -301,6 +314,8 @@ export const CardKPI = React.forwardRef<HTMLDivElement, CardKPIProps>(
       description2,
       icon,
       showIcon = true,
+      icon2,
+      showIcon2 = true,
       onClick,
       clickable = false,
       className,
@@ -385,29 +400,67 @@ export const CardKPI = React.forwardRef<HTMLDivElement, CardKPIProps>(
           </div>
 
           {/* Description Row */}
-          {(description1 || description2) && (
-            <div
-              className={cn(
-                'luca-flex luca-flex-col luca-items-start luca-w-full luca-font-semibold luca-whitespace-nowrap luca-overflow-clip',
-                sizeStyles.descriptionText,
-                styles.descriptionColor,
-                sizeStyles.descriptionGap
-              )}
-            >
-              <div className="luca-flex luca-gap-4 luca-items-center luca-w-full">
-                {description1 && (
-                  <div className="luca-flex luca-flex-col luca-justify-center luca-shrink-0">
-                    {typeof description1 === 'string' ? <p>{description1}</p> : description1}
-                  </div>
+          <div className={cn('luca-flex luca-gap-1 luca-items-center luca-w-full', sizeStyles.gap)}>
+            {showIcon2 && icon2 && (
+              <div
+                className={cn(
+                  'luca-flex luca-items-center luca-justify-center luca-rounded-full luca-shrink-0',
+                  sizeStyles.iconSize,
+                  iconStyles.bg,
+                  sizeStyles.iconPadding
                 )}
-                {description2 && (
-                  <div className="luca-flex luca-flex-col luca-justify-center luca-shrink-0">
-                    {typeof description2 === 'string' ? <p>{description2}</p> : description2}
-                  </div>
-                )}
+              >
+                <div
+                  className={cn(
+                    'luca-flex luca-items-center luca-justify-center',
+                    iconStyles.iconColor
+                  )}
+                >
+                  {React.isValidElement(icon2)
+                    ? React.cloneElement(icon2 as React.ReactElement<React.ComponentProps<'svg'>>, {
+                        className: cn(
+                          sizeStyles.iconSize.includes('w-6')
+                            ? 'luca-w-4 luca-h-4'
+                            : sizeStyles.iconSize.includes('w-7')
+                              ? 'luca-w-[14px] luca-h-[14px]'
+                              : sizeStyles.iconSize.includes('w-8')
+                                ? 'luca-w-4 luca-h-4'
+                                : sizeStyles.iconSize.includes('w-10')
+                                  ? 'luca-w-5 luca-h-5'
+                                  : 'luca-w-6 luca-h-6',
+                          iconStyles.iconColor,
+                          (icon2 as React.ReactElement<React.ComponentProps<'svg'>>).props
+                            ?.className
+                        ),
+                      })
+                    : icon2}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+            {(description1 || description2) && (
+              <div
+                className={cn(
+                  'luca-flex luca-flex-col luca-items-start luca-w-full luca-font-semibold luca-whitespace-nowrap luca-overflow-clip',
+                  sizeStyles.descriptionText,
+                  styles.descriptionColor,
+                  sizeStyles.descriptionGap
+                )}
+              >
+                <div className="luca-flex luca-gap-4 luca-items-center luca-w-full">
+                  {description1 && (
+                    <div className="luca-flex luca-flex-col luca-justify-center luca-shrink-0">
+                      {typeof description1 === 'string' ? <p>{description1}</p> : description1}
+                    </div>
+                  )}
+                  {description2 && (
+                    <div className="luca-flex luca-flex-col luca-justify-center luca-shrink-0">
+                      {typeof description2 === 'string' ? <p>{description2}</p> : description2}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
