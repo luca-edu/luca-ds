@@ -220,7 +220,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {logoIcon}
               </div>
             ) : (
-              <LucaLogoSmall />
+              <LucaLogoSmall width={32} height={32} />
             )
           ) : (
             <div

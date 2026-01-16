@@ -242,5 +242,13 @@ export type {
   CardProductState,
 } from './components/CardProduct';
 
+export { Profile } from './components/Profile';
+export type {
+  ProfileProps,
+  ProfileVariant,
+  ProfileSize,
+  ProfileState,
+} from './components/Profile';
+
 // Utils
 export { cn } from './utils/cn';
