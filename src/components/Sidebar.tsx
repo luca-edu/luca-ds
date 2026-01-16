@@ -56,7 +56,6 @@ export interface SidebarProps {
   profile?: ProfileProps;
 }
 
-// Mapeo de variantes a colores del tailwind.config.js
 const variantColors: Record<
   SidebarVariant,
   {
@@ -118,7 +117,6 @@ const variantColors: Record<
   },
 };
 
-// ComponentListItems para mostrar submenuItems cuando el sidebar está collapsed
 const ComponentListItems: React.FC<{
   menuItem: SidebarMenuItem;
   variant: SidebarVariant;
@@ -130,7 +128,6 @@ const ComponentListItems: React.FC<{
   return (
     <div className="luca-bg-white luca-border luca-border-neutral-200 luca-rounded-lg luca-shadow-[0px_1px_3px_0px_rgba(166,175,195,0.4)] luca-overflow-hidden">
       <div className="luca-flex luca-flex-col luca-gap-[5px] luca-px-1 luca-py-2">
-        {/* Título del menú principal */}
         <button
           type="button"
           className={cn(
@@ -143,7 +140,6 @@ const ComponentListItems: React.FC<{
           </p>
         </button>
 
-        {/* SubmenuItems */}
         {menuItem.submenu?.map((submenuItem) => {
           const isSubActive = isSubmenuItemActive(menuItem.key, submenuItem);
           return (
@@ -205,7 +201,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       setInternalCollapsed(newCollapsed);
     }
     onCollapseChange?.(newCollapsed);
-    // Colapsar todos los submenús cuando se colapsa el sidebar
     if (newCollapsed) {
       setExpandedSubmenus(new Set());
     }
@@ -215,12 +210,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     if (item.disabled) return;
 
     if (collapsed && item.submenu && item.submenu.length > 0) {
-      // Si está collapsed, no hacer nada (el popover se maneja con hover)
       return;
     }
 
     if (item.submenu && item.submenu.length > 0) {
-      // Toggle submenu
       setExpandedSubmenus((prev) => {
         const newSet = new Set(prev);
         if (newSet.has(item.key)) {
@@ -231,7 +224,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         return newSet;
       });
     } else {
-      // Seleccionar item
       onActiveKeyChange?.(item.key);
       item.onClick?.();
     }
@@ -265,7 +257,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         className
       )}
     >
-      {/* Header con Logo */}
       <div className="luca-flex luca-flex-col luca-gap-6 luca-items-center luca-px-4 luca-pt-6 luca-pb-0 luca-shrink-0">
         <div
           className={cn(
@@ -300,14 +291,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
         </div>
 
-        {/* Profile */}
         {profile && (
           <div className="luca-w-ful">
             <Profile {...profile} collapsed={collapsed} />
           </div>
         )}
 
-        {/* Menús */}
         <div className="luca-flex luca-flex-col luca-gap-4 luca-items-start luca-w-full luca-overflow-y-auto luca-flex-1 luca-min-h-0 luca-py-4 luca-border-t luca-border-neutral-200">
           {items.map((item) => {
             const isActive = isItemActive(item);
@@ -398,7 +387,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   menuButton
                 )}
 
-                {/* Submenús - Solo cuando NO está collapsed */}
                 {!collapsed && hasSubmenu && isSubmenuExpanded && (
                   <div className="luca-mt-1 luca-ml-4 luca-flex luca-flex-col luca-gap-1">
                     {item.submenu?.map((submenuItem) => {
@@ -441,7 +429,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Footer */}
       <div className="luca-flex luca-flex-1 luca-flex-col luca-gap-2 luca-items-center luca-justify-end luca-pb-6 luca-px-2 luca-shrink-0">
         {footer ||
           (defaultFooter && (
@@ -451,7 +438,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           ))}
       </div>
 
-      {/* Botón de colapsar/expandir */}
       {showCollapseButton && (
         <button
           type="button"
