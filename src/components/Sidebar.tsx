@@ -8,6 +8,7 @@ import {
   LucaLogoSmall,
 } from '../shared/icons';
 import { Tooltip } from './Tooltip';
+import { Profile, ProfileProps } from './Profile';
 
 export type SidebarVariant =
   | 'primary'
@@ -51,6 +52,7 @@ export interface SidebarProps {
   footerText?: string;
   className?: string;
   showCollapseButton?: boolean;
+  profile?: ProfileProps;
 }
 
 // Mapeo de variantes a colores del tailwind.config.js
@@ -131,6 +133,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   footerText = 'V1.0 © 2025',
   className,
   showCollapseButton = true,
+  profile,
 }) => {
   const [internalCollapsed, setInternalCollapsed] = useState(false);
   const [expandedSubmenus, setExpandedSubmenus] = useState<Set<string>>(new Set());
@@ -235,8 +238,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
         </div>
 
+        {/* Profile */}
+        {profile && (
+          <div className="luca-w-ful">
+            <Profile {...profile} collapsed={collapsed} />
+          </div>
+        )}
+
         {/* Menús */}
-        <div className="luca-flex luca-flex-col luca-gap-4 luca-items-start luca-w-full luca-overflow-y-auto luca-flex-1 luca-min-h-0 luca-py-4">
+        <div className="luca-flex luca-flex-col luca-gap-4 luca-items-start luca-w-full luca-overflow-y-auto luca-flex-1 luca-min-h-0 luca-py-4 luca-border-t luca-border-neutral-200">
           {items.map((item) => {
             const isActive = isItemActive(item);
             const hasSubmenu = item.submenu && item.submenu.length > 0;

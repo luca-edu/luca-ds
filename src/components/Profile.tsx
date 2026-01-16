@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '../utils/cn';
 import { Avatar, AvatarProps } from './Avatar';
+import { Tooltip } from './Tooltip';
 
 export type ProfileVariant =
   | 'primary'
@@ -65,6 +66,11 @@ export interface ProfileProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
    * @default false
    */
   collapsed?: boolean;
+
+  /**
+   * useTooltip prop to show tooltip
+   */
+  useTooltip?: boolean;
 }
 
 const profileSizeStyles: Record<
@@ -153,6 +159,7 @@ export const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(
       onClick,
       className,
       collapsed = false,
+      useTooltip = false,
       ...props
     },
     ref
@@ -199,7 +206,13 @@ export const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(
         {...props}
       >
         <div className="luca-shrink-0">
-          <Avatar {...defaultAvatarProps} />
+          {collapsed && useTooltip ? (
+            <Tooltip content={name ?? ''} variant="primary" placement="right">
+              <Avatar {...defaultAvatarProps} />
+            </Tooltip>
+          ) : (
+            <Avatar {...defaultAvatarProps} />
+          )}
         </div>
         {!collapsed && (name || subtitle) && (
           <div className="luca-flex luca-flex-col luca-justify-center luca-min-w-0 luca-flex-1 luca-gap-[4px]">

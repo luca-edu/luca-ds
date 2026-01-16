@@ -83,11 +83,27 @@ const meta = {
       control: 'boolean',
       description: 'Whether to show the collapse button',
     },
+    profile: {
+      control: 'object',
+      description: 'Profile props',
+    },
   },
   args: {
     variant: 'primary',
     collapsed: false,
     showCollapseButton: true,
+    profile: {
+      name: 'Roxana García',
+      subtitle: '5° A',
+      avatar: {
+        type: 'image',
+        src: 'https://i.pravatar.cc/150?img=1',
+        alt: 'Roxana',
+        size: 'sm',
+      },
+      useTooltip: true,
+      size: 'md',
+    },
   },
 } satisfies Meta<typeof Sidebar>;
 
@@ -152,7 +168,7 @@ export const Default: Story = {
 };
 
 // Story colapsado
-export const Collapsed: Story = {
+/*export const Collapsed: Story = {
   args: {
     items: defaultItems,
   },
@@ -283,41 +299,6 @@ export const WithDisabled: Story = {
   },
 };
 
-// Story con todas las variantes
-export const AllVariants: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: () => {
-    const [activeKeys, setActiveKeys] = useState<Record<string, string>>({
-      primary: 'home',
-      accent: 'home',
-      success: 'home',
-      warning: 'home',
-      danger: 'home',
-      info: 'home',
-      neutral: 'home',
-    });
-
-    return (
-      <div className="luca-h-screen luca-flex luca-gap-4 luca-p-4">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
-          (variant) => (
-            <Sidebar
-              key={variant}
-              variant={variant}
-              items={defaultItems}
-              activeKey={activeKeys[variant]}
-              onActiveKeyChange={(key) => setActiveKeys((prev) => ({ ...prev, [variant]: key }))}
-              footerText={`${variant} - V1.0 © 2025`}
-            />
-          )
-        )}
-      </div>
-    );
-  },
-};
-
 // Story con logo personalizado
 export const CustomLogo: Story = {
   args: {
@@ -378,4 +359,4 @@ export const WithoutCollapseButton: Story = {
       </div>
     );
   },
-};
+};*/
