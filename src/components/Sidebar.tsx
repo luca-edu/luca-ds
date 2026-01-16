@@ -7,6 +7,7 @@ import {
   LucaLogoLarge,
   LucaLogoSmall,
 } from '../shared/icons';
+import { Tooltip } from './Tooltip';
 
 export type SidebarVariant =
   | 'primary'
@@ -260,11 +261,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     collapsed ? (typeof item.label === 'string' ? item.label : item.key) : undefined
                   }
                 >
-                  {item.icon && (
-                    <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
-                      {item.icon}
-                    </span>
-                  )}
+                  {item.icon &&
+                    (collapsed ? (
+                      <Tooltip content={item.label as string} variant="primary" placement="right">
+                        <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
+                          {item.icon}
+                        </span>
+                      </Tooltip>
+                    ) : (
+                      <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
+                        {item.icon}
+                      </span>
+                    ))}
                   {!collapsed && (
                     <>
                       <span className='luca-font-["Poppins"] luca-font-medium luca-text-sm luca-leading-5 luca-flex-1 luca-text-left'>
