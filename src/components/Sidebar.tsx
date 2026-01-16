@@ -9,6 +9,7 @@ import {
 } from '../shared/icons';
 import { Tooltip } from './Tooltip';
 import { Profile, ProfileProps } from './Profile';
+import { Popover } from 'antd';
 
 export type SidebarVariant =
   | 'primary'
@@ -117,6 +118,62 @@ const variantColors: Record<
   },
 };
 
+// ComponentListItems para mostrar submenuItems cuando el sidebar está collapsed
+const ComponentListItems: React.FC<{
+  menuItem: SidebarMenuItem;
+  variant: SidebarVariant;
+  onSubmenuClick: (parentKey: string, submenuItem: SidebarSubmenuItem) => void;
+  isSubmenuItemActive: (parentKey: string, submenuItem: SidebarSubmenuItem) => boolean;
+}> = ({ menuItem, variant, onSubmenuClick, isSubmenuItemActive }) => {
+  const colors = variantColors[variant];
+
+  return (
+    <div className="luca-bg-white luca-border luca-border-neutral-200 luca-rounded-lg luca-shadow-[0px_1px_3px_0px_rgba(166,175,195,0.4)] luca-overflow-hidden">
+      <div className="luca-flex luca-flex-col luca-gap-[5px] luca-px-1 luca-py-2">
+        {/* Título del menú principal */}
+        <button
+          type="button"
+          className={cn(
+            'luca-flex luca-gap-[10px] luca-h-[38px] luca-items-center luca-px-2 luca-py-2 luca-rounded-lg luca-w-[240px] luca-text-left luca-transition-all luca-duration-200',
+            colors.activeBg
+          )}
+        >
+          <p className='luca-flex-1 luca-font-["Poppins"] luca-font-medium luca-text-base luca-leading-6 luca-text-neutral-900 luca-whitespace-nowrap'>
+            {typeof menuItem.label === 'string' ? menuItem.label : 'Menu'}
+          </p>
+        </button>
+
+        {/* SubmenuItems */}
+        {menuItem.submenu?.map((submenuItem) => {
+          const isSubActive = isSubmenuItemActive(menuItem.key, submenuItem);
+          return (
+            <button
+              key={submenuItem.key}
+              type="button"
+              onClick={() => onSubmenuClick(menuItem.key, submenuItem)}
+              disabled={submenuItem.disabled}
+              className={cn(
+                'luca-flex luca-gap-[10px] luca-h-[38px] luca-items-center luca-px-2 luca-py-[7px] luca-rounded-lg luca-w-[240px] luca-text-left luca-transition-all luca-duration-200',
+                isSubActive
+                  ? cn(colors.activeBg, colors.activeText)
+                  : cn(
+                      'luca-text-neutral-500 hover:luca-bg-neutral-50 hover:luca-text-neutral-700'
+                    ),
+                submenuItem.disabled &&
+                  'luca-cursor-not-allowed luca-opacity-60 hover:luca-bg-transparent hover:luca-text-neutral-500'
+              )}
+            >
+              <p className='luca-flex-1 luca-font-["Poppins"] luca-font-normal luca-text-sm luca-leading-5 luca-whitespace-nowrap'>
+                {typeof submenuItem.label === 'string' ? submenuItem.label : submenuItem.key}
+              </p>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 export const Sidebar: React.FC<SidebarProps> = ({
   items,
   activeKey,
@@ -156,6 +213,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const handleMenuClick = (item: SidebarMenuItem) => {
     if (item.disabled) return;
+
+    if (collapsed && item.submenu && item.submenu.length > 0) {
+      // Si está collapsed, no hacer nada (el popover se maneja con hover)
+      return;
+    }
 
     if (item.submenu && item.submenu.length > 0) {
       // Toggle submenu
@@ -252,58 +314,91 @@ export const Sidebar: React.FC<SidebarProps> = ({
             const hasSubmenu = item.submenu && item.submenu.length > 0;
             const isSubmenuExpanded = expandedSubmenus.has(item.key);
 
-            return (
-              <div key={item.key} className="luca-w-full">
-                <button
-                  type="button"
-                  onClick={() => handleMenuClick(item)}
-                  disabled={item.disabled}
-                  className={cn(
-                    'luca-flex luca-gap-2 luca-items-center luca-p-2 luca-rounded-lg luca-transition-all luca-duration-200 luca-w-full',
-                    collapsed ? 'luca-justify-center' : 'luca-justify-start',
-                    isActive
-                      ? cn(colors.activeBg, colors.activeText)
-                      : cn(colors.inactiveText, colors.inactiveHoverBg, colors.inactiveHover),
-                    item.disabled &&
-                      'luca-cursor-not-allowed luca-opacity-60 hover:luca-bg-transparent hover:luca-text-neutral-500'
-                  )}
-                  title={
-                    collapsed ? (typeof item.label === 'string' ? item.label : item.key) : undefined
-                  }
-                >
-                  {item.icon &&
-                    (collapsed ? (
-                      <Tooltip content={item.label as string} variant="primary" placement="right">
-                        <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
-                          {item.icon}
-                        </span>
-                      </Tooltip>
-                    ) : (
+            const menuButton = (
+              <button
+                type="button"
+                onClick={() => handleMenuClick(item)}
+                disabled={item.disabled}
+                className={cn(
+                  'luca-flex luca-gap-2 luca-items-center luca-p-2 luca-rounded-lg luca-transition-all luca-duration-200 luca-w-full',
+                  collapsed ? 'luca-justify-center' : 'luca-justify-start',
+                  isActive
+                    ? cn(colors.activeBg, colors.activeText)
+                    : cn(colors.inactiveText, colors.inactiveHoverBg, colors.inactiveHover),
+                  item.disabled &&
+                    'luca-cursor-not-allowed luca-opacity-60 hover:luca-bg-transparent hover:luca-text-neutral-500'
+                )}
+                title={
+                  collapsed && !hasSubmenu
+                    ? typeof item.label === 'string'
+                      ? item.label
+                      : item.key
+                    : undefined
+                }
+              >
+                {item.icon &&
+                  (collapsed && !hasSubmenu ? (
+                    <Tooltip content={item.label as string} variant="primary" placement="right">
                       <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
                         {item.icon}
                       </span>
-                    ))}
-                  {!collapsed && (
-                    <>
-                      <span className='luca-font-["Poppins"] luca-font-medium luca-text-sm luca-leading-5 luca-flex-1 luca-text-left'>
-                        {item.label}
+                    </Tooltip>
+                  ) : (
+                    <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
+                      {item.icon}
+                    </span>
+                  ))}
+                {!collapsed && (
+                  <>
+                    <span className='luca-font-["Poppins"] luca-font-medium luca-text-sm luca-leading-5 luca-flex-1 luca-text-left'>
+                      {item.label}
+                    </span>
+                    {hasSubmenu && (
+                      <span className="luca-shrink-0">
+                        <ChevronDownIcon
+                          size={16}
+                          className={cn(
+                            'luca-transition-transform luca-duration-200',
+                            isSubmenuExpanded && 'luca-rotate-180'
+                          )}
+                        />
                       </span>
-                      {hasSubmenu && (
-                        <span className="luca-shrink-0">
-                          <ChevronDownIcon
-                            size={16}
-                            className={cn(
-                              'luca-transition-transform luca-duration-200',
-                              isSubmenuExpanded && 'luca-rotate-180'
-                            )}
-                          />
-                        </span>
-                      )}
-                    </>
-                  )}
-                </button>
+                    )}
+                  </>
+                )}
+              </button>
+            );
 
-                {/* Submenús */}
+            return (
+              <div key={item.key} className="luca-w-full">
+                {collapsed && hasSubmenu ? (
+                  <Popover
+                    content={
+                      <ComponentListItems
+                        menuItem={item}
+                        variant={variant}
+                        onSubmenuClick={handleSubmenuClick}
+                        isSubmenuItemActive={isSubmenuItemActive}
+                      />
+                    }
+                    placement="right"
+                    trigger={['hover']}
+                    overlayClassName="luca-sidebar-popover"
+                    overlayInnerStyle={{
+                      padding: 0,
+                      backgroundColor: 'transparent',
+                      boxShadow: 'none',
+                    }}
+                    mouseEnterDelay={0.1}
+                    mouseLeaveDelay={0.1}
+                  >
+                    <div className="luca-w-full">{menuButton}</div>
+                  </Popover>
+                ) : (
+                  menuButton
+                )}
+
+                {/* Submenús - Solo cuando NO está collapsed */}
                 {!collapsed && hasSubmenu && isSubmenuExpanded && (
                   <div className="luca-mt-1 luca-ml-4 luca-flex luca-flex-col luca-gap-1">
                     {item.submenu?.map((submenuItem) => {
