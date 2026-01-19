@@ -83,11 +83,27 @@ const meta = {
       control: 'boolean',
       description: 'Whether to show the collapse button',
     },
+    profile: {
+      control: 'object',
+      description: 'Profile props',
+    },
   },
   args: {
     variant: 'primary',
     collapsed: false,
     showCollapseButton: true,
+    profile: {
+      name: 'Roxana García',
+      subtitle: '5° A',
+      avatar: {
+        type: 'image',
+        src: 'https://i.pravatar.cc/150?img=1',
+        alt: 'Roxana',
+        size: 'sm',
+      },
+      useTooltip: true,
+      size: 'md',
+    },
   },
 } satisfies Meta<typeof Sidebar>;
 
@@ -99,6 +115,16 @@ const defaultItems = [
     key: 'home',
     label: 'Mis clases',
     icon: <HomeIcon />,
+  },
+  {
+    key: 'subjects',
+    label: 'Materias',
+    icon: <BookIcon />,
+    submenu: [
+      { key: 'active', label: 'Todos los programas' },
+      { key: 'active', label: 'Programas activos' },
+      { key: 'archived', label: 'Programas archivados' },
+    ],
   },
   {
     key: 'programs',
@@ -145,235 +171,6 @@ export const Default: Story = {
           <h1 className="luca-text-2xl luca-font-bold luca-mb-4">Contenido Principal</h1>
           <p>Active Key: {activeKey}</p>
           <p>Collapsed: {collapsed ? 'Sí' : 'No'}</p>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Story colapsado
-export const Collapsed: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: (args) => {
-    const [activeKey, setActiveKey] = useState('home');
-    return (
-      <div className="luca-h-screen luca-flex">
-        <Sidebar
-          {...args}
-          items={defaultItems}
-          activeKey={activeKey}
-          onActiveKeyChange={setActiveKey}
-          collapsed={true}
-        />
-        <div className="luca-flex-1 luca-p-8">
-          <h1 className="luca-text-2xl luca-font-bold luca-mb-4">Contenido Principal</h1>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Story con submenús
-export const WithSubmenus: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: (args) => {
-    const [activeKey, setActiveKey] = useState('home');
-    const [collapsed, setCollapsed] = useState(false);
-
-    const itemsWithSubmenus = [
-      {
-        key: 'home',
-        label: 'Mis clases',
-        icon: <HomeIcon />,
-      },
-      {
-        key: 'programs',
-        label: 'Programas',
-        icon: <BookIcon />,
-        submenu: [
-          { key: 'all', label: 'Todos los programas' },
-          { key: 'active', label: 'Programas activos' },
-          { key: 'archived', label: 'Programas archivados' },
-        ],
-      },
-      {
-        key: 'tournaments',
-        label: 'Torneos',
-        icon: <TrophyIcon />,
-        submenu: [
-          { key: 'active', label: 'Torneos activos', icon: <TrophyIcon /> },
-          { key: 'past', label: 'Torneos pasados' },
-          { key: 'upcoming', label: 'Próximos torneos' },
-        ],
-      },
-    ];
-
-    return (
-      <div className="luca-h-screen luca-flex">
-        <Sidebar
-          {...args}
-          items={itemsWithSubmenus}
-          activeKey={activeKey}
-          onActiveKeyChange={setActiveKey}
-          collapsed={collapsed}
-          onCollapseChange={setCollapsed}
-        />
-        <div className="luca-flex-1 luca-p-8">
-          <h1 className="luca-text-2xl luca-font-bold luca-mb-4">Contenido Principal</h1>
-          <p>Active Key: {activeKey}</p>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Story con disabled items
-export const WithDisabled: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: (args) => {
-    const [activeKey, setActiveKey] = useState('home');
-    const itemsWithDisabled = [
-      {
-        key: 'home',
-        label: 'Mis clases',
-        icon: <HomeIcon />,
-      },
-      {
-        key: 'programs',
-        label: 'Programas',
-        icon: <BookIcon />,
-        disabled: true,
-      },
-      {
-        key: 'ai-tools',
-        label: 'Herramientas IA',
-        icon: <RobotIcon />,
-      },
-      {
-        key: 'tournaments',
-        label: 'Torneos',
-        icon: <TrophyIcon />,
-        submenu: [
-          { key: 'active', label: 'Torneos activos' },
-          { key: 'past', label: 'Torneos pasados', disabled: true },
-          { key: 'upcoming', label: 'Próximos torneos' },
-        ],
-      },
-    ];
-
-    return (
-      <div className="luca-h-screen luca-flex">
-        <Sidebar
-          {...args}
-          items={itemsWithDisabled}
-          activeKey={activeKey}
-          onActiveKeyChange={setActiveKey}
-        />
-        <div className="luca-flex-1 luca-p-8">
-          <h1 className="luca-text-2xl luca-font-bold luca-mb-4">Contenido Principal</h1>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Story con todas las variantes
-export const AllVariants: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: () => {
-    const [activeKeys, setActiveKeys] = useState<Record<string, string>>({
-      primary: 'home',
-      accent: 'home',
-      success: 'home',
-      warning: 'home',
-      danger: 'home',
-      info: 'home',
-      neutral: 'home',
-    });
-
-    return (
-      <div className="luca-h-screen luca-flex luca-gap-4 luca-p-4">
-        {(['primary', 'accent', 'success', 'warning', 'danger', 'info', 'neutral'] as const).map(
-          (variant) => (
-            <Sidebar
-              key={variant}
-              variant={variant}
-              items={defaultItems}
-              activeKey={activeKeys[variant]}
-              onActiveKeyChange={(key) => setActiveKeys((prev) => ({ ...prev, [variant]: key }))}
-              footerText={`${variant} - V1.0 © 2025`}
-            />
-          )
-        )}
-      </div>
-    );
-  },
-};
-
-// Story con logo personalizado
-export const CustomLogo: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: (args) => {
-    const [activeKey, setActiveKey] = useState('home');
-    const customLogo = (
-      <div className="luca-flex luca-items-center luca-gap-2">
-        <div className="luca-bg-primary-600 luca-text-white luca-w-8 luca-h-8 luca-rounded luca-flex luca-items-center luca-justify-center luca-font-bold">
-          L
-        </div>
-        <span className="luca-text-primary-600 luca-font-bold luca-text-xl">Mi App</span>
-      </div>
-    );
-
-    const logoIcon = <div className="luca-text-white luca-font-bold luca-text-lg">L</div>;
-
-    return (
-      <div className="luca-h-screen luca-flex">
-        <Sidebar
-          {...args}
-          items={defaultItems}
-          activeKey={activeKey}
-          onActiveKeyChange={setActiveKey}
-          logo={customLogo}
-          logoIcon={logoIcon}
-          logoWidth={200}
-          logoHeight={48}
-        />
-        <div className="luca-flex-1 luca-p-8">
-          <h1 className="luca-text-2xl luca-font-bold luca-mb-4">Contenido Principal</h1>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Story sin botón de colapsar
-export const WithoutCollapseButton: Story = {
-  args: {
-    items: defaultItems,
-  },
-  render: (args) => {
-    const [activeKey, setActiveKey] = useState('home');
-    return (
-      <div className="luca-h-screen luca-flex">
-        <Sidebar
-          {...args}
-          items={defaultItems}
-          activeKey={activeKey}
-          onActiveKeyChange={setActiveKey}
-          showCollapseButton={false}
-        />
-        <div className="luca-flex-1 luca-p-8">
-          <h1 className="luca-text-2xl luca-font-bold luca-mb-4">Contenido Principal</h1>
         </div>
       </div>
     );

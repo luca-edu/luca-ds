@@ -109,14 +109,14 @@ export const Badge: React.FC<BadgeProps> = ({
 
   // Icon colors for duotone variant
   const iconColors = {
-    primary: '#3843D0',
+    primary: 'white',
     secondary: '#374151',
-    gray: '#6b7280',
-    light: '#374151',
-    warning: '#d97706',
-    danger: '#DC2626',
-    success: '#16A34A',
-    info: '#38BDF8',
+    gray: 'white',
+    light: 'white',
+    warning: 'white',
+    danger: 'white',
+    success: 'white',
+    info: 'white',
   };
 
   return (
@@ -130,9 +130,7 @@ export const Badge: React.FC<BadgeProps> = ({
       )}
       {...props}
     >
-      {showIcon && rounded === 'full' && variant === 'duotone' && (
-        <CheckIcon className="luca-shrink-0" color={iconColors[color]} />
-      )}
+      {showIcon && <CheckIcon className="luca-shrink-0 luca-me-1" color={iconColors[color]} />}
       {children}
     </span>
   );

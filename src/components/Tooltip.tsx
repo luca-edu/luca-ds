@@ -16,8 +16,10 @@ export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 type Placement = AntTooltipProps['placement'];
 
-export interface TooltipProps
-  extends Omit<AntTooltipProps, 'title' | 'overlayClassName' | 'placement'> {
+export interface TooltipProps extends Omit<
+  AntTooltipProps,
+  'title' | 'overlayClassName' | 'placement'
+> {
   content: string;
   variant?: TooltipVariant;
   placement?: TooltipPlacement;

@@ -68,8 +68,7 @@ function useFieldValue<T extends HTMLInputElement | HTMLTextAreaElement>({
 }
 
 export interface InputFieldProps
-  extends FieldBaseProps,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'children' | 'size'> {
+  extends FieldBaseProps, Omit<React.InputHTMLAttributes<HTMLInputElement>, 'children' | 'size'> {
   size?: InputProps['size'];
 }
 
@@ -234,8 +233,7 @@ export const InputField = React.forwardRef<AntInputRef, InputFieldProps>(
 InputField.displayName = 'InputField';
 
 export interface TextAreaFieldProps
-  extends FieldBaseProps,
-    Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'children'> {}
+  extends FieldBaseProps, Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'children'> {}
 
 type AntTextAreaRef = React.ComponentRef<typeof Input.TextArea>;
 
