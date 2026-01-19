@@ -9,7 +9,7 @@ import { AllVariants as CheckboxAllVariants } from './Checkbox.stories';
 import { AllVariants as RadioButtonAllVariants } from './RadioButton.stories';
 import { AllVariants as TooltipAllVariants } from './Tooltip.stories';
 import { AllVariants as NavTabsAllVariants } from './NavTabs.stories';
-import { AllVariants as SidebarAllVariants } from './Sidebar.stories';
+import { Default as SidebarAllVariants } from './Sidebar.stories';
 import { AllVariants as NotificationAllVariants } from './Notification.stories';
 import { AllVariants as ToastAllVariants } from './Toast.stories';
 import { AllVariants as AmountButtonAllVariants } from './AmountButton.stories';
