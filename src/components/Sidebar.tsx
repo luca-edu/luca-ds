@@ -24,6 +24,7 @@ export interface SidebarSubmenuItem {
   key: string;
   label: React.ReactNode;
   icon?: React.ReactNode;
+  iconOff?: React.ReactNode;
   disabled?: boolean;
 }
 
@@ -31,6 +32,7 @@ export interface SidebarMenuItem {
   key: string;
   label: React.ReactNode;
   icon?: React.ReactNode;
+  iconOff?: React.ReactNode;
   disabled?: boolean;
   submenu?: SidebarSubmenuItem[];
   href?: string;
@@ -300,6 +302,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="luca-flex luca-flex-col luca-gap-4 luca-items-start luca-w-full luca-overflow-y-auto luca-flex-1 luca-min-h-0 luca-py-4 luca-border-t luca-border-neutral-200">
           {items.map((item) => {
             const isActive = isItemActive(item);
+            const icon = isActive ? item.icon : item.iconOff || item.icon;
             const hasSubmenu = item.submenu && item.submenu.length > 0;
             const isSubmenuExpanded = expandedSubmenus.has(item.key);
 
@@ -329,12 +332,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   (collapsed && !hasSubmenu ? (
                     <Tooltip content={item.label as string} variant="primary" placement="right">
                       <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
-                        {item.icon}
+                        {icon}
                       </span>
                     </Tooltip>
                   ) : (
                     <span className="luca-shrink-0 luca-size-6 luca-flex luca-items-center luca-justify-center">
-                      {item.icon}
+                      {icon}
                     </span>
                   ))}
                 {!collapsed && (
