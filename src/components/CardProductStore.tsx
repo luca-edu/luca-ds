@@ -114,6 +114,35 @@ export interface CardProductStoreProps extends Omit<
    * @default false
    */
   showPurchasedBadge?: boolean;
+  /**
+   * Texto del badge "¡Comprado!"
+   * @default '¡Comprado!'
+   */
+  purchasedText?: string;
+
+  /**
+   * Texto del badge "Ya no está disponible"
+   * @default 'Ya no está disponible'
+   */
+  notAvailableText?: string;
+
+  /**
+   * Mostrar badge "Ya no está disponible"
+   * @default false
+   */
+  showNotAvailableBadge?: boolean;
+
+  /**
+   * Texto del badge "Premio disponible en Nivel Maestro"
+   * @default 'Premio disponible en Nivel Maestro'
+   */
+  nextLevelOnlyText?: string;
+
+  /**
+   * Mostrar badge "Sólo para el próximo nivel"
+   * @default false
+   */
+  showNextLevelOnlyBadge?: boolean;
 
   /**
    * Texto del link "Ver en mi colección"
@@ -199,6 +228,7 @@ const textSizeStyles: Record<
     date: string;
     price: string;
     link: string;
+    nextLevelOnly: string;
   }
 > = {
   xs: {
@@ -208,6 +238,7 @@ const textSizeStyles: Record<
     date: 'luca-text-[10px]',
     price: 'luca-text-[10px]',
     link: 'luca-text-[10px]',
+    nextLevelOnly: 'luca-text-[10px]',
   },
   sm: {
     title: 'luca-text-sm',
@@ -216,6 +247,7 @@ const textSizeStyles: Record<
     date: 'luca-text-xs',
     price: 'luca-text-xs',
     link: 'luca-text-xs',
+    nextLevelOnly: 'luca-text-xs',
   },
   md: {
     title: 'luca-text-base xs:luca-text-sm sml:luca-text-base',
@@ -224,6 +256,7 @@ const textSizeStyles: Record<
     date: 'luca-text-xs',
     price: 'luca-text-sm xs:luca-text-xs sml:luca-text-sm',
     link: 'luca-text-sm xs:luca-text-xs sml:luca-text-sm',
+    nextLevelOnly: 'luca-text-sm xs:luca-text-xs sml:luca-text-sm',
   },
   lg: {
     title: 'luca-text-lg',
@@ -232,6 +265,7 @@ const textSizeStyles: Record<
     date: 'luca-text-sm',
     price: 'luca-text-base',
     link: 'luca-text-base',
+    nextLevelOnly: 'luca-text-base',
   },
   xl: {
     title: 'luca-text-xl',
@@ -240,6 +274,7 @@ const textSizeStyles: Record<
     date: 'luca-text-base',
     price: 'luca-text-lg',
     link: 'luca-text-lg',
+    nextLevelOnly: 'luca-text-lg',
   },
 };
 
@@ -339,6 +374,11 @@ export const CardProductStore = React.forwardRef<HTMLDivElement, CardProductStor
       crystalsValue = 850,
       showPriceButton = true,
       showPurchasedBadge = false,
+      showNotAvailableBadge = false,
+      notAvailableText = 'Ya no está disponible',
+      purchasedText = '¡Comprado!',
+      nextLevelOnlyText = 'Premio disponible en Nivel Maestro',
+      showNextLevelOnlyBadge = false,
       collectionLinkText = 'Ver en mi colección',
       showCollectionLink = true,
       onPriceClick,
@@ -384,7 +424,7 @@ export const CardProductStore = React.forwardRef<HTMLDivElement, CardProductStor
       <div
         ref={ref}
         className={cn(
-          'luca-flex luca-flex-col luca-items-center luca-rounded-lg luca-border luca-border-neutral-200',
+          'luca-flex luca-flex-col luca-items-center luca-rounded-lg luca-border luca-border-neutral-200 luca-min-h-[320px]',
           sizeStyles.width,
           sizeStyles.padding,
           sizeStyles.gap,
@@ -482,7 +522,7 @@ export const CardProductStore = React.forwardRef<HTMLDivElement, CardProductStor
         </div>
 
         {/* Acciones */}
-        <div className="luca-flex luca-flex-col luca-gap-2 luca-items-center luca-w-full">
+        <div className="luca-flex luca-flex-col luca-gap-2 luca-items-center luca-w-full luca-mt-auto">
           {/* Botón de precio */}
           {showPriceButton && (
             <button
@@ -523,7 +563,7 @@ export const CardProductStore = React.forwardRef<HTMLDivElement, CardProductStor
           {/* Badge ¡Comprado! */}
           {showPurchasedBadge && (
             <Badge variant="fill" color="success" rounded="semi" showIcon>
-              ¡Comprado!
+              {purchasedText}
             </Badge>
           )}
 
@@ -539,7 +579,26 @@ export const CardProductStore = React.forwardRef<HTMLDivElement, CardProductStor
               {collectionLinkText}
             </TextButton>
           )}
+
+          {/* Badge !No disponible¡ */}
+          {showNotAvailableBadge && (
+            <Badge variant="fill" color="light" rounded="semi">
+              {notAvailableText}
+            </Badge>
+          )}
         </div>
+
+        {showNextLevelOnlyBadge && nextLevelOnlyText && (
+          <p
+            className={cn(
+              'luca-font-normal luca-leading-5 luca-text-center luca-w-full luca-mt-auto',
+              textStyles.nextLevelOnly,
+              isDisabled ? 'luca-text-neutral-400' : 'luca-text-neutral-600'
+            )}
+          >
+            {nextLevelOnlyText}
+          </p>
+        )}
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '../utils/cn';
 import { GemIcon, GemIconBlue } from '../shared/icons';
 
@@ -196,7 +196,7 @@ const containerSizeStyles: Record<
   xs: {
     width: 'luca-w-[100px]',
     height: 'luca-h-[120px]',
-    imageSize: 'luca-w-[80px] luca-h-[80px] ',
+    imageSize: 'luca-w-[80px] luca-h-[80px]',
   },
   sm: {
     width: 'luca-w-[120px]',
@@ -440,15 +440,32 @@ export const CardProduct: React.FC<CardProductProps> = ({
   className,
   ...props
 }) => {
-  const isDisabled = state === 'disabled';
-  const isBlocked = state === 'blocked';
-  const isExclusive = state === 'exclusive' || state === 'exclusiveHover';
-  const isHover = state === 'hover';
+  const [isHovering, setIsHovering] = useState(false);
+
+  // Verificar estados base antes de calcular el estado efectivo
+  const isDisabledBase = state === 'disabled';
+  const isBlockedBase = state === 'blocked';
+
+  // Determinar el estado efectivo basado en el hover
+  const effectiveState: CardProductState = React.useMemo(() => {
+    if (state === 'default' && isHovering) {
+      return 'hover';
+    }
+    if (state === 'exclusive' && isHovering) {
+      return 'exclusiveHover';
+    }
+    return state;
+  }, [state, isHovering]);
+
+  const isDisabled = effectiveState === 'disabled';
+  const isBlocked = effectiveState === 'blocked';
+  const isExclusive = effectiveState === 'exclusive' || effectiveState === 'exclusiveHover';
+  const isHover = effectiveState === 'hover';
   const isClickable = clickable && !isDisabled && !isBlocked && onClick;
 
   const sizeStyles = containerSizeStyles[size];
   const textStyles = textSizeStyles[size];
-  const bgStyles = backgroundColorStyles[color][state];
+  const bgStyles = backgroundColorStyles[color][effectiveState];
 
   const handleClick = () => {
     if (isClickable && onClick) {
@@ -464,13 +481,13 @@ export const CardProduct: React.FC<CardProductProps> = ({
     sizeStyles.width,
     sizeStyles.height,
     bgStyles,
-    shadowStyles[state],
+    shadowStyles[effectiveState],
     isClickable && 'luca-cursor-pointer',
     isDisabled && 'luca-opacity-50 luca-cursor-not-allowed',
     className
   );
 
-  const bottomContainerBgStyles = bottomBackgroundColorStyles[color][state];
+  const bottomContainerBgStyles = bottomBackgroundColorStyles[color][effectiveState];
   const bottomContainerRadiusStyles = bottomBackgroundRadiusStyles[size];
   const bottomContainerHeightStyles = bottomBackgroundContainerStyles[size];
 
@@ -484,7 +501,7 @@ export const CardProduct: React.FC<CardProductProps> = ({
   // Estilos para el contenedor del fondo inferior
   const bottomContainerStyles = cn(
     'luca-absolute luca-bottom-0 luca-left-0 luca-right-0 luca-flex luca-flex-col luca-items-center luca-justify-center luca-px-1 luca-py-1',
-    (state === 'default' || state === 'disabled') && 'luca-pb-1.5',
+    (effectiveState === 'default' || effectiveState === 'disabled') && 'luca-pb-1.5',
     (isHover || isExclusive) && 'luca-pb-1.5'
   );
 
@@ -492,7 +509,8 @@ export const CardProduct: React.FC<CardProductProps> = ({
   const imageContainerStyles = cn(
     'luca-absolute luca-left-1/2 luca-top-1 luca-translate-x-[-50%] luca-overflow-hidden',
     sizeStyles.imageSize,
-    (isDisabled || isBlocked) && 'luca-opacity-50'
+    (isDisabled || isBlocked) && 'luca-opacity-50',
+    !isDisabled && !isBlocked && 'luca-cursor-pointer'
   );
 
   const blockedBackgroundColor = blockedBackgroundColorStyles[color];
@@ -504,10 +522,22 @@ export const CardProduct: React.FC<CardProductProps> = ({
       <GemIconBlue width={16} height={18} className="luca-shrink-0" />
     );
 
+  const handleMouseEnter = () => {
+    if ((state === 'default' || state === 'exclusive') && !isDisabledBase && !isBlockedBase) {
+      setIsHovering(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
   return (
     <div
       className={containerStyles}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       role={isClickable ? 'button' : undefined}
       tabIndex={isClickable ? 0 : undefined}
       onKeyDown={(e) => {
@@ -519,7 +549,7 @@ export const CardProduct: React.FC<CardProductProps> = ({
       {...props}
     >
       {/* Imagen del producto */}
-      <div className={imageContainerStyles}>
+      <div className={imageContainerStyles} draggable>
         {image ? (
           image
         ) : imageSrc ? (
@@ -565,7 +595,7 @@ export const CardProduct: React.FC<CardProductProps> = ({
             className={cn(
               'luca-flex luca-flex-col luca-justify-center luca-leading-tight luca-text-center luca-w-full luca-whitespace-pre-wrap',
               textStyles.name,
-              textColorStyles[state]
+              textColorStyles[effectiveState]
             )}
           >
             <p className="luca-font-normal luca-leading-6">{productName}</p>
