@@ -114,6 +114,32 @@ const meta: Meta<typeof CardProductStore> = {
         defaultValue: { summary: 'false' },
       },
     },
+    showNotAvailableBadge: {
+      control: 'boolean',
+      description: 'Mostrar badge "Ya no está disponible"',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+    },
+    notAvailableText: {
+      control: 'text',
+      description: 'Texto del badge "Ya no está disponible"',
+    },
+    purchasedText: {
+      control: 'text',
+      description: 'Texto del badge "¡Comprado!"',
+    },
+    showNextLevelOnlyBadge: {
+      control: 'boolean',
+      description: 'Mostrar badge "Premio disponible en Nivel Maestro"',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+    },
+    nextLevelOnlyText: {
+      control: 'text',
+      description: 'Texto del badge "Premio disponible en Nivel Maestro"',
+    },
   },
 };
 
@@ -128,6 +154,9 @@ export const Default: Story = {
     dateText: 'Termina en n días',
     crystalsValue: 850,
     imageSrc: 'https://i.pravatar.cc/150?img=1',
+    showNotAvailableBadge: true,
+    notAvailableText: 'Ya no está disponible',
+    purchasedText: '¡Comprado!',
   },
 };
 
@@ -140,6 +169,9 @@ export const Disabled: Story = {
     crystalsValue: 850,
     state: 'disabled',
     imageSrc: 'https://i.pravatar.cc/150?img=1',
+    showNotAvailableBadge: true,
+    notAvailableText: 'Ya no está disponible',
+    purchasedText: '¡Comprado!',
   },
 };
 
@@ -164,6 +196,9 @@ export const WithPurchasedBadge: Story = {
     crystalsValue: 850,
     showPurchasedBadge: true,
     imageSrc: 'https://i.pravatar.cc/150?img=1',
+    showNotAvailableBadge: true,
+    notAvailableText: 'Ya no está disponible',
+    purchasedText: '¡Comprado!',
   },
 };
 
