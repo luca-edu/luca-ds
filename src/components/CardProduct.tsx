@@ -492,7 +492,7 @@ export const CardProduct: React.FC<CardProductProps> = ({
   const bottomContainerHeightStyles = bottomBackgroundContainerStyles[size];
 
   const bottomContainerBackgroundStyles = cn(
-    'luca-absolute luca-bottom-0 luca-z-[-1] luca-w-full',
+    'luca-absolute luca-bottom-0 luca-z-[0] luca-w-full',
     bottomContainerBgStyles,
     bottomContainerRadiusStyles,
     bottomContainerHeightStyles
@@ -500,14 +500,14 @@ export const CardProduct: React.FC<CardProductProps> = ({
 
   // Estilos para el contenedor del fondo inferior
   const bottomContainerStyles = cn(
-    'luca-absolute luca-bottom-0 luca-left-0 luca-right-0 luca-flex luca-flex-col luca-items-center luca-justify-center luca-px-1 luca-py-1',
+    'luca-absolute luca-bottom-0 luca-left-0 luca-right-0 luca-flex luca-flex-col luca-items-center luca-justify-center luca-px-1 luca-py-1 luca-z-[10]',
     (effectiveState === 'default' || effectiveState === 'disabled') && 'luca-pb-1.5',
     (isHover || isExclusive) && 'luca-pb-1.5'
   );
 
   // Estilos para la imagen
   const imageContainerStyles = cn(
-    'luca-absolute luca-left-1/2 luca-top-1 luca-translate-x-[-50%] luca-overflow-hidden',
+    'luca-absolute luca-left-1/2 luca-top-1 luca-translate-x-[-50%] luca-overflow-hidden luca-z-[10]',
     sizeStyles.imageSize,
     (isDisabled || isBlocked) && 'luca-opacity-50',
     !isDisabled && !isBlocked && 'luca-cursor-pointer'
