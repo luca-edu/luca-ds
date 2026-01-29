@@ -34,6 +34,14 @@ const meta = {
       control: 'boolean',
       description: 'Whether to show the icon',
     },
+    showBackgroundIcon: {
+      control: 'boolean',
+      description: 'Whether to show the background icon',
+    },
+    showBackgroundIcon2: {
+      control: 'boolean',
+      description: 'Whether to show the background icon',
+    },
   },
 } satisfies Meta<typeof CardKPI>;
 

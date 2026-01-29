@@ -150,7 +150,7 @@ export const NavTabs = React.forwardRef<HTMLDivElement, NavTabsProps>(
     const containerStyles = cn(
       'luca-flex luca-items-center',
       style === 'default' &&
-        'luca-gap-1 luca-rounded-lg luca-py-2 luca-px-3 luca-border luca-border-neutral-200 luca-bg-white',
+        'luca-gap-2 luca-rounded-xl luca-py-2 luca-px-3 luca-border luca-border-neutral-200 luca-bg-white luca-overflow-x-auto',
       style === 'underline' && 'luca-gap-0 luca-border-b luca-border-neutral-200',
       style === 'pills' && 'luca-gap-1 luca-rounded-lg luca-bg-neutral-100 luca-py-2 luca-px-3',
       fullWidth && 'luca-w-full',

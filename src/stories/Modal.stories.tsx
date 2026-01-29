@@ -39,6 +39,10 @@ const meta = {
       control: 'boolean',
       description: 'Whether pressing Escape closes the modal',
     },
+    headerClassName: {
+      control: 'text',
+      description: 'Class name for the modal header',
+    },
   },
 } satisfies Meta<typeof Modal>;
 
