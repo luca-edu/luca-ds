@@ -31,6 +31,7 @@ export interface ModalProps {
   className?: string;
   maxWidth?: number | string;
   children?: React.ReactNode;
+  headerClassName?: string;
 }
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
@@ -47,6 +48,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       maxWidth,
       children,
       onClose,
+      headerClassName,
     },
     ref,
     ...rest
@@ -56,14 +58,15 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       content: styles.content,
     };
 
+    const headerClassNames = cn(
+      'luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px] ',
+      headerClassName
+    );
+
     return (
       <AntdModal
         open={isOpen || false}
-        title={
-          <span className="luca-font-semibold luca-text-lg luca-text-[#111827] luca-leading-[30px]">
-            {title}
-          </span>
-        }
+        title={<span className={headerClassNames}>{title}</span>}
         maskClosable={closeOnOverlayClick}
         footer={null}
         keyboard={closeOnEscape}
