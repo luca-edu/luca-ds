@@ -97,6 +97,9 @@ export type {
 export { InputField, TextAreaField } from './components/InputField';
 export type { InputFieldProps, TextAreaFieldProps } from './components/InputField';
 
+export { FileUploadField } from './components/FileUploadField';
+export type { FileUploadFieldProps } from './components/FileUploadField';
+
 export { Tooltip } from './components/Tooltip';
 export type { TooltipProps, TooltipVariant, TooltipPlacement } from './components/Tooltip';
 

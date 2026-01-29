@@ -387,7 +387,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       const key = selectedKeys[0];
       const selectedItem = items.find((item) => getItemValue(item) === key);
       const label = selectedItem ? getItemLabel(selectedItem) : placeholder;
-      return <>{label}</>;
+      return <span className="luca-text-sm luca-font-medium luca-text-neutral-900">{label}</span>;
     }
 
     if (
@@ -421,7 +421,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
     return (
       <>
-        <span className="luca-text-sm luca-font-medium luca-text-neutral-500">
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-900">
           {placeholder} ({countItemsSelected})
         </span>
       </>
@@ -604,7 +604,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             </div>
             <ChevronDownIcon
               size={16}
-              className={hasError ? 'luca-text-danger-500' : colors.icon}
+              className={hasError ? 'luca-text-danger-500' : 'luca-text-neutral-500'}
             />
           </button>
         </AntDropdown>
@@ -666,8 +666,8 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
       onClick={handleClick}
       className={cn(
         'luca-flex luca-w-full luca-items-center luca-gap-3 luca-rounded-md luca-px-2 luca-py-1.5 luca-transition-colors luca-duration-150',
-        checked ? colors.bgChecked : 'luca-bg-white',
-        'hover:luca-bg-neutral-100 focus:luca-outline-none focus:luca-ring-2',
+        checked ? 'luca-bg-neutral-50' : 'luca-bg-white',
+        'hover:luca-bg-neutral-50 focus:luca-outline-none focus:luca-ring-2',
         colors.ringFocus,
         disabled && 'luca-cursor-not-allowed luca-opacity-70'
       )}
@@ -686,7 +686,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
         </span>
       )}
       <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-center luca-gap-0.5">
-        <span className="luca-text-sm luca-font-medium luca-text-neutral-700 luca-break-words luca-text-left luca-w-full">
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-500 luca-break-words luca-text-left luca-w-full">
           {label}
         </span>
         {description && (

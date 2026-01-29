@@ -25,6 +25,7 @@ export interface TooltipProps extends Omit<
   placement?: TooltipPlacement;
   className?: string;
   overlayClassName?: string;
+  textAlign?: 'left' | 'center' | 'right';
 }
 
 const variantColors: Record<TooltipVariant, { bg: string; text: string; arrow: string }> = {
@@ -92,6 +93,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   placement = 'top',
   className,
   overlayClassName,
+  textAlign = 'center',
   ...rest
 }) => {
   const colors = variantColors[variant];
@@ -174,7 +176,12 @@ export const Tooltip: React.FC<TooltipProps> = ({
               hasShadow && 'luca-shadow-[0px_1px_3px_0px_rgba(166,175,195,0.4)]'
             )}
           >
-            <p className='luca-font-["Poppins"] luca-font-normal luca-text-sm luca-leading-5 luca-text-center luca-break-words'>
+            <p className={cn(
+              'luca-font-["Poppins"] luca-font-normal luca-text-sm luca-leading-5 luca-break-words',
+              textAlign === 'left' && 'luca-text-left',
+              textAlign === 'center' && 'luca-text-center',
+              textAlign === 'right' && 'luca-text-right'
+            )}>
               {content}
             </p>
           </div>
