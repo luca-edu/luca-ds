@@ -86,6 +86,12 @@ const getArrowColor = (variant: TooltipVariant): string => {
   return colors[variant];
 };
 
+const alignClass = {
+  left: 'luca-text-left',
+  center: 'luca-text-center',
+  right: 'luca-text-right',
+};
+
 export const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,
@@ -178,9 +184,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
           >
             <p className={cn(
               'luca-font-["Poppins"] luca-font-normal luca-text-sm luca-leading-5 luca-break-words',
-              textAlign === 'left' && 'luca-text-left',
-              textAlign === 'center' && 'luca-text-center',
-              textAlign === 'right' && 'luca-text-right'
+              alignClass[textAlign || 'left']
             )}>
               {content}
             </p>

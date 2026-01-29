@@ -15,7 +15,8 @@ export type DropdownVariant =
   | 'warning'
   | 'danger'
   | 'info'
-  | 'neutral';
+  | 'neutral'
+  | 'muted';
 
 export interface DropdownOption {
   key: string;
@@ -55,6 +56,7 @@ export interface DropdownProps {
   tooltip?: string;
   helpText?: string;
   message?: React.ReactNode;
+  labelClassName?: string;
 }
 
 const sizeStyles: Record<DropdownSize, string> = {
@@ -195,6 +197,22 @@ const variantColors: Record<
     bgCheckbox: 'luca-bg-neutral-500',
     icon: 'luca-text-neutral-600',
   },
+  muted: {
+    border: 'luca-border-neutral-200',
+    borderHover: 'hover:luca-border-neutral-200',
+    borderFocus: 'focus:luca-border-neutral-200',
+    text: 'luca-text-neutral-500',
+    textHover: 'hover:luca-text-neutral-500',
+    textFocus: 'focus:luca-text-neutral-500',
+    ring: 'focus:luca-ring-0',
+    ringFocus: 'focus:luca-ring-0',
+    bgChecked: 'luca-bg-gray-100',
+    bgTag: 'luca-bg-primary-50',
+    textTag: 'luca-text-primary-600',
+    borderCheckbox: 'luca-border-primary-500',
+    bgCheckbox: 'luca-bg-primary-500',
+    icon: 'luca-text-gray-500',
+  },
 };
 
 export const Dropdown: React.FC<DropdownProps> = ({
@@ -227,6 +245,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   tooltip,
   helpText,
   message,
+  labelClassName,
 }) => {
   const [internalValue, setInternalValue] = React.useState<string[]>(defaultValue ?? []);
   const [open, setOpen] = React.useState(false);
@@ -421,7 +440,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
     return (
       <>
-        <span className="luca-text-sm luca-font-medium luca-text-neutral-900">
+        <span className="luca-text-sm luca-font-medium luca-text-neutral-500">
           {placeholder} ({countItemsSelected})
         </span>
       </>
@@ -529,7 +548,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
           {label && (
             <label
               htmlFor={fieldId}
-              className="luca-flex luca-items-center luca-gap-1 luca-text-base luca-font-medium luca-leading-6 luca-text-neutral-900"
+              className={cn(
+                'luca-flex luca-items-center luca-gap-1 luca-text-base luca-font-medium luca-leading-6 luca-text-neutral-900',
+                labelClassName
+              )}
             >
               <span>
                 {label}
@@ -666,8 +688,8 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
       onClick={handleClick}
       className={cn(
         'luca-flex luca-w-full luca-items-center luca-gap-3 luca-rounded-md luca-px-2 luca-py-1.5 luca-transition-colors luca-duration-150',
-        checked ? 'luca-bg-neutral-50' : 'luca-bg-white',
-        'hover:luca-bg-neutral-50 focus:luca-outline-none focus:luca-ring-2',
+        checked ? colors.bgChecked : 'luca-bg-white',
+        'hover:luca-bg-neutral-100 focus:luca-outline-none focus:luca-ring-2',
         colors.ringFocus,
         disabled && 'luca-cursor-not-allowed luca-opacity-70'
       )}
@@ -686,7 +708,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
         </span>
       )}
       <div className="luca-flex luca-min-w-0 luca-flex-1 luca-flex-col luca-items-center luca-gap-0.5">
-        <span className="luca-text-sm luca-font-medium luca-text-neutral-500 luca-break-words luca-text-left luca-w-full">
+        <span className={cn('luca-text-sm luca-font-medium luca-break-words luca-text-left luca-w-full', colors.icon)}>
           {label}
         </span>
         {description && (
