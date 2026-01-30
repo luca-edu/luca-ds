@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FileUploadField } from '../components/FileUploadField';
+import lottieData from '../assets/christmas_overmoon.json';
 
 const meta = {
   title: 'Components/FileUploadField',
@@ -54,6 +55,13 @@ const meta = {
       description: 'Tipos de archivo aceptados',
       table: {
         defaultValue: { summary: 'image/*' },
+      },
+    },
+    lottie: {
+      control: 'boolean',
+      description: 'Modo Lottie: solo permite .gif o .json',
+      table: {
+        defaultValue: { summary: 'false' },
       },
     },
     maxSizeMB: {
@@ -245,6 +253,33 @@ export const SmallMaxSize: Story = {
   },
   render: (args) => {
     const [file, setFile] = React.useState<File | null>(null);
+    return (
+      <div className="luca-w-[400px]">
+        <FileUploadField {...args} value={file} onChange={setFile} />
+      </div>
+    );
+  },
+};
+
+// Story con modo Lottie (solo .gif o .json)
+export const LottieMode: Story = {
+  args: {
+    label: 'Subir efecto',
+    lottie: true,
+    placeholder: 'Seleccionar .gif o .json',
+    helpText: 'Solo se permiten archivos .gif o .json (Lottie)',
+  },
+  render: (args) => {
+    const [file, setFile] = React.useState<File | null>(null);
+
+    React.useEffect(() => {
+      
+      const jsonString = JSON.stringify(lottieData);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const mockFile = new File([blob], 'christmas_overmoon.json', { type: 'application/json' });
+      setFile(mockFile);
+    }, []);
+
     return (
       <div className="luca-w-[400px]">
         <FileUploadField {...args} value={file} onChange={setFile} />

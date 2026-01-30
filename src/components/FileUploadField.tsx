@@ -12,6 +12,7 @@ export interface FileUploadFieldProps {
   message?: React.ReactNode;
   status?: 'default' | 'danger';
   accept?: string;
+  lottie?: boolean;
   maxSizeMB?: number;
   value?: File | null;
   onChange?: (file: File | null) => void;
@@ -32,6 +33,7 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
       message,
       status = 'default',
       accept = 'image/*',
+      lottie = false,
       maxSizeMB = 5,
       value,
       onChange,
@@ -46,6 +48,9 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
     const fileInputRef = React.useRef<HTMLInputElement>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
     const [error, setError] = React.useState<string | null>(null);
+    const [jsonContent, setJsonContent] = React.useState<string | null>(null);
+
+    const effectiveAccept = lottie ? '.gif,.json' : accept;
 
     const generatedId = React.useId();
     const fieldId = idProp ?? generatedId;
@@ -56,15 +61,38 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
     React.useImperativeHandle(ref, () => fileInputRef.current!);
 
     React.useEffect(() => {
-      if (value && showPreview) {
+      let cancelled = false;
+
+      const loadPreview = async () => {
+        setPreviewUrl(null);
+        setJsonContent(null);
+
+        if (!value || !showPreview) return;
+
         if (value.type.startsWith('image/') || value.type.startsWith('video/')) {
           const url = URL.createObjectURL(value);
-          setPreviewUrl(url);
-          return () => URL.revokeObjectURL(url);
+          if (!cancelled) setPreviewUrl(url);
+          return () => {
+            if (!cancelled) URL.revokeObjectURL(url);
+          };
         }
-      }
-      setPreviewUrl(null);
-    }, [value, showPreview]);
+
+        if (lottie && (value.type === 'application/json' || value.name.endsWith('.json'))) {
+          try {
+            const text = await value.text();
+            if (!cancelled) setJsonContent(text);
+          } catch {
+            
+          }
+        }
+      };
+
+      void loadPreview();
+
+      return () => {
+        cancelled = true;
+      };
+    }, [value, showPreview, lottie]);
 
     const handleButtonClick = () => {
       if (!disabled) {
@@ -85,6 +113,19 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
           }
           return;
         }
+
+        if (lottie) {
+          const isGif = file.type === 'image/gif' || file.name.toLowerCase().endsWith('.gif');
+          const isJson = file.type === 'application/json' || file.name.toLowerCase().endsWith('.json');
+
+          if (!isGif && !isJson) {
+            setError('Solo se permiten archivos .gif o .json');
+            if (fileInputRef.current) {
+              fileInputRef.current.value = '';
+            }
+            return;
+          }
+        }
       }
 
       onChange?.(file);
@@ -97,11 +138,14 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
           fileInputRef.current.value = '';
         }
         setError(null);
+        setJsonContent(null);
       }
     };
 
     const hasError = status === 'danger' || Boolean(error);
     const displayMessage = error || message;
+    const isJsonFile = lottie && value && (value.type === 'application/json' || value.name.endsWith('.json'));
+    const shouldShowPreview = showPreview && value && (previewUrl || isJsonFile);
 
     return (
       <div className={cn('luca-flex luca-w-full luca-flex-col luca-gap-2', wrapperClassName)}>
@@ -141,7 +185,7 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
         )}
 
         <div className="luca-flex luca-flex-col luca-gap-1">
-          {previewUrl && showPreview ? (
+          {shouldShowPreview ? (
             <div
               className={cn(
                 'luca-relative luca-rounded-lg luca-border-2 luca-bg-white luca-p-4',
@@ -162,18 +206,42 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
                 Eliminar
               </Button>
               <div className="luca-flex luca-flex-col luca-items-center luca-justify-center">
-                {value?.type.startsWith('image/') ? (
+                {value?.type.startsWith('image/') && previewUrl ? (
                   <img
                     src={previewUrl}
                     alt="Preview"
                     className="luca-mb-3 luca-max-h-64 luca-max-w-full luca-rounded-lg luca-object-contain"
                   />
-                ) : value?.type.startsWith('video/') ? (
+                ) : value?.type.startsWith('video/') && previewUrl ? (
                   <video
                     src={previewUrl}
                     controls
                     className="luca-mb-3 luca-max-h-64 luca-max-w-full luca-rounded-lg"
                   />
+                ) : isJsonFile ? (
+                  <div className="luca-mb-3 luca-w-full luca-rounded-lg luca-border luca-border-neutral-200 luca-bg-neutral-50 luca-p-4">
+                    <div className="luca-flex luca-items-center luca-gap-2 luca-mb-2">
+                      <svg
+                        className="luca-h-6 luca-w-6 luca-text-primary-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+                        Archivo JSON (Lottie)
+                      </span>
+                    </div>
+                    <p className="luca-text-xs luca-text-neutral-500">
+                      {jsonContent ? `${Math.round(jsonContent.length / 1024)} KB` : 'Cargando...'}
+                    </p>
+                  </div>
                 ) : null}
                 <p className="luca-text-sm luca-font-medium luca-text-neutral-700">
                   {value?.name}
@@ -204,7 +272,7 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept={accept}
+                  accept={effectiveAccept}
                   onChange={handleFileChange}
                   className="luca-hidden"
                   id={fieldId}
@@ -222,9 +290,9 @@ export const FileUploadField = React.forwardRef<HTMLInputElement, FileUploadFiel
                 >
                   {placeholder}
                 </Button>
-                {accept && (
+                {effectiveAccept && (
                   <p className="luca-mt-3 luca-text-xs luca-text-neutral-500">
-                    Formatos aceptados: {accept}
+                    Formatos aceptados: {effectiveAccept}
                   </p>
                 )}
               </div>
