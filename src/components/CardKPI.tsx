@@ -292,6 +292,18 @@ export interface CardKPIProps extends Omit<
   showIcon2?: boolean;
 
   /**
+   * Whether to show the background icon
+   * @default true
+   */
+  showBackgroundIcon?: boolean;
+
+  /**
+   * Whether to show the background icon
+   * @default true
+   */
+  showBackgroundIcon2?: boolean;
+
+  /**
    * Click handler
    */
   onClick?: () => void;
@@ -319,6 +331,8 @@ export const CardKPI = React.forwardRef<HTMLDivElement, CardKPIProps>(
       onClick,
       clickable = false,
       className,
+      showBackgroundIcon = true,
+      showBackgroundIcon2 = true,
       ...props
     },
     ref
@@ -356,7 +370,7 @@ export const CardKPI = React.forwardRef<HTMLDivElement, CardKPIProps>(
                 className={cn(
                   'luca-flex luca-items-center luca-justify-center luca-rounded-full luca-shrink-0',
                   sizeStyles.iconSize,
-                  iconStyles.bg,
+                  showBackgroundIcon && iconStyles.bg,
                   sizeStyles.iconPadding
                 )}
               >
@@ -406,7 +420,7 @@ export const CardKPI = React.forwardRef<HTMLDivElement, CardKPIProps>(
                 className={cn(
                   'luca-flex luca-items-center luca-justify-center luca-rounded-full luca-shrink-0',
                   sizeStyles.iconSize,
-                  iconStyles.bg,
+                  showBackgroundIcon2 && iconStyles.bg,
                   sizeStyles.iconPadding
                 )}
               >
