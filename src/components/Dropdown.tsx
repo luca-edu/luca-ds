@@ -626,7 +626,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             </div>
             <ChevronDownIcon
               size={16}
-              className={hasError ? 'luca-text-danger-500' : 'luca-text-neutral-500'}
+              className={hasError ? 'luca-text-danger-500' : colors.icon}
             />
           </button>
         </AntDropdown>
