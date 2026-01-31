@@ -40,6 +40,14 @@ const meta = {
         defaultValue: { summary: 'top' },
       },
     },
+    textAlign: {
+      control: 'select',
+      options: ['left', 'center', 'right'],
+      description: 'Alineación del texto dentro del tooltip',
+      table: {
+        defaultValue: { summary: 'center' },
+      },
+    },
   },
 } satisfies Meta<typeof Tooltip>;
 
@@ -188,6 +196,43 @@ export const LongContent: Story = {
         placement="top"
       >
         <Button>Hover para ver tooltip largo</Button>
+      </Tooltip>
+    </div>
+  ),
+};
+
+// Story con diferentes alineaciones de texto
+export const TextAlignment: Story = {
+  args: {
+    content: 'Tooltip',
+    variant: 'primary',
+    placement: 'top',
+  },
+  render: () => (
+    <div className="luca-flex luca-gap-8 luca-p-20">
+      <Tooltip
+        content="Este tooltip tiene el texto alineado a la izquierda para mejor legibilidad"
+        variant="primary"
+        placement="top"
+        textAlign="left"
+      >
+        <Button variant="secondary">Left</Button>
+      </Tooltip>
+      <Tooltip
+        content="Este tooltip tiene el texto centrado, que es el comportamiento por defecto"
+        variant="primary"
+        placement="top"
+        textAlign="center"
+      >
+        <Button variant="secondary">Center</Button>
+      </Tooltip>
+      <Tooltip
+        content="Este tooltip tiene el texto alineado a la derecha"
+        variant="primary"
+        placement="top"
+        textAlign="right"
+      >
+        <Button variant="secondary">Right</Button>
       </Tooltip>
     </div>
   ),

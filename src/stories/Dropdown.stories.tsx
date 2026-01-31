@@ -124,3 +124,24 @@ export const Virtualized: Story = {
     defaultValue: ['grade-1', 'grade-2', 'grade-3', 'grade-4', 'grade-5'],
   },
 };
+
+export const MutedVariant: Story = {
+  args: {
+    variant: 'muted',
+    multiple: false,
+    defaultValue: ['1'],
+  },
+};
+
+export const CustomLabelStyle: Story = {
+  args: {
+    label: 'Grado con estilo personalizado',
+    labelClassName: 'luca-text-primary-600 luca-text-lg',
+    multiple: false,
+    items: [
+      { key: '1', label: 'Primero' },
+      { key: '2', label: 'Segundo' },
+      { key: '3', label: 'Tercero' },
+    ],
+  },
+};
