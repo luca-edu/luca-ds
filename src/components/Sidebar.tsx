@@ -294,7 +294,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {profile && (
-          <div className="luca-w-full">
+          <div className={cn('luca-w-full', collapsed ? 'luca-relative luca-left-[-11px]' : '')}>
             <Profile {...profile} collapsed={collapsed} />
           </div>
         )}
