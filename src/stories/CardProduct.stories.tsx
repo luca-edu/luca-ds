@@ -79,6 +79,20 @@ const meta: Meta<typeof CardProduct> = {
         value: <ArmorYellowIcon />,
       },
     },
+    showPurchasedBadge: {
+      control: 'boolean',
+      description: 'Mostrar badge de comprado',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+    },
+    purchasedText: {
+      control: 'text',
+      description: 'Texto del badge de comprado',
+      table: {
+        defaultValue: { summary: 'Comprado' },
+      },
+    },
   },
 };
 
@@ -93,6 +107,8 @@ export const Default: Story = {
     color: 'primary',
     state: 'default',
     image: <ArmorYellowIcon />,
+    showPurchasedBadge: true,
+    purchasedText: 'Comprado',
   },
 };
 
@@ -104,6 +120,8 @@ export const Hover: Story = {
     color: 'primary',
     state: 'hover',
     image: <ArmorYellowIcon />,
+    showPurchasedBadge: true,
+    purchasedText: 'Comprado',
   },
 };
 
@@ -115,6 +133,8 @@ export const Disabled: Story = {
     color: 'primary',
     state: 'disabled',
     image: <ArmorYellowIcon />,
+    showPurchasedBadge: true,
+    purchasedText: 'Comprado',
   },
 };
 
@@ -127,6 +147,8 @@ export const Blocked: Story = {
     state: 'blocked',
     blockedLevelText: 'Nivel Máster',
     image: <ArmorYellowIcon />,
+    showPurchasedBadge: true,
+    purchasedText: 'Comprado',
   },
 };
 
@@ -149,6 +171,8 @@ export const ExclusiveHover: Story = {
     color: 'primary',
     state: 'exclusiveHover',
     image: <ArmorYellowIcon />,
+    showPurchasedBadge: true,
+    purchasedText: 'Comprado',
   },
 };
 

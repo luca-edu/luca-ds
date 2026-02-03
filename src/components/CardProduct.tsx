@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { cn } from '../utils/cn';
 import { GemIcon, GemIconBlue } from '../shared/icons';
+import { Badge } from './Badge';
 
 export type CardProductSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type CardProductColor =
@@ -90,6 +91,18 @@ export interface CardProductProps extends Omit<React.HTMLAttributes<HTMLDivEleme
    * Handler de click
    */
   onClick?: () => void;
+
+  /**
+   * Mostrar badge de comprado
+   * @default false
+   */
+  showPurchasedBadge?: boolean;
+
+  /**
+   * Texto del badge de comprado
+   * @default 'Comprado'
+   */
+  purchasedText?: string;
 }
 
 // Icono de candado
@@ -438,6 +451,8 @@ export const CardProduct: React.FC<CardProductProps> = ({
   clickable = false,
   onClick,
   className,
+  showPurchasedBadge = false,
+  purchasedText = 'Comprado',
   ...props
 }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -615,6 +630,12 @@ export const CardProduct: React.FC<CardProductProps> = ({
               </div>
             </div>
           </div>
+        )}
+
+        {showPurchasedBadge && (
+          <Badge variant="fill" color="success" rounded="semi" showIcon>
+            {purchasedText}
+          </Badge>
         )}
       </div>
     </div>

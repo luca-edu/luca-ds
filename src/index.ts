@@ -150,6 +150,16 @@ export type {
   CardClassStatus,
 } from './components/CardClass';
 
+export { CardStudentClass } from './components/CardStudentClass';
+export type {
+  CardStudentClassProps,
+  CardStudentClassVariant,
+  CardStudentClassSize,
+  CardStudentClassState,
+  CardStudentClassMissionStatus,
+  MissionStatusType,
+} from './components/CardStudentClass';
+
 export { CardOption } from './components/CardOption';
 export type {
   CardOptionProps,
