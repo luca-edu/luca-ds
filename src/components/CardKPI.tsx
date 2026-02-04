@@ -232,10 +232,8 @@ const cardKPIVariantStyles: Record<
   },
 };
 
-export interface CardKPIProps extends Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  'title' | 'description1' | 'description2'
-> {
+export interface CardKPIProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'description1' | 'description2'> {
   /**
    * Color variant of the card
    * @default 'primary'

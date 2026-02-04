@@ -88,7 +88,7 @@ const meta = {
     },
     state: {
       control: 'select',
-      options: ['default', 'hover', 'disabled', 'empty'],
+      options: ['default', 'hover', 'disabled'],
       description: 'State of the card',
     },
     clickable: {
@@ -102,6 +102,18 @@ const meta = {
         defaultValue: { summary: '<decorativeElement />' },
         value: decorativeElement,
       },
+    },
+    averageScore: {
+      control: 'number',
+      description: 'Average score value (e.g. 5.5)',
+    },
+    maxScore: {
+      control: 'number',
+      description: 'Max score for average (e.g. 10)',
+    },
+    averageLabel: {
+      control: 'text',
+      description: 'Average label text',
     },
   },
 } satisfies Meta<typeof CardStudentClass>;
@@ -210,14 +222,6 @@ export const Disabled: Story = {
     averageScore: 5.5,
     maxScore: 10,
     averageLabel: 'Promedio',
-  },
-};
-
-export const Empty: Story = {
-  args: {
-    subjectIcon: defaultSubjectIcon,
-    classNameLabel: 'Español',
-    state: 'empty',
   },
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Avatar } from '../components/Avatar';
-import { Badge } from '../components/Badge';
 
 const meta = {
   title: 'Components/Avatar',
@@ -31,6 +30,46 @@ const meta = {
       options: ['text', 'image'],
       description: 'Type of avatar',
     },
+    listImages: {
+      control: 'object',
+      description: 'List of images for the avatar list',
+    },
+    showListImages: {
+      control: 'boolean',
+      description: 'Show list images',
+    },
+    showStatus: {
+      control: 'boolean',
+      description: 'Show online status indicator',
+    },
+    status: {
+      control: 'select',
+      options: ['online', 'offline', 'away', 'busy'],
+    },
+    text: {
+      control: 'text',
+      description: 'Text to display (for type="text")',
+    },
+    name: {
+      control: 'text',
+      description: 'Name for generating initials (for type="text")',
+    },
+    src: {
+      control: 'text',
+      description: 'Image source (for type="image")',
+    },
+    alt: {
+      control: 'text',
+      description: 'Alt text for image (for type="image")',
+    },
+    image: {
+      control: 'object',
+      description: 'Custom image element (for type="image")',
+    },
+    className: {
+      control: 'text',
+      description: 'Custom class name',
+    },
   },
 } satisfies Meta<typeof Avatar>;
 
@@ -39,7 +78,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    type: 'text',
+    type: 'image',
     text: 'TG',
   },
 };
@@ -201,47 +240,6 @@ export const WithStatus: Story = {
   ),
 };
 
-export const WithBadge: Story = {
-  args: {
-    type: 'image',
-    src: 'https://i.pravatar.cc/150?img=1',
-    alt: 'Avatar',
-  },
-  render: (args) => (
-    <div className="luca-flex luca-flex-col luca-gap-6 luca-p-8 luca-w-full luca-max-w-4xl">
-      <div className="luca-flex luca-flex-col luca-gap-4">
-        <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">With Badge</h3>
-        <div className="luca-flex luca-flex-wrap luca-gap-4 luca-items-center">
-          <Avatar
-            {...args}
-            badge={
-              <Badge variant="fill" color="danger" rounded="semi">
-                3
-              </Badge>
-            }
-          />
-          <Avatar
-            {...args}
-            badge={
-              <Badge variant="fill" color="success" rounded="semi">
-                New
-              </Badge>
-            }
-          />
-          <Avatar
-            {...args}
-            badge={
-              <Badge variant="fill" color="primary" rounded="semi">
-                5
-              </Badge>
-            }
-          />
-        </div>
-      </div>
-    </div>
-  ),
-};
-
 export const WithNameInitials: Story = {
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6 luca-p-8 luca-w-full luca-max-w-4xl">
@@ -310,17 +308,7 @@ export const NotificationExample: Story = {
       <h3 className="luca-text-lg luca-font-semibold luca-text-neutral-900">Notifications</h3>
       <div className="luca-flex luca-flex-col luca-gap-3">
         <div className="luca-flex luca-items-center luca-gap-3 luca-p-3 luca-rounded-lg luca-bg-neutral-50">
-          <Avatar
-            type="image"
-            src="https://i.pravatar.cc/150?img=1"
-            alt="User"
-            size="md"
-            badge={
-              <Badge variant="fill" color="danger" rounded="semi">
-                5
-              </Badge>
-            }
-          />
+          <Avatar type="image" src="https://i.pravatar.cc/150?img=1" alt="User" size="md" />
           <div className="luca-flex luca-flex-col luca-flex-1">
             <span className="luca-text-sm luca-font-medium luca-text-neutral-900">
               New messages
@@ -370,6 +358,41 @@ export const ResponsiveExample: Story = {
           <Avatar type="text" text="TG" size="md" variant="primary" showStatus status="online" />
         </div>
       </div>
+    </div>
+  ),
+};
+
+export const WithListImages: Story = {
+  render: () => (
+    <div className="luca-flex luca-flex-col luca-gap-6 luca-p-8 luca-w-full luca-max-w-4xl">
+      <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">List Images</h3>
+      <Avatar
+        type="image"
+        listImages={[
+          {
+            index: 0,
+            src: 'https://app.lucaedu.com/static/media/POLLUX.efe4c80642fafc407488b2c7e126b2b7.svg',
+            alt: 'Avatar 1',
+          },
+          {
+            index: 6,
+            src: 'https://storage.googleapis.com/general-storage-prd/luca2-backend/covers/644ad0571e4940fbb888e1206624f7fe.svg',
+            alt: 'Avatar 2',
+          },
+          {
+            index: 4,
+            src: 'https://storage.googleapis.com/general-storage-prd/luca2-backend/covers/2f1e279742d84c8c9e9109cae43da284.svg',
+            alt: 'Avatar 3',
+          },
+          {
+            index: 2,
+            src: 'https://storage.googleapis.com/general-storage-prd/luca2-backend/covers/92ee97fdf8bc42f68f3958f8f159431b.svg',
+            alt: 'Avatar 3',
+          },
+        ]}
+        showListImages={true}
+        className="!luca-h-[220px] !luca-w-[220px] !luca-lg:h-[300px] !luca-lg:w-[300px] !luca-xl:h-[350px] !luca-xl:w-[350px]"
+      />
     </div>
   ),
 };
