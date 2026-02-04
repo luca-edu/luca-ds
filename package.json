@@ -1,6 +1,6 @@
 {
   "name": "@lucaedu-2/luca-ds",
-  "version": "1.9.7",
+  "version": "1.9.8",
   "description": "A modern UI component library built with React, TypeScript, and Tailwind CSS",
   "type": "module",
   "main": "./dist/index.umd.cjs",
