@@ -178,6 +178,7 @@ export type {
   AvatarSize,
   AvatarState,
   AvatarType,
+  AvatarListImage,
 } from './components/Avatar';
 
 export { TextButton } from './components/TextButton';
