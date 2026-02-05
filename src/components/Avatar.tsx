@@ -16,6 +16,12 @@ export type AvatarState = 'default' | 'disabled';
 
 export type AvatarType = 'text' | 'image';
 
+export interface AvatarListImage {
+  src: string;
+  alt: string;
+  index: number;
+}
+
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Color variant of the avatar
@@ -80,9 +86,20 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   status?: 'online' | 'offline' | 'away' | 'busy';
 
   /**
-   * Custom badge element
+   * List of images for the avatar list
    */
-  badge?: React.ReactNode;
+  listImages?: AvatarListImage[];
+
+  /**
+   * Show list images
+   * @default false
+   */
+  showListImages?: boolean;
+
+  /**
+   * Custom class name
+   */
+  className?: string;
 }
 
 const avatarSizeStyles: Record<
@@ -98,19 +115,19 @@ const avatarSizeStyles: Record<
     size: 'luca-w-6 luca-h-6',
     textSize: 'luca-text-xs',
     statusSize: 'luca-w-1.5 luca-h-1.5',
-    statusOffset: 'luca-bottom-0 luca-right-0',
+    statusOffset: 'luca-bottom-0.5 luca-right-0.5',
   },
   sm: {
     size: 'luca-w-[38px] luca-h-[38px]',
     textSize: 'luca-text-sm',
     statusSize: 'luca-w-2 luca-h-2',
-    statusOffset: 'luca-bottom-0 luca-right-0',
+    statusOffset: 'luca-bottom-0.5 luca-right-0.5',
   },
   md: {
     size: 'luca-w-[42px] luca-h-[42px]',
     textSize: 'luca-text-base',
     statusSize: 'luca-w-2.5 luca-h-2.5',
-    statusOffset: 'luca-bottom-0 luca-right-0',
+    statusOffset: 'luca-bottom-0.5 luca-right-0.5',
   },
   lg: {
     size: 'luca-w-[52px] luca-h-[52px]',
@@ -122,7 +139,7 @@ const avatarSizeStyles: Record<
     size: 'luca-w-20 luca-h-20',
     textSize: 'luca-text-xl',
     statusSize: 'luca-w-4 luca-h-4',
-    statusOffset: 'luca-bottom-0 luca-right-0',
+    statusOffset: 'luca-bottom-0.5 luca-right-0.5',
   },
 };
 
@@ -203,8 +220,9 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       image,
       showStatus = false,
       status: statusType = 'online',
-      badge,
       className,
+      listImages = [],
+      showListImages = false,
       ...props
     },
     ref
@@ -247,7 +265,21 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
           </div>
         ) : (
           <>
-            {image ? (
+            {showListImages && listImages.length > 0 ? (
+              <div className="luca-w-full luca-h-full luca-flex luca-items-center luca-justify-center luca-relative">
+                {listImages.map((image) => (
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="luca-absolute luca-w-full luca-h-full luca-object-cover"
+                    style={{
+                      zIndex: `${image.index}`,
+                    }}
+                    key={image.index}
+                  />
+                ))}
+              </div>
+            ) : image ? (
               <div className="luca-w-full luca-h-full">{image}</div>
             ) : src ? (
               <img
@@ -281,13 +313,6 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
               statusStyles[statusType].border
             )}
           />
-        )}
-
-        {/* Badge */}
-        {badge && (
-          <div className="luca-absolute luca-top-0 luca-right-0 luca-transform luca-translate-x-1/2 -luca-translate-y-1/2">
-            {badge}
-          </div>
         )}
       </div>
     );

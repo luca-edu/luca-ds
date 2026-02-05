@@ -1,7 +1,6 @@
 import React from 'react';
 import { cn } from '../utils/cn';
 import { ArrowPathIcon, ExclamationCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
-import { EmptyStateIcon } from '../shared/icons';
 
 export type CardStudentClassVariant =
   | 'primary'
@@ -14,9 +13,9 @@ export type CardStudentClassVariant =
 
 export type CardStudentClassSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export type CardStudentClassState = 'default' | 'hover' | 'disabled' | 'empty';
+export type CardStudentClassState = 'default' | 'hover' | 'disabled';
 
-export type MissionStatusType = 'completed' | 'to-review' | 'pending';
+export type MissionStatusType = 'completed' | 'to-review' | 'pending' | 'empty';
 
 export interface CardStudentClassMissionStatus {
   /**
@@ -215,12 +214,6 @@ const cardStudentClassVariantStyles: Record<
       labelBg: 'luca-bg-neutral-400',
       labelText: 'luca-text-white',
     },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-primary-600',
-      labelText: 'luca-text-white',
-    },
   },
   neutral: {
     default: {
@@ -239,12 +232,6 @@ const cardStudentClassVariantStyles: Record<
       bg: 'luca-bg-neutral-50',
       border: 'luca-border-neutral-200',
       labelBg: 'luca-bg-neutral-400',
-      labelText: 'luca-text-white',
-    },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-neutral-700',
       labelText: 'luca-text-white',
     },
   },
@@ -267,12 +254,6 @@ const cardStudentClassVariantStyles: Record<
       labelBg: 'luca-bg-neutral-400',
       labelText: 'luca-text-white',
     },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-accent-600',
-      labelText: 'luca-text-white',
-    },
   },
   success: {
     default: {
@@ -291,12 +272,6 @@ const cardStudentClassVariantStyles: Record<
       bg: 'luca-bg-neutral-50',
       border: 'luca-border-neutral-200',
       labelBg: 'luca-bg-neutral-400',
-      labelText: 'luca-text-white',
-    },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-success-600',
       labelText: 'luca-text-white',
     },
   },
@@ -319,12 +294,6 @@ const cardStudentClassVariantStyles: Record<
       labelBg: 'luca-bg-neutral-400',
       labelText: 'luca-text-white',
     },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-warning-600',
-      labelText: 'luca-text-white',
-    },
   },
   danger: {
     default: {
@@ -343,12 +312,6 @@ const cardStudentClassVariantStyles: Record<
       bg: 'luca-bg-neutral-50',
       border: 'luca-border-neutral-200',
       labelBg: 'luca-bg-neutral-400',
-      labelText: 'luca-text-white',
-    },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-danger-600',
       labelText: 'luca-text-white',
     },
   },
@@ -371,12 +334,6 @@ const cardStudentClassVariantStyles: Record<
       labelBg: 'luca-bg-neutral-400',
       labelText: 'luca-text-white',
     },
-    empty: {
-      bg: 'luca-bg-white',
-      border: 'luca-border-transparent',
-      labelBg: 'luca-bg-info-600',
-      labelText: 'luca-text-white',
-    },
   },
 };
 
@@ -392,6 +349,10 @@ const missionStatusStyles: Record<MissionStatusType, { iconBg: string; iconColor
   pending: {
     iconBg: 'luca-bg-danger-500',
     iconColor: 'luca-text-white',
+  },
+  empty: {
+    iconBg: '',
+    iconColor: '',
   },
 };
 
@@ -435,7 +396,7 @@ export const CardStudentClass = React.forwardRef<HTMLDivElement, CardStudentClas
       subjectIcon,
       classNameLabel,
       missionStatuses = [],
-      averageScore,
+      averageScore = 0,
       maxScore = 10,
       averageLabel = 'Promedio',
       clickable = false,
@@ -447,63 +408,20 @@ export const CardStudentClass = React.forwardRef<HTMLDivElement, CardStudentClas
     ref
   ) => {
     const isDisabled = state === 'disabled';
-    const isEmpty = state === 'empty';
     const isHover = state === 'hover';
     const styles = cardStudentClassVariantStyles[variant][state];
     const sizeStyles = cardStudentClassSizeStyles[size];
+
+    const isAverageZero =
+      averageScore <= 0 &&
+      missionStatuses.length === 1 &&
+      missionStatuses.some((status) => status.type === 'empty');
 
     const handleClick = () => {
       if (!isDisabled && clickable && onClick) {
         onClick();
       }
     };
-
-    if (isEmpty) {
-      return (
-        <div
-          ref={ref}
-          onClick={handleClick}
-          className={cn(
-            cardStudentClassBaseStyles,
-            sizeStyles.padding,
-            styles.bg,
-            styles.border,
-            isDisabled && 'luca-opacity-50 luca-cursor-not-allowed',
-            clickable && !isDisabled && 'luca-cursor-pointer',
-            'luca-items-center luca-justify-center luca-min-h-[280px]',
-            className
-          )}
-          {...props}
-        >
-          <div className="luca-flex luca-flex-col luca-items-center luca-gap-4 luca-w-full">
-            <div className="luca-flex luca-gap-2 luca-items-center luca-w-full">
-              {subjectIcon && (
-                <div className={cn('luca-shrink-0 luca-overflow-hidden', sizeStyles.iconSize)}>
-                  {subjectIcon}
-                </div>
-              )}
-              {classNameLabel && (
-                <div
-                  className={cn(
-                    'luca-flex luca-items-center luca-justify-start luca-rounded-lg luca-font-semibold luca-whitespace-nowrap luca-w-full',
-                    sizeStyles.labelPadding,
-                    sizeStyles.labelText,
-                    styles.labelBg,
-                    styles.labelText
-                  )}
-                >
-                  {classNameLabel}
-                </div>
-              )}
-            </div>
-            <EmptyStateIcon width={100} height={100} />
-            <p className="luca-text-xs luca-text-neutral-400 luca-text-center luca-max-w-[240px]">
-              No hay datos de misiones para mostrar
-            </p>
-          </div>
-        </div>
-      );
-    }
 
     return (
       <div
@@ -565,14 +483,16 @@ export const CardStudentClass = React.forwardRef<HTMLDivElement, CardStudentClas
                     key={index}
                     className="luca-flex luca-gap-2 luca-items-center luca-w-full luca-min-w-0"
                   >
-                    <div
-                      className={cn(
-                        'luca-flex luca-shrink-0 luca-items-center luca-justify-center luca-rounded-full luca-w-8 luca-h-8',
-                        statusStyle.iconBg
-                      )}
-                    >
-                      <div className={cn(statusStyle.iconColor)}>{icon}</div>
-                    </div>
+                    {icon && status.type !== 'empty' && (
+                      <div
+                        className={cn(
+                          'luca-flex luca-shrink-0 luca-items-center luca-justify-center luca-rounded-full luca-w-8 luca-h-8',
+                          statusStyle.iconBg
+                        )}
+                      >
+                        <div className={cn(statusStyle.iconColor)}>{icon}</div>
+                      </div>
+                    )}
                     <p
                       className={cn(
                         'luca-font-medium luca-text-neutral-800 luca-truncate',
@@ -607,10 +527,12 @@ export const CardStudentClass = React.forwardRef<HTMLDivElement, CardStudentClas
                 className={cn(
                   'luca-font-semibold',
                   sizeStyles.averageValueText,
-                  getAverageScoreColor(averageScore, maxScore)
+                  !isAverageZero && getAverageScoreColor(averageScore, maxScore),
+                  isAverageZero &&
+                    'luca-bg-neutral-100 luca-p-1 !luca-leading-none luca-w-7 luca-h-7 luca-flex luca-items-center luca-justify-center luca-rounded-lg'
                 )}
               >
-                {averageScore}
+                {isAverageZero ? '-' : averageScore}
               </span>
               <span
                 className={cn(
