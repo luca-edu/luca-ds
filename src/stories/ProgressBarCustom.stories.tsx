@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ProgressBar } from '../components/ProgressBar';
+import { ProgressBarCustom } from '../components/ProgressBarCustom';
 import { Button } from '../components/Button';
 
 const meta = {
-  title: 'Components/ProgressBar',
-  component: ProgressBar,
+  title: 'Components/ProgressBarCustom',
+  component: ProgressBarCustom,
   parameters: {
     layout: 'padded',
     docs: {
       description: {
         component:
-          'A flexible progress bar component with multiple variants, sizes, and customization options. Supports all tailwind color variants and responsive sizing.',
+          'A custom progress bar component with enhanced visual effects, multiple variants, sizes, and customization options. Features custom border effects and shadow styling.',
       },
     },
   },
@@ -88,8 +88,15 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
+    showBorder: {
+      control: 'boolean',
+      description: 'Show border/outline effect',
+      table: {
+        defaultValue: { summary: 'true' },
+      },
+    },
   },
-} satisfies Meta<typeof ProgressBar>;
+} satisfies Meta<typeof ProgressBarCustom>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -101,6 +108,7 @@ export const Default: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
 };
 
@@ -111,30 +119,31 @@ export const AllSizes: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6">
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Extra Small (XS)</h3>
-        <ProgressBar value={45} size="xs" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={45} size="xs" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Small (SM)</h3>
-        <ProgressBar value={45} size="sm" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={45} size="sm" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
           Medium (MD) - Default
         </h3>
-        <ProgressBar value={60} size="md" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={60} size="md" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Large (LG)</h3>
-        <ProgressBar value={75} size="lg" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={75} size="lg" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Extra Large (XL)</h3>
-        <ProgressBar value={85} size="xl" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={85} size="xl" showLabel labelPosition="outside" />
       </div>
     </div>
   ),
@@ -147,36 +156,37 @@ export const AllVariants: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6">
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Primary</h3>
-        <ProgressBar value={60} variant="primary" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={60} variant="primary" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Neutral</h3>
-        <ProgressBar value={60} variant="neutral" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={60} variant="neutral" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Accent</h3>
-        <ProgressBar value={60} variant="accent" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={60} variant="accent" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Success</h3>
-        <ProgressBar value={100} variant="success" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={100} variant="success" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Warning</h3>
-        <ProgressBar value={50} variant="warning" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={50} variant="warning" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Danger</h3>
-        <ProgressBar value={25} variant="danger" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={25} variant="danger" showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Info</h3>
-        <ProgressBar value={80} variant="info" showLabel labelPosition="outside" />
+        <ProgressBarCustom value={80} variant="info" showLabel labelPosition="outside" />
       </div>
     </div>
   ),
@@ -189,12 +199,13 @@ export const States: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6">
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Default</h3>
-        <ProgressBar
+        <ProgressBarCustom
           value={70}
           variant="primary"
           state="default"
@@ -204,17 +215,72 @@ export const States: Story = {
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Hover</h3>
-        <ProgressBar value={70} variant="primary" state="hover" showLabel labelPosition="outside" />
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          state="hover"
+          showLabel
+          labelPosition="outside"
+        />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Disabled</h3>
-        <ProgressBar
+        <ProgressBarCustom
           value={70}
           variant="primary"
           state="disabled"
           showLabel
           labelPosition="outside"
         />
+      </div>
+    </div>
+  ),
+};
+
+// Border variations
+export const BorderVariations: Story = {
+  args: {
+    value: 70,
+    variant: 'primary',
+    size: 'md',
+    state: 'default',
+    showBorder: true,
+  },
+  render: () => (
+    <div className="luca-flex luca-flex-col luca-gap-6">
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+          With Border (Default)
+        </h3>
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          showBorder={true}
+          showLabel
+          labelPosition="outside"
+        />
+      </div>
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Without Border</h3>
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          showBorder={false}
+          showLabel
+          labelPosition="outside"
+        />
+      </div>
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+          All Variants with Border
+        </h3>
+        <div className="luca-flex luca-flex-col luca-gap-3">
+          <ProgressBarCustom value={60} variant="primary" showBorder={true} />
+          <ProgressBarCustom value={60} variant="success" showBorder={true} />
+          <ProgressBarCustom value={60} variant="warning" showBorder={true} />
+          <ProgressBarCustom value={60} variant="danger" showBorder={true} />
+          <ProgressBarCustom value={60} variant="info" showBorder={true} />
+        </div>
       </div>
     </div>
   ),
@@ -227,24 +293,25 @@ export const LabelPositions: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6">
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Inside Label</h3>
-        <ProgressBar value={70} showLabel labelPosition="inside" size="lg" />
+        <ProgressBarCustom value={70} showLabel labelPosition="inside" size="lg" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Outside Label</h3>
-        <ProgressBar value={70} showLabel labelPosition="outside" />
+        <ProgressBarCustom value={70} showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Top Label</h3>
-        <ProgressBar value={70} showLabel labelPosition="top" />
+        <ProgressBarCustom value={70} showLabel labelPosition="top" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Custom Label</h3>
-        <ProgressBar value={70} label="7 of 10 completed" labelPosition="top" />
+        <ProgressBarCustom value={70} label="7 of 10 completed" labelPosition="top" />
       </div>
     </div>
   ),
@@ -257,18 +324,19 @@ export const Striped: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6">
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Striped (Static)</h3>
-        <ProgressBar value={60} variant="primary" striped showLabel labelPosition="outside" />
+        <ProgressBarCustom value={60} variant="primary" striped showLabel labelPosition="outside" />
       </div>
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
           Striped (Animated)
         </h3>
-        <ProgressBar
+        <ProgressBarCustom
           value={60}
           variant="success"
           striped
@@ -282,7 +350,7 @@ export const Striped: Story = {
           All Variants with Animation
         </h3>
         <div className="luca-flex luca-flex-col luca-gap-3">
-          <ProgressBar
+          <ProgressBarCustom
             value={45}
             variant="primary"
             striped
@@ -290,7 +358,7 @@ export const Striped: Story = {
             showLabel
             labelPosition="outside"
           />
-          <ProgressBar
+          <ProgressBarCustom
             value={60}
             variant="success"
             striped
@@ -298,7 +366,7 @@ export const Striped: Story = {
             showLabel
             labelPosition="outside"
           />
-          <ProgressBar
+          <ProgressBarCustom
             value={50}
             variant="warning"
             striped
@@ -306,7 +374,7 @@ export const Striped: Story = {
             showLabel
             labelPosition="outside"
           />
-          <ProgressBar
+          <ProgressBarCustom
             value={30}
             variant="danger"
             striped
@@ -314,7 +382,7 @@ export const Striped: Story = {
             showLabel
             labelPosition="outside"
           />
-          <ProgressBar
+          <ProgressBarCustom
             value={75}
             variant="info"
             striped
@@ -348,7 +416,13 @@ export const Interactive: Story = {
 
     return (
       <div className="luca-flex luca-flex-col luca-gap-6">
-        <ProgressBar value={progress} variant="primary" showLabel labelPosition="top" size="lg" />
+        <ProgressBarCustom
+          value={progress}
+          variant="primary"
+          showLabel
+          labelPosition="top"
+          size="lg"
+        />
         <div className="luca-flex luca-gap-3">
           <Button onClick={handleDecrease} disabled={progress === 0}>
             Decrease
@@ -372,6 +446,7 @@ export const AutoProgress: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => {
     const [progress, setProgress] = useState(0);
@@ -409,7 +484,7 @@ export const AutoProgress: Story = {
 
     return (
       <div className="luca-flex luca-flex-col luca-gap-6">
-        <ProgressBar
+        <ProgressBarCustom
           value={progress}
           variant={progress === 100 ? 'success' : 'primary'}
           showLabel
@@ -441,6 +516,7 @@ export const MultipleProgressBars: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6 luca-max-w-2xl">
@@ -450,7 +526,7 @@ export const MultipleProgressBars: Story = {
 
       <div className="luca-space-y-4">
         <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
-          <ProgressBar
+          <ProgressBarCustom
             value={100}
             variant="success"
             label="Mathematics - Completed"
@@ -460,7 +536,7 @@ export const MultipleProgressBars: Story = {
         </div>
 
         <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
-          <ProgressBar
+          <ProgressBarCustom
             value={75}
             variant="primary"
             label="Science - 15 of 20 lessons"
@@ -470,7 +546,7 @@ export const MultipleProgressBars: Story = {
         </div>
 
         <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
-          <ProgressBar
+          <ProgressBarCustom
             value={45}
             variant="warning"
             label="History - 9 of 20 lessons"
@@ -480,7 +556,7 @@ export const MultipleProgressBars: Story = {
         </div>
 
         <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
-          <ProgressBar
+          <ProgressBarCustom
             value={15}
             variant="danger"
             label="Literature - Behind schedule"
@@ -490,7 +566,7 @@ export const MultipleProgressBars: Story = {
         </div>
 
         <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
-          <ProgressBar
+          <ProgressBarCustom
             value={90}
             variant="info"
             label="Art - 18 of 20 lessons"
@@ -510,6 +586,7 @@ export const FileUpload: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => {
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -540,7 +617,7 @@ export const FileUpload: Story = {
 
           {uploadProgress > 0 && (
             <div className="luca-mb-4">
-              <ProgressBar
+              <ProgressBarCustom
                 value={uploadProgress}
                 variant={uploadProgress === 100 ? 'success' : 'primary'}
                 showLabel
@@ -567,18 +644,49 @@ export const Responsive: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-p-8 luca-w-full luca-max-w-2xl luca-border luca-border-neutral-200 luca-rounded-lg luca-bg-neutral-50">
       <p className="luca-text-sm luca-text-neutral-600 luca-mb-4">
-        Redimensiona la ventana para ver el comportamiento responsive del progress bar.
+        Redimensiona la ventana para ver el comportamiento responsive del progress bar custom.
       </p>
       <div className="luca-flex luca-flex-col luca-gap-4">
-        <ProgressBar value={70} variant="primary" size="xs" showLabel labelPosition="outside" />
-        <ProgressBar value={70} variant="primary" size="sm" showLabel labelPosition="outside" />
-        <ProgressBar value={70} variant="primary" size="md" showLabel labelPosition="outside" />
-        <ProgressBar value={70} variant="primary" size="lg" showLabel labelPosition="outside" />
-        <ProgressBar value={70} variant="primary" size="xl" showLabel labelPosition="outside" />
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          size="xs"
+          showLabel
+          labelPosition="outside"
+        />
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          size="sm"
+          showLabel
+          labelPosition="outside"
+        />
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          size="md"
+          showLabel
+          labelPosition="outside"
+        />
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          size="lg"
+          showLabel
+          labelPosition="outside"
+        />
+        <ProgressBarCustom
+          value={70}
+          variant="primary"
+          size="xl"
+          showLabel
+          labelPosition="outside"
+        />
       </div>
     </div>
   ),
@@ -591,6 +699,7 @@ export const WithCustomStyles: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-6">
@@ -598,7 +707,7 @@ export const WithCustomStyles: Story = {
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
           Custom Track Color
         </h3>
-        <ProgressBar
+        <ProgressBarCustom
           value={60}
           showLabel
           labelPosition="outside"
@@ -609,7 +718,7 @@ export const WithCustomStyles: Story = {
 
       <div className="luca-flex luca-flex-col luca-gap-2">
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">Custom Gradient</h3>
-        <ProgressBar
+        <ProgressBarCustom
           value={75}
           showLabel
           labelPosition="outside"
@@ -621,7 +730,7 @@ export const WithCustomStyles: Story = {
         <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
           Custom Height via Styles
         </h3>
-        <ProgressBar
+        <ProgressBarCustom
           value={50}
           showLabel
           labelPosition="outside"
@@ -640,6 +749,7 @@ export const AllVariantsWithStates: Story = {
     variant: 'primary',
     size: 'md',
     state: 'default',
+    showBorder: true,
   },
   render: () => (
     <div className="luca-flex luca-flex-col luca-gap-8">
@@ -652,7 +762,7 @@ export const AllVariantsWithStates: Story = {
             <div className="luca-flex luca-flex-col luca-gap-3">
               <div className="luca-flex luca-flex-col luca-gap-2">
                 <span className="luca-text-xs luca-text-neutral-600">Default</span>
-                <ProgressBar
+                <ProgressBarCustom
                   value={70}
                   variant={variant}
                   state="default"
@@ -662,7 +772,7 @@ export const AllVariantsWithStates: Story = {
               </div>
               <div className="luca-flex luca-flex-col luca-gap-2">
                 <span className="luca-text-xs luca-text-neutral-600">Hover</span>
-                <ProgressBar
+                <ProgressBarCustom
                   value={70}
                   variant={variant}
                   state="hover"
@@ -672,7 +782,7 @@ export const AllVariantsWithStates: Story = {
               </div>
               <div className="luca-flex luca-flex-col luca-gap-2">
                 <span className="luca-text-xs luca-text-neutral-600">Disabled</span>
-                <ProgressBar
+                <ProgressBarCustom
                   value={70}
                   variant={variant}
                   state="disabled"
@@ -684,6 +794,43 @@ export const AllVariantsWithStates: Story = {
           </div>
         )
       )}
+    </div>
+  ),
+};
+
+// Comparison with regular ProgressBar
+export const Comparison: Story = {
+  args: {
+    value: 70,
+    variant: 'primary',
+    size: 'md',
+    state: 'default',
+    showBorder: true,
+  },
+  render: () => (
+    <div className="luca-flex luca-flex-col luca-gap-6">
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+          ProgressBar (Standard)
+        </h3>
+        <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
+          <p className="luca-text-xs luca-text-neutral-600 luca-mb-2">
+            Standard progress bar without custom border effects
+          </p>
+          {/* Note: This would require importing ProgressBar if needed for comparison */}
+        </div>
+      </div>
+      <div className="luca-flex luca-flex-col luca-gap-2">
+        <h3 className="luca-text-sm luca-font-semibold luca-text-neutral-700">
+          ProgressBarCustom (Enhanced)
+        </h3>
+        <div className="luca-p-4 luca-bg-neutral-50 luca-rounded-lg">
+          <p className="luca-text-xs luca-text-neutral-600 luca-mb-2">
+            Custom progress bar with enhanced border effects and styling
+          </p>
+          <ProgressBarCustom value={70} variant="primary" showLabel labelPosition="outside" />
+        </div>
+      </div>
     </div>
   ),
 };

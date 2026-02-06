@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../utils/cn';
 
-export type ProgressBarVariant =
+export type ProgressBarCustomVariant =
   | 'primary'
   | 'neutral'
   | 'accent'
@@ -10,11 +10,11 @@ export type ProgressBarVariant =
   | 'danger'
   | 'info';
 
-export type ProgressBarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type ProgressBarCustomSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export type ProgressBarState = 'default' | 'hover' | 'disabled';
+export type ProgressBarCustomState = 'default' | 'hover' | 'disabled';
 
-export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ProgressBarCustomProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Progress value (0-100)
    */
@@ -28,17 +28,17 @@ export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
    * Visual variant of the progress bar (uses tailwind colors)
    * @default "primary"
    */
-  variant?: ProgressBarVariant;
+  variant?: ProgressBarCustomVariant;
   /**
    * Size of the progress bar (responsive)
    * @default "md"
    */
-  size?: ProgressBarSize;
+  size?: ProgressBarCustomSize;
   /**
    * State of the progress bar
    * @default "default"
    */
-  state?: ProgressBarState;
+  state?: ProgressBarCustomState;
   /**
    * Show percentage label
    * @default false
@@ -64,6 +64,11 @@ export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   animated?: boolean;
   /**
+   * Show border/outline effect
+   * @default true
+   */
+  showBorder?: boolean;
+  /**
    * Custom background color for the track
    */
   trackClassName?: string;
@@ -77,140 +82,213 @@ export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
   customStyles?: React.CSSProperties;
 }
 
-const progressBarSizeStyles: Record<
-  ProgressBarSize,
+const progressBarCustomSizeStyles: Record<
+  ProgressBarCustomSize,
   {
     track: string;
     label: string;
+    borderWidth: string;
+    heightOuter: string;
+    heightFill: string;
   }
 > = {
   xs: {
-    track: 'luca-h-1',
+    track: 'luca-h-6',
     label: 'luca-text-[10px] luca-leading-[14px]',
+    borderWidth:
+      'luca-border-[1px] luca-py-[3px] luca-px-4 luca-shadow-[0_4px_0.2px_rgba(0,0,0,0.10)]',
+    heightOuter: 'luca-w-[calc(100%-32px)] luca-h-[16px]',
+    heightFill: 'luca-h-4',
   },
   sm: {
-    track: 'luca-h-2',
+    track: 'luca-h-8',
     label: 'luca-text-xs luca-leading-[16px]',
+    borderWidth:
+      'luca-border-[2px] luca-py-[4px] luca-px-4 luca-shadow-[0_4px_0.2px_rgba(0,0,0,0.10)]',
+    heightOuter: 'luca-w-[calc(100%-32px)] luca-h-[20px]',
+    heightFill: 'luca-h-5',
   },
   md: {
-    track: 'luca-h-3',
+    track: 'luca-h-10',
     label: 'luca-text-sm luca-leading-[20px]',
+    borderWidth:
+      'luca-border-[3px] luca-py-[5px] luca-px-4 luca-shadow-[0_4px_0.2px_rgba(0,0,0,0.10)]',
+    heightOuter: 'luca-w-[calc(100%-32px)] luca-h-[24px]',
+    heightFill: 'luca-h-6',
   },
   lg: {
-    track: 'luca-h-4',
+    track: 'luca-h-12',
     label: 'luca-text-base luca-leading-[24px]',
+    borderWidth:
+      'luca-border-[4px] luca-py-[6px] luca-px-4 luca-shadow-[0_5px_0.2px_rgba(0,0,0,0.10)]',
+    heightOuter: 'luca-w-[calc(100%-32px)] luca-h-[28px]',
+    heightFill: 'luca-h-7',
   },
   xl: {
-    track: 'luca-h-5',
+    track: 'luca-h-14',
     label: 'luca-text-lg luca-leading-[28px]',
+    borderWidth:
+      'luca-border-[5px] luca-py-[7px] luca-px-4 luca-shadow-[0_6px_0.2px_rgba(0,0,0,0.10)]',
+    heightOuter: 'luca-w-[calc(100%-32px)] luca-h-[32px]',
+    heightFill: 'luca-h-8',
   },
 };
 
-const progressBarVariantStyles: Record<
-  ProgressBarVariant,
-  Record<ProgressBarState, { track: string; fill: string }>
+const progressBarCustomVariantStyles: Record<
+  ProgressBarCustomVariant,
+  Record<
+    ProgressBarCustomState,
+    {
+      track: string;
+      fill: string;
+      border: string;
+      borderOuter: string;
+    }
+  >
 > = {
   primary: {
     default: {
       track: 'luca-bg-primary-100',
       fill: 'luca-bg-primary-600',
+      border: 'luca-border-primary-400',
+      borderOuter: 'luca-bg-primary-200',
     },
     hover: {
       track: 'luca-bg-primary-100',
       fill: 'luca-bg-primary-700',
+      border: 'luca-border-primary-500',
+      borderOuter: 'luca-bg-primary-300',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-100',
     },
   },
   neutral: {
     default: {
       track: 'luca-bg-neutral-100',
       fill: 'luca-bg-neutral-600',
+      border: 'luca-border-neutral-400',
+      borderOuter: 'luca-bg-neutral-200',
     },
     hover: {
       track: 'luca-bg-neutral-100',
       fill: 'luca-bg-neutral-700',
+      border: 'luca-border-neutral-500',
+      borderOuter: 'luca-bg-neutral-200',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-200',
     },
   },
   accent: {
     default: {
       track: 'luca-bg-accent-100',
       fill: 'luca-bg-accent-600',
+      border: 'luca-border-accent-400',
+      borderOuter: 'luca-bg-accent-200',
     },
     hover: {
       track: 'luca-bg-accent-100',
       fill: 'luca-bg-accent-700',
+      border: 'luca-border-accent-500',
+      borderOuter: 'luca-bg-accent-200',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-200',
     },
   },
   success: {
     default: {
       track: 'luca-bg-success-100',
       fill: 'luca-bg-success-600',
+      border: 'luca-border-success-400',
+      borderOuter: 'luca-bg-success-200',
     },
     hover: {
       track: 'luca-bg-success-100',
       fill: 'luca-bg-success-700',
+      border: 'luca-border-success-500',
+      borderOuter: 'luca-bg-success-200',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-200',
     },
   },
   warning: {
     default: {
       track: 'luca-bg-warning-100',
       fill: 'luca-bg-warning-600',
+      border: 'luca-border-warning-400',
+      borderOuter: 'luca-bg-warning-200',
     },
     hover: {
       track: 'luca-bg-warning-100',
       fill: 'luca-bg-warning-700',
+      border: 'luca-border-warning-500',
+      borderOuter: 'luca-bg-warning-200',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-200',
     },
   },
   danger: {
     default: {
       track: 'luca-bg-danger-100',
       fill: 'luca-bg-danger-600',
+      border: 'luca-border-danger-400',
+      borderOuter: 'luca-bg-danger-200',
     },
     hover: {
       track: 'luca-bg-danger-100',
       fill: 'luca-bg-danger-700',
+      border: 'luca-border-danger-500',
+      borderOuter: 'luca-bg-danger-200',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-200',
     },
   },
   info: {
     default: {
       track: 'luca-bg-info-100',
       fill: 'luca-bg-info-600',
+      border: 'luca-border-info-400',
+      borderOuter: 'luca-bg-info-200',
     },
     hover: {
       track: 'luca-bg-info-100',
       fill: 'luca-bg-info-700',
+      border: 'luca-border-info-500',
+      borderOuter: 'luca-bg-info-200',
     },
     disabled: {
       track: 'luca-bg-neutral-200',
       fill: 'luca-bg-neutral-400',
+      border: 'luca-border-neutral-300',
+      borderOuter: 'luca-bg-neutral-200',
     },
   },
 };
 
-export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
+export const ProgressBarCustom = React.forwardRef<HTMLDivElement, ProgressBarCustomProps>(
   (
     {
       value,
@@ -223,6 +301,7 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
       labelPosition = 'inside',
       striped = false,
       animated = false,
+      showBorder = true,
       trackClassName,
       barClassName,
       customStyles,
@@ -238,8 +317,8 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
 
     const isDisabled = state === 'disabled';
     const isHover = state === 'hover';
-    const styles = progressBarVariantStyles[variant][state];
-    const sizeStyles = progressBarSizeStyles[size];
+    const styles = progressBarCustomVariantStyles[variant][state];
+    const sizeStyles = progressBarCustomSizeStyles[size];
 
     const showInsideLabel =
       labelPosition === 'inside' && displayLabel && size !== 'xs' && size !== 'sm';
@@ -268,14 +347,15 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
 
         {/* Progress Track and Bar Container */}
         <div className="luca-flex luca-items-center luca-gap-3">
-          {/* Track */}
+          {/* Track with custom border effect */}
           <div
             className={cn(
               'luca-relative luca-w-full luca-overflow-hidden luca-rounded-full',
-              'luca-shadow-[0px_0px_1px_0px_rgba(0,0,0,0.05)]',
               sizeStyles.track,
               styles.track,
               isDisabled && 'luca-opacity-50',
+              showBorder && styles.border,
+              showBorder && sizeStyles.borderWidth,
               trackClassName
             )}
             role="progressbar"
@@ -285,11 +365,24 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
             aria-label={displayLabel || `${percentage}% complete`}
             aria-disabled={isDisabled}
           >
+            {/* Outer border effect */}
+            {showBorder && (
+              <div
+                className={cn(
+                  'luca-absolute luca-inset-0 luca-rounded-full luca-top-1/2 luca-left-1/2 luca-translate-x-[-50%] luca-translate-y-[-50%] luca-z-10',
+                  styles.borderOuter,
+                  sizeStyles.heightOuter,
+                  'luca-pointer-events-none'
+                )}
+              />
+            )}
+
             {/* Filled Bar */}
             <div
               className={cn(
-                'luca-h-full luca-rounded-full luca-transition-all luca-duration-500 luca-ease-out',
+                'luca-rounded-full luca-transition-all luca-duration-500 luca-ease-out luca-z-10 luca-relative',
                 styles.fill,
+                sizeStyles.heightFill,
                 striped && 'luca-bg-[length:1rem_1rem]',
                 striped &&
                   'luca-bg-gradient-to-r luca-from-transparent luca-via-white/20 luca-to-transparent',
@@ -336,4 +429,4 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
   }
 );
 
-ProgressBar.displayName = 'ProgressBar';
+ProgressBarCustom.displayName = 'ProgressBarCustom';

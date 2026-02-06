@@ -178,6 +178,7 @@ export type {
   AvatarSize,
   AvatarState,
   AvatarType,
+  AvatarListImage,
 } from './components/Avatar';
 
 export { TextButton } from './components/TextButton';
@@ -201,7 +202,16 @@ export type {
   ProgressBarProps,
   ProgressBarVariant,
   ProgressBarSize,
+  ProgressBarState,
 } from './components/ProgressBar';
+
+export { ProgressBarCustom } from './components/ProgressBarCustom';
+export type {
+  ProgressBarCustomProps,
+  ProgressBarCustomVariant,
+  ProgressBarCustomSize,
+  ProgressBarCustomState,
+} from './components/ProgressBarCustom';
 
 export { Steps } from './components/Steps';
 export type { StepsProps, Step } from './components/Steps';
