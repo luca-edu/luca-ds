@@ -49,7 +49,8 @@ export interface PasswordFormLabels {
   back: string;
 }
 
-export interface ProfileDrawerProps {
+/** Props shared across all ProfileDrawer configurations. */
+interface ProfileDrawerBaseProps {
   /** Whether the drawer is visible. */
   open: boolean;
 
@@ -67,12 +68,6 @@ export interface ProfileDrawerProps {
    * Overridden automatically when the built-in password form is active (back arrow).
    */
   headerLeft?: React.ReactNode;
-
-  /**
-   * Avatar or media element.
-   * Positioned absolutely above the profile-info card to create the overlap effect.
-   */
-  avatar?: React.ReactNode;
 
   /**
    * Content rendered inside the profile info card (name, email, school, etc.).
@@ -150,12 +145,47 @@ export interface ProfileDrawerProps {
   bodyClassName?: string;
 }
 
+/**
+ * Avatar as a fully custom ReactNode — the consumer owns all rendering.
+ * Mutually exclusive with `avatarSrc`.
+ */
+interface ProfileDrawerCustomAvatar {
+  /** Fully custom avatar element. Overrides the built-in image renderer. */
+  avatar: React.ReactNode;
+  avatarSrc?: never;
+  avatarAlt?: never;
+}
+
+/**
+ * Avatar via image source — ProfileDrawer handles the circular container,
+ * sizing, object-fit, and broken-image fallback internally.
+ * Mutually exclusive with `avatar`.
+ */
+interface ProfileDrawerSrcAvatar {
+  avatar?: never;
+  /**
+   * Image source (URL or imported asset) for the profile avatar.
+   * Rendered inside a circular container sized by an internal CSS variable.
+   */
+  avatarSrc?: string;
+  /**
+   * Alt text for the avatar image. Defaults to `""` (decorative).
+   * Set explicitly when the avatar conveys meaning beyond the displayed name,
+   * e.g. `"Photo of {name}"`.
+   */
+  avatarAlt?: string;
+}
+
+export type ProfileDrawerProps = ProfileDrawerBaseProps &
+  (ProfileDrawerCustomAvatar | ProfileDrawerSrcAvatar);
+
 /* ------------------------------------------------------------------ */
 /*  Constants                                                          */
 /* ------------------------------------------------------------------ */
 
 const DEFAULT_WIDTH = 700;
 const MIN_PASSWORD_LENGTH = 6;
+const DEFAULT_AVATAR_SIZE = '200px';
 
 const DEFAULT_LABELS: PasswordFormLabels = {
   action: 'Cambiar contraseña',
@@ -220,6 +250,24 @@ const XMarkSvg = (
   </svg>
 );
 
+/** heroicons v2: user (24/outline) — fallback for broken avatar images */
+const UserFallbackSvg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="luca-h-12 luca-w-12 luca-text-neutral-400"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+    />
+  </svg>
+);
+
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
@@ -239,6 +287,8 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
       title,
       headerLeft,
       avatar,
+      avatarSrc,
+      avatarAlt,
       profileInfo,
       sections,
       footer,
@@ -258,10 +308,48 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
     },
     ref
   ) => {
+    if (process.env.NODE_ENV !== 'production' && avatar && avatarSrc) {
+      console.warn(
+        'ProfileDrawer: Both `avatar` and `avatarSrc` were provided. ' +
+          '`avatarSrc` will be ignored. Use one or the other.'
+      );
+    }
+
     const labels = { ...DEFAULT_LABELS, ...labelOverrides };
     const hasPasswordFeature = !!onPasswordSubmit;
 
-    /* ---- Internal password state ---- */
+    const [imgError, setImgError] = useState(false);
+
+    useEffect(() => {
+      setImgError(false);
+    }, [avatarSrc]);
+
+    const resolvedAvatar =
+      avatar ??
+      (avatarSrc ? (
+        <div
+          className="luca-overflow-hidden luca-rounded-full luca-bg-neutral-100"
+          style={{
+            width: 'var(--luca-profile-avatar-size)',
+            height: 'var(--luca-profile-avatar-size)',
+          }}
+        >
+          {imgError ? (
+            <div className="luca-flex luca-h-full luca-w-full luca-items-center luca-justify-center luca-bg-neutral-200">
+              {UserFallbackSvg}
+            </div>
+          ) : (
+            <img
+              src={avatarSrc}
+              alt={avatarAlt ?? ''}
+              className="luca-h-full luca-w-full luca-object-cover"
+              onError={() => setImgError(true)}
+            />
+          )}
+        </div>
+      ) : null);
+
+    const hasAvatar = !!resolvedAvatar;
 
     const [pwView, setPwView] = useState(false);
     const [pwForm, setPwForm] = useState({
@@ -277,7 +365,6 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
       setPwError('');
     }, []);
 
-    // Reset when the drawer closes
     useEffect(() => {
       if (!open) resetPasswordState();
     }, [open, resetPasswordState]);
@@ -302,14 +389,10 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
       onClose();
     }, [resetPasswordState, onClose]);
 
-    /* ---- Derived view state ---- */
-
     const isPasswordView = hasPasswordFeature && pwView && detailPanel === undefined;
     const isDetailView = detailPanel !== undefined;
     const isMainView = !isPasswordView && !isDetailView;
-    const showProfileCard = isMainView && !!(avatar || profileInfo);
-
-    /* ---- Resolved header ---- */
+    const showProfileCard = isMainView && !!(hasAvatar || profileInfo);
 
     const resolvedTitle = isPasswordView ? labels.title : title;
     const resolvedHeaderLeft = isPasswordView ? (
@@ -330,8 +413,7 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
       headerLeft
     );
 
-    /* ---- Password action row (injected inside the first consumer section) ---- */
-
+    /* Prepended inside the first consumer section when the password feature is active. */
     const passwordActionRow = hasPasswordFeature ? (
       <button
         type="button"
@@ -343,11 +425,8 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
       </button>
     ) : null;
 
-    /* ---- Displayed error (internal validation or external prop) ---- */
-
+    /* Internal validation error takes precedence over the external `passwordError` prop. */
     const displayedError = pwError || passwordError;
-
-    /* ---- Password form panel ---- */
 
     const passwordPanel = (
       <div className="luca-flex luca-flex-col luca-gap-6">
@@ -416,8 +495,6 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
       </div>
     );
 
-    /* ---- Render ---- */
-
     return (
       <Drawer
         ref={ref}
@@ -437,7 +514,6 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
             className
           )}
         >
-          {/* ── Header ─────────────────────────────────────────── */}
           <div
             className={cn(
               'luca-flex luca-items-center luca-justify-between',
@@ -472,7 +548,6 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
             </button>
           </div>
 
-          {/* ── Scrollable body ────────────────────────────────── */}
           <div
             className={cn(
               'luca-flex-1 luca-min-h-0',
@@ -483,16 +558,13 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
           >
             <div className="luca-flex luca-flex-col luca-gap-4">
               {isPasswordView ? (
-                /* ── Built-in password form ────────────────────── */
                 <section className="luca-rounded-2xl luca-bg-white luca-p-6">
                   {passwordPanel}
                 </section>
               ) : isDetailView ? (
-                /* ── External detail panel ─────────────────────── */
                 <section className="luca-rounded-2xl luca-bg-white luca-p-6">{detailPanel}</section>
               ) : (
                 <>
-                  {/* ── Profile card (avatar + info) ──────────── */}
                   {showProfileCard && (
                     <section
                       className={cn(
@@ -500,21 +572,26 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
                         profileCardClassName
                       )}
                     >
-                      {avatar && (
+                      {resolvedAvatar && (
                         <div
                           className={cn(
                             'luca-relative luca-z-10 luca-flex luca-justify-center',
                             avatarClassName
                           )}
+                          style={
+                            {
+                              '--luca-profile-avatar-size': DEFAULT_AVATAR_SIZE,
+                            } as React.CSSProperties
+                          }
                         >
-                          {avatar}
+                          {resolvedAvatar}
                         </div>
                       )}
                       {profileInfo && (
                         <div
                           className={cn(
                             'luca-relative',
-                            avatar ? 'luca--mt-24' : '',
+                            hasAvatar ? 'luca--mt-24' : '',
                             'luca-rounded-2xl luca-border luca-border-neutral-200 luca-bg-white luca-shadow-none',
                             'luca-pt-28 luca-pb-4 luca-px-4'
                           )}
@@ -525,7 +602,6 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
                     </section>
                   )}
 
-                  {/* ── Sections (password row injected into first card) */}
                   {sections?.map((section, index) => (
                     <section
                       key={section.key}
@@ -538,10 +614,8 @@ export const ProfileDrawer = forwardRef<HTMLDivElement, ProfileDrawerProps>(
                     </section>
                   ))}
 
-                  {/* ── Children (escape hatch) ───────────────── */}
                   {children}
 
-                  {/* ── Footer ────────────────────────────────── */}
                   {footer && <div className="luca-shrink-0">{footer}</div>}
                 </>
               )}

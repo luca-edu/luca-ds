@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../utils/cn';
 
@@ -174,9 +167,7 @@ function unlockScroll() {
 /*  Helpers                                                            */
 /* ------------------------------------------------------------------ */
 
-function resolveContainer(
-  getContainer: DrawerProps['getContainer'],
-): HTMLElement | null {
+function resolveContainer(getContainer: DrawerProps['getContainer']): HTMLElement | null {
   if (getContainer === false) return null; // inline
   if (getContainer === undefined) return document.body;
   if (typeof getContainer === 'function') return getContainer();
@@ -220,7 +211,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       bodyStyle,
       footerStyle,
     },
-    ref,
+    ref
   ) => {
     /* ---- mount / visibility state machine ---- */
     const [isMounted, setIsMounted] = useState(false);
@@ -230,7 +221,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const previousFocusRef = useRef<HTMLElement | null>(null);
     const isBodyPortal = getContainer === undefined;
 
-    // Resolve the target container element
     const containerEl = useMemo(() => resolveContainer(getContainer), [getContainer]);
 
     /* ---- scroll lock (body-level only) ---- */
@@ -286,7 +276,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       previousFocusRef.current = document.activeElement as HTMLElement | null;
 
       const focusable = Array.from(
-        panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
+        panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS)
       );
 
       const first = focusable[0];
@@ -314,7 +304,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         if (event.key !== 'Tab' || !panelRef.current) return;
 
         const focusable = Array.from(
-          panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
+          panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS)
         ).filter((el) => !el.hasAttribute('disabled'));
 
         if (focusable.length === 0) {
@@ -340,30 +330,26 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           first.focus();
         }
       },
-      [keyboard, onClose],
+      [keyboard, onClose]
     );
 
-    /* ---- mask click ---- */
     const handleMaskMouseDown = useCallback(() => {
       if (maskClosable) onClose();
     }, [maskClosable, onClose]);
 
-    /* ---- ref merge ---- */
     const mergedRef = useCallback(
       (node: HTMLDivElement | null) => {
         panelRef.current = node;
         if (typeof ref === 'function') ref(node);
         else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
       },
-      [ref],
+      [ref]
     );
 
-    /* ---- computed styles ---- */
     const resolvedWidth = typeof width === 'number' ? `${width}px` : width;
     const offsetPx = `${offset}px`;
 
-    const translateHidden =
-      placement === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+    const translateHidden = placement === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
     const translateVisible = 'translateX(0)';
 
     const panelPositionStyle: React.CSSProperties = useMemo(() => {
@@ -371,9 +357,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         top: offsetPx,
         bottom: offsetPx,
         ...(placement === 'right' ? { right: offsetPx } : { left: offsetPx }),
-        width: offset > 0
-          ? `calc(100% - ${offsetPx})`
-          : '100%',
+        width: offset > 0 ? `calc(100% - ${offsetPx})` : '100%',
         maxWidth: resolvedWidth,
         borderRadius: offset > 0 ? '16px' : 0,
         transform: isAnimating ? translateVisible : translateHidden,
@@ -383,10 +367,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       return base;
     }, [resolvedWidth, isAnimating, translateHidden, style, placement, offsetPx, offset]);
 
-    /* ---- has header? ---- */
     const showHeader = !!(title || extra || closable);
 
-    /* ---- render ---- */
     if (!isMounted) return null;
 
     const defaultCloseIcon = (
@@ -398,35 +380,22 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         stroke="currentColor"
         className="luca-h-6 luca-w-6"
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M6 18 18 6M6 6l12 12"
-        />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>
     );
 
     const content = (
       <div
-        className={cn(
-          isBodyPortal ? 'luca-fixed' : 'luca-absolute',
-          'luca-inset-0',
-          rootClassName,
-        )}
-        style={
-          isDormant
-            ? { zIndex, visibility: 'hidden', pointerEvents: 'none' }
-            : { zIndex }
-        }
+        className={cn(isBodyPortal ? 'luca-fixed' : 'luca-absolute', 'luca-inset-0', rootClassName)}
+        style={isDormant ? { zIndex, visibility: 'hidden', pointerEvents: 'none' } : { zIndex }}
         data-testid="drawer-root"
       >
-        {/* Mask */}
         {mask && (
           <div
             className={cn(
               'luca-absolute luca-inset-0 luca-transition-opacity',
               isAnimating ? 'luca-opacity-100' : 'luca-opacity-0',
-              maskClassName,
+              maskClassName
             )}
             style={{
               backgroundColor: 'rgba(0, 0, 0, 0.45)',
@@ -438,14 +407,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           />
         )}
 
-        {/* Panel */}
         <div
           ref={mergedRef}
           className={cn(
             'luca-absolute luca-flex luca-flex-col luca-overflow-hidden',
             'luca-bg-white luca-shadow-xl',
             'focus:luca-outline-none',
-            className,
+            className
           )}
           style={panelPositionStyle}
           onMouseDown={(e) => e.stopPropagation()}
@@ -456,7 +424,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           tabIndex={-1}
           data-testid="drawer-panel"
         >
-          {/* Header */}
           {showHeader && (
             <div
               className={cn(
@@ -464,7 +431,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 'luca-px-6 luca-py-4',
                 'luca-border-b luca-border-neutral-200',
                 'luca-shrink-0',
-                headerClassName,
+                headerClassName
               )}
               style={headerStyle}
               data-testid="drawer-header"
@@ -487,7 +454,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                       'luca-text-neutral-500',
                       'luca-transition',
                       'hover:luca-bg-neutral-100 hover:luca-text-neutral-700',
-                      'focus-visible:luca-outline-2 focus-visible:luca-outline-offset-2 focus-visible:luca-outline-primary',
+                      'focus-visible:luca-outline-2 focus-visible:luca-outline-offset-2 focus-visible:luca-outline-primary'
                     )}
                     aria-label="Close"
                     data-testid="drawer-close-btn"
@@ -499,12 +466,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             </div>
           )}
 
-          {/* Body */}
           <div
             className={cn(
               'luca-flex-1 luca-min-h-0 luca-overflow-y-auto luca-overflow-x-hidden',
               'luca-px-6 luca-py-4',
-              bodyClassName,
+              bodyClassName
             )}
             style={bodyStyle}
             data-testid="drawer-body"
@@ -512,14 +478,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             {children}
           </div>
 
-          {/* Footer */}
           {footer && (
             <div
               className={cn(
                 'luca-px-6 luca-py-4',
                 'luca-border-t luca-border-neutral-200',
                 'luca-shrink-0',
-                footerClassName,
+                footerClassName
               )}
               style={footerStyle}
               data-testid="drawer-footer"
@@ -531,7 +496,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       </div>
     );
 
-    // Decide where to render
     if (getContainer === false) {
       // Inline — no portal, parent must be relative
       return content;
@@ -539,7 +503,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const target = containerEl ?? document.body;
     return createPortal(content, target);
-  },
+  }
 );
 
 Drawer.displayName = 'Drawer';

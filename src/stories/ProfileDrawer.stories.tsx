@@ -11,27 +11,97 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    open: {
+    /* ---- Core ---- */
+    open: { control: 'boolean', description: 'Whether the drawer is visible.' },
+    onClose: { control: false, description: 'Called when the user requests to close the drawer.' },
+    title: { control: 'text', description: 'Header title (e.g. "Mi cuenta").' },
+    width: { control: 'text', description: 'Drawer width. @default 700' },
+
+    /* ---- Avatar (mutually exclusive branches) ---- */
+    avatar: {
+      control: false,
+      description:
+        'Fully custom avatar element (ReactNode). Mutually exclusive with `avatarSrc`. Use for non-standard avatar layouts.',
+    },
+    avatarSrc: {
+      control: 'text',
+      description:
+        'Image source for the profile avatar (convenience API). Renders a circular container with object-fit, fallback, and CSS-variable sizing internally.',
+    },
+    avatarAlt: {
+      control: 'text',
+      description:
+        'Alt text for the avatar image. Defaults to "" (decorative). Set explicitly when the avatar conveys meaning beyond the displayed name.',
+    },
+
+    /* ---- Slot content ---- */
+    headerLeft: {
+      control: false,
+      description:
+        'Element rendered left of the title. Auto-replaced with a back arrow during the password flow.',
+    },
+    profileInfo: {
+      control: false,
+      description: 'Content inside the profile info card (name, email, school, etc.).',
+    },
+    sections: {
+      control: false,
+      description: 'Array of `ProfileDrawerSection` objects rendered as white rounded cards.',
+    },
+    footer: {
+      control: false,
+      description: 'Footer element after all sections (e.g. version text).',
+    },
+    detailPanel: {
+      control: false,
+      description:
+        'When provided, replaces the main slot-based body. Use for sub-views not covered by the built-in password form.',
+    },
+    children: {
+      control: false,
+      description: 'Escape hatch: render arbitrary children instead of the slot-based layout.',
+    },
+    drawerProps: {
+      control: false,
+      description:
+        'Extra props forwarded to the underlying `<Drawer>` (e.g. `zIndex`, `getContainer`, `placement`).',
+    },
+
+    /* ---- Built-in password change ---- */
+    onPasswordSubmit: {
+      control: false,
+      description:
+        'Called on valid password form submit. Providing this prop enables the built-in password-change feature.',
+    },
+    passwordError: {
+      control: 'text',
+      description: 'External error to display on the password form (e.g. API error).',
+    },
+    passwordSubmitting: {
       control: 'boolean',
-      description: 'Whether the drawer is visible',
+      description: 'Disables form controls while the submission is in progress.',
     },
-    title: {
+    passwordLabels: {
+      control: false,
+      description:
+        'Override default labels for the password form (useful for i18n). Partial<PasswordFormLabels>.',
+    },
+
+    /* ---- className hooks ---- */
+    className: {
       control: 'text',
-      description: 'Header title',
+      description: 'Applied to the outermost wrapper inside the drawer body.',
     },
-    width: {
+    profileCardClassName: {
       control: 'text',
-      description: 'Drawer width',
+      description: 'Applied to the profile-card region (avatar + info).',
     },
-    /* Complex / ReactNode props excluded from controls to avoid serialization issues */
-    avatar: { table: { disable: true } },
-    profileInfo: { table: { disable: true } },
-    sections: { table: { disable: true } },
-    footer: { table: { disable: true } },
-    children: { table: { disable: true } },
-    headerLeft: { table: { disable: true } },
-    detailPanel: { table: { disable: true } },
-    drawerProps: { table: { disable: true } },
+    avatarClassName: { control: 'text', description: 'Applied to the avatar container.' },
+    headerClassName: {
+      control: 'text',
+      description: 'Applied to the header row inside the drawer.',
+    },
+    bodyClassName: { control: 'text', description: 'Applied to the scrollable body container.' },
   },
 } satisfies Meta<typeof ProfileDrawer>;
 
@@ -62,8 +132,6 @@ function ActionRow({
     </button>
   );
 }
-
-/* Inline SVG icons for stories (no external dependency needed) */
 
 /* document-text (heroicons v2, 24/outline) */
 const DocIcon = (
@@ -177,14 +245,10 @@ const logoutSection: ProfileDrawerSection = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Teacher-like avatar (circle, 200px)                                 */
+/*  Teacher avatar source (used with avatarSrc convenience API)          */
 /* ------------------------------------------------------------------ */
 
-const TeacherAvatar = (
-  <div className="luca-h-[200px] luca-w-[200px] luca-overflow-hidden luca-rounded-full luca-bg-primary-100 luca-flex luca-items-center luca-justify-center">
-    <span className="luca-text-6xl">👩‍🏫</span>
-  </div>
-);
+const TEACHER_AVATAR_URL = 'https://api.dicebear.com/9.x/avataaars/svg?seed=teacher';
 
 const TeacherProfileInfo = (
   <div className="luca-flex luca-w-full luca-flex-col luca-items-center luca-justify-center luca-gap-1 luca-rounded-lg luca-p-2 luca-text-center luca-text-neutral-900">
@@ -229,7 +293,7 @@ const StudentProfileInfo = (
 /*  Stories                                                            */
 /* ------------------------------------------------------------------ */
 
-/* Wrapper components keep complex JSX out of story render scope */
+/* Wrapper components avoid Storybook arg-serialization crashes with complex ReactNode props. */
 const TeacherProfileDemo = () => {
   const [open, setOpen] = useState(false);
 
@@ -260,7 +324,7 @@ const TeacherProfileDemo = () => {
         onClose={() => setOpen(false)}
         title="Mi cuenta"
         width={700}
-        avatar={TeacherAvatar}
+        avatarSrc={TEACHER_AVATAR_URL}
         profileInfo={TeacherProfileInfo}
         sections={[actionsSection, helpSection, downloadSection, logoutSection]}
         onPasswordSubmit={(data) => {
@@ -398,5 +462,300 @@ export const MinimalConfig: Story = {
     open: false,
     onClose: () => {},
     title: 'Profile',
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Avatar fallback demo                                               */
+/* ------------------------------------------------------------------ */
+
+const AvatarFallbackDemo = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="luca-px-4 luca-py-2 luca-bg-accent-600 luca-text-neutral-900 luca-rounded-xl luca-font-semibold luca-shadow-[0px_4px_0px_0px_#f58f00] hover:luca-bg-[#f5b02a]"
+      >
+        Open Avatar Fallback
+      </button>
+      <ProfileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Mi cuenta"
+        width={700}
+        avatarSrc="https://broken.invalid/does-not-exist.png"
+        avatarAlt="Broken image demo"
+        profileInfo={TeacherProfileInfo}
+        sections={[actionsSection, helpSection, logoutSection]}
+        footer={
+          <p className="luca-text-center luca-text-xs luca-leading-4 luca-text-neutral-900">
+            Versión 2.1
+          </p>
+        }
+      />
+    </>
+  );
+};
+
+/** Demonstrates the user-icon fallback when `avatarSrc` fails to load. */
+export const AvatarFallback: Story = {
+  render: () => <AvatarFallbackDemo />,
+  args: {
+    open: false,
+    onClose: () => {},
+    title: 'Mi cuenta',
+    width: 700,
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Password error + submitting state                                   */
+/* ------------------------------------------------------------------ */
+
+const PasswordErrorDemo = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="luca-px-4 luca-py-2 luca-bg-accent-600 luca-text-neutral-900 luca-rounded-xl luca-font-semibold luca-shadow-[0px_4px_0px_0px_#f58f00] hover:luca-bg-[#f5b02a]"
+      >
+        Open Password Error Demo
+      </button>
+      <ProfileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Mi cuenta"
+        avatarSrc={TEACHER_AVATAR_URL}
+        profileInfo={TeacherProfileInfo}
+        sections={[actionsSection]}
+        onPasswordSubmit={() => {}}
+        passwordError="La contraseña actual es incorrecta"
+        passwordSubmitting={false}
+        footer={
+          <p className="luca-text-center luca-text-xs luca-leading-4 luca-text-neutral-900">
+            Versión 2.1
+          </p>
+        }
+      />
+    </>
+  );
+};
+
+/**
+ * Demonstrates `passwordError` and `passwordSubmitting` props.
+ * Click **Cambiar contraseña** to see the error message on the form.
+ */
+export const PasswordErrorState: Story = {
+  render: () => <PasswordErrorDemo />,
+  args: {
+    open: false,
+    onClose: () => {},
+    title: 'Mi cuenta',
+    width: 700,
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Custom labels (i18n)                                                */
+/* ------------------------------------------------------------------ */
+
+const CustomLabelsDemo = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="luca-px-4 luca-py-2 luca-bg-accent-600 luca-text-neutral-900 luca-rounded-xl luca-font-semibold luca-shadow-[0px_4px_0px_0px_#f58f00] hover:luca-bg-[#f5b02a]"
+      >
+        Open Custom Labels (EN)
+      </button>
+      <ProfileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="My Account"
+        avatarSrc={TEACHER_AVATAR_URL}
+        profileInfo={TeacherProfileInfo}
+        sections={[actionsSection]}
+        onPasswordSubmit={(data) => console.log('Password submit:', data)}
+        passwordLabels={{
+          action: 'Change password',
+          title: 'Change password',
+          currentPassword: 'Current password',
+          newPassword: 'New password',
+          confirmPassword: 'Confirm new password',
+          cancel: 'Cancel',
+          submit: 'Save',
+          mismatchError: 'Passwords do not match',
+          minLengthError: 'Password must be at least 6 characters',
+          back: 'Back',
+        }}
+        footer={
+          <p className="luca-text-center luca-text-xs luca-leading-4 luca-text-neutral-900">
+            Version 2.1
+          </p>
+        }
+      />
+    </>
+  );
+};
+
+/**
+ * Demonstrates `passwordLabels` override for full i18n control.
+ * All labels are English. Click **Change password** to see the translated form.
+ */
+export const CustomLabels: Story = {
+  render: () => <CustomLabelsDemo />,
+  args: {
+    open: false,
+    onClose: () => {},
+    title: 'My Account',
+    width: 700,
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Header left element                                                 */
+/* ------------------------------------------------------------------ */
+
+const HeaderLeftArrow = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="luca-h-6 luca-w-6"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+  </svg>
+);
+
+const WithHeaderLeftDemo = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="luca-px-4 luca-py-2 luca-bg-accent-600 luca-text-neutral-900 luca-rounded-xl luca-font-semibold luca-shadow-[0px_4px_0px_0px_#f58f00] hover:luca-bg-[#f5b02a]"
+      >
+        Open With Header Left
+      </button>
+      <ProfileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Settings"
+        headerLeft={
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="luca-rounded-full luca-p-1 luca-text-neutral-500 luca-transition hover:luca-bg-neutral-100 hover:luca-text-neutral-700"
+            aria-label="Back"
+          >
+            {HeaderLeftArrow}
+          </button>
+        }
+        avatarSrc={TEACHER_AVATAR_URL}
+        profileInfo={TeacherProfileInfo}
+        sections={[actionsSection, helpSection]}
+        footer={
+          <p className="luca-text-center luca-text-xs luca-leading-4 luca-text-neutral-900">
+            Versión 2.1
+          </p>
+        }
+      />
+    </>
+  );
+};
+
+/**
+ * Demonstrates `headerLeft` — a custom element rendered left of the title.
+ * Here a back arrow button is placed next to the "Settings" title.
+ */
+export const WithHeaderLeft: Story = {
+  render: () => <WithHeaderLeftDemo />,
+  args: {
+    open: false,
+    onClose: () => {},
+    title: 'Settings',
+    width: 700,
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/*  Detail panel (replaces main body)                                    */
+/* ------------------------------------------------------------------ */
+
+const WithDetailPanelDemo = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="luca-px-4 luca-py-2 luca-bg-accent-600 luca-text-neutral-900 luca-rounded-xl luca-font-semibold luca-shadow-[0px_4px_0px_0px_#f58f00] hover:luca-bg-[#f5b02a]"
+      >
+        Open Detail Panel
+      </button>
+      <ProfileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Notification Settings"
+        avatarSrc={TEACHER_AVATAR_URL}
+        profileInfo={TeacherProfileInfo}
+        sections={[actionsSection]}
+        detailPanel={
+          <div className="luca-flex luca-flex-col luca-gap-4">
+            <h3 className="luca-text-lg luca-font-semibold luca-text-neutral-900">
+              Email Notifications
+            </h3>
+            <label className="luca-flex luca-items-center luca-justify-between luca-gap-2">
+              <span className="luca-text-sm luca-text-neutral-700">Weekly digest</span>
+              <input
+                type="checkbox"
+                defaultChecked
+                className="luca-h-4 luca-w-4 luca-accent-primary"
+              />
+            </label>
+            <label className="luca-flex luca-items-center luca-justify-between luca-gap-2">
+              <span className="luca-text-sm luca-text-neutral-700">Assignment reminders</span>
+              <input
+                type="checkbox"
+                defaultChecked
+                className="luca-h-4 luca-w-4 luca-accent-primary"
+              />
+            </label>
+            <label className="luca-flex luca-items-center luca-justify-between luca-gap-2">
+              <span className="luca-text-sm luca-text-neutral-700">Marketing emails</span>
+              <input type="checkbox" className="luca-h-4 luca-w-4 luca-accent-primary" />
+            </label>
+          </div>
+        }
+        footer={
+          <p className="luca-text-center luca-text-xs luca-leading-4 luca-text-neutral-900">
+            Versión 2.1
+          </p>
+        }
+      />
+    </>
+  );
+};
+
+/**
+ * Demonstrates `detailPanel` — arbitrary content that replaces the slot-based body.
+ * Profile card, sections, and password flow are all hidden; only the panel renders.
+ */
+export const WithDetailPanel: Story = {
+  render: () => <WithDetailPanelDemo />,
+  args: {
+    open: false,
+    onClose: () => {},
+    title: 'Notification Settings',
+    width: 700,
   },
 };
