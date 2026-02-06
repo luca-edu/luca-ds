@@ -52,6 +52,17 @@ export type { LayoutHeaderProps } from './components/LayoutHeader';
 export { Modal } from './components/Modal';
 export type { ModalProps } from './components/Modal';
 
+export { Drawer } from './components/Drawer';
+export type { DrawerProps, DrawerPlacement } from './components/Drawer';
+
+export { ProfileDrawer } from './components/ProfileDrawer';
+export type {
+  ProfileDrawerProps,
+  ProfileDrawerSection,
+  PasswordSubmitData,
+  PasswordFormLabels,
+} from './components/ProfileDrawer';
+
 export { SearchBar } from './components/SearchBar';
 export type { SearchBarProps, SearchBarStyle } from './components/SearchBar';
 
